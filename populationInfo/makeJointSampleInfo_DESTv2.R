@@ -92,7 +92,7 @@
 
 
 ### output
-  write.csv(dest_v2, )
+  write.csv(dest_v2, "DESTv2/populationInfo/dest_v2_samples.csv", quote=F)
 
 ### basic plot
   sampPlot <- ggplot(dest_v2[year>=2009]) +
