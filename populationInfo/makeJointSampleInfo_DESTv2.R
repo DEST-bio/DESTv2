@@ -6,8 +6,7 @@
   library(lubridate)
   library(ggplot2)
   library(countrycode)
-  library(sp)
-  library(rworldmap)
+  #library(rworldmap)
 
 ### set wd
   setwd("/Users/alanbergland/Documents/GitHub/")
@@ -18,7 +17,7 @@
 ### load new DrosEU (v3)
   ### this is the collection metadata
     #droseu_sample <- as.data.table(read_excel("/Users/alanbergland/Documents/GitHub/DESTv2/populationInfo/OriginalMetadata/DrosEUExtraction_metadata_12 Dec 2022.xlsx"))
-    droseu_sample <- as.data.table(read_excel("populationInfo/Metadata collection sheets/Finalized docs/Dec 15 2022/JCBN.DrosEUExtraction_metadata_12 Dec 2022.xlsx"))
+    droseu_sample <- as.data.table(read_excel("DESTv2/populationInfo/OriginalMetadata/AOB.JCBN.DrosEUExtraction_metadata_12 Dec 2022.xlsx"))
     setnames(droseu_sample,
             c("SampleID", "Plate number", "Plate position", "Location name"),
             c("sampleId", "Plate_number", "Plate_position", "Location_name"))
@@ -36,11 +35,13 @@
 
   ### this is the DNA_library metadata
     #droseu_lib <- as.data.table(read_excel("DESTv2/populationInfo/OriginalMetadata/Final Extraction data  _Microgen_DrosEU_2017-2021.xlsx"))
-    droseu_lib <- as.data.table(read_excel("populationInfo/2022_DESTv2/Metadata collection sheets/Finalized docs/Dec 15 2022/AOB.JCBN.Final Extraction data _Microgen_DrosEU_2017-2021.xlsx"))
+    droseu_lib <- as.data.table(read_excel("DESTv2/populationInfo/OriginalMetadata/AOB.JCBN.Final Extraction data _Microgen_DrosEU_2017-2021.xlsx"))
 
     setnames(droseu_lib,
              c("SampleID", "Sample ID**\r\n(<15 letters)"),
              c("sampleId", "SequencingId"))
+
+    setnames(droseu_lib, "Extraction", "nFlies")
 
   ### First batch of sequencing includes all samples except these:
     low_qual <- c(32, 50, 76, 77, 83, 87, 92, 96, 107, 120, 121, 127,136, 139, 144, 158, 185, 205, 210, 215, 233, 235, 236, 241, 243, 244, 246, 247, 249, 250, 252, 253)
@@ -50,13 +51,20 @@
     table(droseu.full$"Location_name" == droseu$"Location name")
     as.data.frame(droseu.full[,c("Location_name", "Location name"), with=F])
 
+  ### fix a few small errors
+    droseu.full[Location_name=="Kameno (Boka Kotorska bay, Adriatic coast)", Location_name:="Kameno"]
+    droseu.full[Location_name=="Irakilo, Crete", Location_name:="Irakilo"]
+    droseu.full[Location_name=="Dairsie, Fife", Location_name:="Dairsie"]
+
+    droseu.full$Location_name[grepl(",", droseu.full$Location_name)]
+
   ### clean up a bit
     droseu <- droseu.full[,
                           c("sampleId", "SequencingId",
                             "Location_name", "Country.x", "Country.y",
                             "Date.x", "Day_apprx", "Month", "Year", "Date_Exact", "Date_Comp",
                             "lat", "long", "altitude",
-                            "Extraction",
+                            "nFlies",
                             "Sampling strategy", "Wild/F1", "Fruit type"), with=F]
 
 
@@ -159,7 +167,7 @@
 ### merge together
   dest_v2 <- rbindlist(list(
     dest_v1[set%in%c("DrosEU", "DrosRTEC", "dgn")][,c("sampleId", "year", "yday", "locality", "lat", "long", "continent", "country", "city", "type", "set"), with=F],
-    droseu[,c("sampleId", "year", "yday", "locality", "lat", "long", "continent", "country", "city", "type", "set"), with=F],
+    droseu[,c("SequencingId", "sampleId", "year", "yday", "locality", "lat", "long", "continent", "country", "city", "type", "set"), with=F],
     cville[,c("sampleId", "year", "yday", "locality", "lat", "long", "continent", "country", "city", "type", "set"), with=F]), fill=T)
 
   dest_v2[continent=="NorthAmerica", continent:="North_America"]
@@ -170,7 +178,7 @@
   dest_v2[lat< -30, continent:="Australia"]
 
 ### output
-  write.csv(dest_v2, "DESTv2/populationInfo/dest_v2_samples.csv", quote=F)
+  write.csv(dest_v2, "DESTv2/populationInfo/dest_v2_samples.csv", quote=F, row.names=F)
 
 ### basic plot
   sampPlot <- ggplot(dest_v2[type=="pooled"]) +
