@@ -272,7 +272,10 @@
     dest_v2[,.N,sampleId][N>1]
 
 ### output
-  write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_12Jan2023.csv")
+  setkey(dest_v2, sampleId)
+  dest_v2 <- dest_v2[,-c("pre", "tmpId", "date_string"), with=F]
+  
+  write.csv(, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_12Jan2023.csv")
 
 
 
