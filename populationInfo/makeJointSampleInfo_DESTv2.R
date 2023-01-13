@@ -10,53 +10,13 @@
   library(sf)
   library(stringi)
   #library(rworldmap)
+  library(googlesheets4)
 
 ### set wd
   setwd("/Users/alanbergland/Documents/GitHub/")
 
 ### load DESTv1
   dest_v1 <- fread("DESTv2/populationInfo/OriginalMetadata/DEST_v1.samps_10Nov2020.csv")
-
-#  ### add in "exact date" info from Machado et al
-#    drosRTEC <- as.data.table(read_excel("DESTv2/populationInfo/OriginalMetadata/elife-67577-supp1-v2.xlsx"))
-#    drosRTEC[,day:=as.numeric(as.character(Day))]
-#    drosRTEC[,exactDate:=!is.na(day)]
-#    drosRTEC[,c("Day", "Month", "Year", "exactDate"), with=F]
-#    setnames(drosRTEC, "Sample", "sampleId")
-#    dim(dest_v1)
-#    dest_v1 <- merge(dest_v1, drosRTEC[,c("sampleId", "exactDate"), with=F], all.x=T)
-#    dim(dest_v1) ### should have 272 rows
-
-#  ### get year month date info
-#    ### for DrosRTEC/DrosEU
-#      dest_v1[set%in%c("DrosRTEC", "DrosEU"),year:= as.numeric(paste("20", tstrsplit(collectionDate, "/")[[3]], sep=""))]
-#      dest_v1[set%in%c("DrosRTEC", "DrosEU"),month:=as.numeric(tstrsplit(collectionDate, "/")[[1]])]
-#      dest_v1[set%in%c("DrosRTEC", "DrosEU"),day:=  as.numeric(tstrsplit(collectionDate, "/")[[2]])]
-#      dest_v1[is.na(exactDate) & is.na(day), exactDate:=F]
-#      dest_v1[exactDate==F & is.na(day), day:=15]
-#      dest_v1[sampleId=="NC_ra_03_n", year:=2003]
-#      dest_v1[sampleId=="NC_ra_03_n", month:=NA]
-#
-#    ### for DGN
-#      dest_v1[set%in%c("dgn"),year:= as.numeric(tstrsplit(collectionDate, "/")[[1]])]
-#      dest_v1[set%in%c("dgn"),month:=as.numeric(tstrsplit(collectionDate, "/")[[2]])]
-#
-#    ### padd the missing info
-#      dest_v1[is.na(exactDate) & is.na(month), exactDate:=F]
-#      dest_v1[exactDate==F & is.na(month), month:=6]
-#
-#      dest_v1[is.na(exactDate) & is.na(year), exactDate:=F]
-#
-#      dest_v1[is.na(exactDate), exactDate:=T]
-#
-#    dest_v1[,c("exactDate", "year", "month", "day"), with=F]
-#
-#    dest_v1[,yday:=yday(ymd(paste(year, month, day, sep="-")))]
-#
-#    dest_v1[is.na(yday)]
-#    table(dest_v1$exactDate)
-
-
 
   ### some naming conventions
     setnames(dest_v1, "type", "library_type")
@@ -70,7 +30,6 @@
 
 ### load new DrosEU (v3)
   ### this is the collection metadata
-    #droseu_sample <- as.data.table(read_excel("/Users/alanbergland/Documents/GitHub/DESTv2/populationInfo/OriginalMetadata/DrosEUExtraction_metadata_12 Dec 2022.xlsx"))
     droseu_sample <- as.data.table(read_excel("DESTv2/populationInfo/OriginalMetadata/AOB.JCBN.DrosEUExtraction_metadata_12 Jan 2023.xlsx"))
     setnames(droseu_sample,
             c("SampleID", "Plate number", "Plate position"),
@@ -81,14 +40,11 @@
     droseu_sample[Altitude=="60 m", Altitude:=60]
     droseu_sample[,altitude:=as.numeric(iconv(Altitude, 'utf-8', 'ascii', sub=''))]
 
-    #droseu_sample[is.na(as.numeric(as.character(droseu_sample$lat)))]
-    #droseu_sample[is.na(as.numeric(as.character(droseu_sample$long)))]
 
     droseu_sample[city=="Charlottesville", lat:=37.9790]
     droseu_sample[city=="Charlottesville", long:=-78.4897]
 
   ### this is the DNA_library metadata
-    #droseu_lib <- as.data.table(read_excel("DESTv2/populationInfo/OriginalMetadata/Final Extraction data  _Microgen_DrosEU_2017-2021.xlsx"))
     droseu_lib <- as.data.table(read_excel("DESTv2/populationInfo/OriginalMetadata/AOB.JCBN.Final Extraction data _Microgen_DrosEU_2017-2021.xlsx"))
 
     setnames(droseu_lib,
@@ -97,10 +53,6 @@
 
     setnames(droseu_lib, "Extraction", "nFlies")
 
-  ### First batch of sequencing includes all samples except these:
-    low_qual <- c(32, 50, 76, 77, 83, 87, 92, 96, 107, 120, 121, 127,136, 139, 144, 158, 185, 205, 210, 215, 233, 235, 236, 241, 243, 244, 246, 247, 249, 250, 252, 253)
-    low_qual <- paste("DrosEu-", low_qual, sep="")
-    #samps[SequencingId%in%low_qual]
 
   ### merge droseu
     droseu.full <- merge(droseu_sample, droseu_lib, by="sampleId", all=T)
@@ -115,29 +67,47 @@
                             "nFlies",   "bio_rep", "tech_rep", "exp_rep", "loc_rep",
                             "Sampling strategy", "Wild/F1", "Fruit type", "Collectors name.x"), with=F]
 
-  ### some double checks:
-    ggplot(data=droseu, aes(locality_dist)) + geom_histogram()
+  ### First batch of sequencing includes all samples except these:
+    low_qual <- c(32, 50, 76, 77, 83, 87, 92, 96, 107, 120, 121, 127,136, 139, 144, 158, 185, 205, 210, 215, 233, 235, 236, 241, 243, 244, 246, 247, 249, 250, 252, 253)
+    low_qual <- paste("DrosEu-", low_qual, sep="")
+    droseu[SequencingId%in%low_qual, low_qual:=T]
+    droseu[is.na(low_qual), low_qual:=F]
 
-    ggplot(data=droseu, aes(y=lat, x=long)) + geom_point()
+  ## other stuff
+    droseu[,type:="pooled"]
+    droseu[,set:="DrosEU_3"]
+    droseu[,seq_platform:="NovaSeq6000"]
 
-    ### does the country name from the Microgen and the Metadata sheets align? YES
-    table(droseu$Country.x==droseu$Country.y); droseu[droseu$Country.x!=droseu$Country.y] ### these are just some simple discrepancies beteween names; Believe Country.x
+  ### rename new droseu data
+    setnames(droseu,
+             c("sampleId", "Sampling strategy", "Wild/F1", "Country.x"),
+             c("sampleId_internal", "sampling_strategy", "Wild_F1", "country"))
 
-## other stuff
-  droseu[,type:="pooled"]
-  droseu[,set:="DrosEU_3"]
+    setnames(droseu, "type", "library_type")
+    setnames(droseu, "Wild_F1", "fly_type")
+    setnames(droseu, "Collectors name.x", "collector")
+    setnames(droseu, "Fruit type", "fruit_type")
 
-### rename new droseu data
-  setnames(droseu,
-           c("sampleId", "Sampling strategy", "Wild/F1", "Country.x"),
-           c("sampleId_internal", "sampling_strategy", "Wild_F1", "country"))
+  ### add in DNA and library quality metrics
+    gs <- "https://docs.google.com/spreadsheets/d/1bf6x_ow7KqUSNQAWOLkzJhwI86Spw65eXwl5dY-sWag/edit#gid=152737368"
+    qual <- as.data.table(read_sheet(ss=gs))
+    #qual <- qual[2:253,]
+    setnames(qual, names(qual), c("Library_Name", "conc", "addvol", "finalvol", "tot", "DIN",
+          "Result_Original", "Status", "libtype", "conc2", "concNm", "size", "result", "comment", "totalreads", "q30"))
+    setnames(qual, "Library_Name", "SequencingId")
 
-  setnames(droseu, "type", "library_type")
-  setnames(droseu, "Wild_F1", "fly_type")
-  setnames(droseu, "Collectors name.x", "collector")
-  setnames(droseu, "Fruit type", "fruit_type")
+    qual.dt <- data.table(SequencingId=unlist(qual$SequencingId[2:254]),
+                          DIN=unlist(qual$DIN[2:254]),
+                          DNA_result=unlist(qual$Result_Original[2:254]),
+                          DNA_Status=unlist(qual$Status[2:254]),
+                          library_result=unlist(qual$result[2:254]),
+                          totalreads=unlist(qual$totalreads[2:254]))
+
+    droseu <- merge(droseu, qual.dt, all.x=T, by="SequencingId")
+    dim(droseu)
 
 ### Cville data
+
   cville <- as.data.table(read_excel("DESTv2/populationInfo/OriginalMetadata/TableS1.Sample Metadata.xlsx"))
   cville <- cville[source_data=="This Study"][Seq_strategy=="pooled"]
   cville[,yday:=yday(ymd(collectionDate))]
@@ -169,19 +139,29 @@
 
 ### merge together
 
-  commonCols <- c("sampleId", "set", "SequencingId",
-                  "year", "min_day", "max_day", "min_month", "max_month",
+  commonCols <- c("sampleId", "set", "SequencingId", "low_qual",
+                  "year", "min_day", "max_day", "min_month", "max_month", "season",
                   "locality", "lat", "long",
                   "country", "city",
                   "bio_rep", "tech_rep", "exp_rep", "loc_rep", "fruit_type",
                   "nFlies", "fly_type", "library_type", "sampling_strategy", "seq_platform",
-                  "collector", "SRA_Accession", "reference")
+                  "collector", "SRA_Accession", "reference",
+                  "DIN", "DNA_result", "DNA_Status", "library_result", "totalreads")
 
-  dest_v2 <- rbindlist(list(dest_v1[,commonCols[commonCols%in%names(dest_v1)], with=F],
-                            droseu[,commonCols[commonCols%in%names(droseu)], with=F],
+        ### just a litlle bit of padding with NAs to make the rbind work
+          droseu[,sampleId:=NA]
+          droseu[,season:=NA]
+          droseu[,locality:=NA]
+          droseu[,SRA_Accession:=NA]
+          droseu[,reference:=NA]
+
+
+  dest_v2 <- rbindlist(list(droseu[,commonCols[commonCols%in%names(droseu)], with=F],
+                            dest_v1[,commonCols[commonCols%in%names(dest_v1)], with=F],
                             cville[,commonCols[commonCols%in%names(cville)], with=F],
                             pub[,commonCols[commonCols%in%names(pub)], with=F]),
                           fill=T)
+
   dest_v2[,tmpId:=c(1:dim(dest_v2)[1])]
 
 ### fix a few problematic longitudes
@@ -245,6 +225,8 @@
   dest_v2[,min_month:=month(make_date(year) + min_jday - 1)]
   dest_v2[,max_month:=month(make_date(year) + max_jday - 1)]
 
+  dest_v2[,min_day:=as.numeric(as.character(min_day))]
+  dest_v2[,max_day:=as.numeric(as.character(max_day))]
 
   table(dest_v2$exactDate, dest_v2$set)
 
@@ -270,30 +252,43 @@
 ### make final sampleId
   setnames(dest_v2, "sampleId", "sampleId_orig")
   dest_v2[,sampleId:=paste(locality, subsample, date_string, sep="_")]
-    table(dest_v2[,.N,sampleId]$N)
-    dest_v2[,.N,sampleId][N>1]
 
-### get elevation
-  library(elevatr)
-
+### remove commas from object
+   dest_v2 <- foreach(i=1:dim(dest_v2)[2], .combine="cbind")%do%{
+      # i<- 1
+      tmp <- as.data.frame(dest_v2[,names(dest_v2)[i],with=F])
+      tmp[,1] <- gsub(",", ";", tmp[,1])
+      return(tmp)
+    }
+    dest_v2 <- as.data.table(dest_v2)
 
 ### output
-  dest_v2 <- dest_v2[,-c("pre", "tmpId", "date_string"), with=F]
+  setnames(dest_v2, "season", "sr_season")
 
   colOrder <- c("sampleId", "sampleId_orig", "locality",
                 "lat", "long",
                 "continent", "country", "city", "province",
-                "min_day", "max_day", "min_month", "max_month", "year", "jday", "exactDate",
+                "min_day", "max_day", "min_month", "max_month", "year", "jday", "exactDate", "sr_season",
                 "bio_rep", "tech_rep", "exp_rep", "loc_rep", "fruit_type", "subsample",
                 "nFlies", "fly_type", "library_type", "sampling_strategy", "seq_platform", "set",
-                "collector", "SRA_Accession", "reference")
+                "collector", "SRA_Accession", "reference",
+                "SequencingId", "low_qual", "DIN", "DNA_result", "DNA_Status", "library_result", "totalreads")
+
+
 
   dest_v2 <- dest_v2[,colOrder, with=F]
   setkey(dest_v2, sampleId)
 
+  write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_13Jan2023.csv")
 
 
-  write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_12Jan2023.csv")
+
+summary(lm(as.numeric(as.character(totalreads))~DNA_result-1, dest_v2))
+summary(lm(as.numeric(as.character(totalreads))~library_result-1, dest_v2))
+
+#### need to add
+  • library/DNA quality
+
 
 
 
