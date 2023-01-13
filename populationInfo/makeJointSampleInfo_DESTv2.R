@@ -169,7 +169,7 @@
   dest_v2[city=="Edinburgh", long:=ifelse(long>0, -1*long, long)]
   dest_v2[city=="Larache", long:=ifelse(long>0, -1*long, long)]
   dest_v2[city=="Nador province", long:=ifelse(long>0, -1*long, long)]
-  
+
 ### get political identifiers
   states <- ne_states(returnclass="sf")
   countries <- ne_countries(returnclass="sf")
@@ -255,14 +255,27 @@
   setnames(dest_v2, "sampleId", "sampleId_orig")
   dest_v2[,sampleId:=paste(locality, subsample, date_string, sep="_")]
 
-### remove commas from object
+### remove commas & especial characterials from object
    dest_v2 <- foreach(i=1:dim(dest_v2)[2], .combine="cbind")%do%{
       # i<- 1
       tmp <- as.data.frame(dest_v2[,names(dest_v2)[i],with=F])
+      tmp.class <- class(tmp[,1])
       tmp[,1] <- gsub(",", ";", tmp[,1])
+      tmp[,1] <- stri_trans_general(str = tmp[,1],
+                                    id = "Latin-ASCII")
+      class(tmp[,1]) <- tmp.class
       return(tmp)
     }
     dest_v2 <- as.data.table(dest_v2)
+
+    ### NA too!
+
+### a little more cleanup
+  ### ghost population
+    dest_v2 <- dest_v2[sampleId!="DE_Bad_Wal_1_NA"]
+
+  ### fruit
+    dest_v2[fruit_type=="-",fruit_type:=NA]
 
 ### output
   setnames(dest_v2, "season", "sr_season")
