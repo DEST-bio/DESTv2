@@ -167,7 +167,9 @@
 ### fix a few problematic longitudes
   dest_v2[city=="Muthill", long:=ifelse(long>0, -1*long, long)]
   dest_v2[city=="Edinburgh", long:=ifelse(long>0, -1*long, long)]
-
+  dest_v2[city=="Larache", long:=ifelse(long>0, -1*long, long)]
+  dest_v2[city=="Nador province", long:=ifelse(long>0, -1*long, long)]
+  
 ### get political identifiers
   states <- ne_states(returnclass="sf")
   countries <- ne_countries(returnclass="sf")
