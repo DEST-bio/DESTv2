@@ -1,7 +1,6 @@
 ### libraries
   library(data.table)
   library(readxl)
-  library(sp)
   library(foreach)
   library(lubridate)
   library(ggplot2)
@@ -9,6 +8,7 @@
   library(rnaturalearth)
   library(rnaturalearthdata)
   library(sf)
+  library(stringi)
   #library(rworldmap)
 
 ### set wd
@@ -17,44 +17,46 @@
 ### load DESTv1
   dest_v1 <- fread("DESTv2/populationInfo/OriginalMetadata/DEST_v1.samps_10Nov2020.csv")
 
-  ### add in "exact date" info from Machado et al
-    drosRTEC <- as.data.table(read_excel("DESTv2/populationInfo/OriginalMetadata/elife-67577-supp1-v2.xlsx"))
-    drosRTEC[,day:=as.numeric(as.character(Day))]
-    drosRTEC[,exactDate:=!is.na(day)]
-    drosRTEC[,c("Day", "Month", "Year", "exactDate"), with=F]
-    setnames(drosRTEC, "Sample", "sampleId")
-    dim(dest_v1)
-    dest_v1 <- merge(dest_v1, drosRTEC[,c("sampleId", "exactDate"), with=F], all.x=T)
-    dim(dest_v1) ### should have 272 rows
+#  ### add in "exact date" info from Machado et al
+#    drosRTEC <- as.data.table(read_excel("DESTv2/populationInfo/OriginalMetadata/elife-67577-supp1-v2.xlsx"))
+#    drosRTEC[,day:=as.numeric(as.character(Day))]
+#    drosRTEC[,exactDate:=!is.na(day)]
+#    drosRTEC[,c("Day", "Month", "Year", "exactDate"), with=F]
+#    setnames(drosRTEC, "Sample", "sampleId")
+#    dim(dest_v1)
+#    dest_v1 <- merge(dest_v1, drosRTEC[,c("sampleId", "exactDate"), with=F], all.x=T)
+#    dim(dest_v1) ### should have 272 rows
 
-  ### get year month date info
-    ### for DrosRTEC/DrosEU
-      dest_v1[set%in%c("DrosRTEC", "DrosEU"),year:= as.numeric(paste("20", tstrsplit(collectionDate, "/")[[3]], sep=""))]
-      dest_v1[set%in%c("DrosRTEC", "DrosEU"),month:=as.numeric(tstrsplit(collectionDate, "/")[[1]])]
-      dest_v1[set%in%c("DrosRTEC", "DrosEU"),day:=  as.numeric(tstrsplit(collectionDate, "/")[[2]])]
-      dest_v1[is.na(exactDate) & is.na(day), exactDate:=F]
-      dest_v1[exactDate==F & is.na(day), day:=15]
-      dest_v1[sampleId=="NC_ra_03_n", year:=2003]
-      dest_v1[sampleId=="NC_ra_03_n", month:=NA]
+#  ### get year month date info
+#    ### for DrosRTEC/DrosEU
+#      dest_v1[set%in%c("DrosRTEC", "DrosEU"),year:= as.numeric(paste("20", tstrsplit(collectionDate, "/")[[3]], sep=""))]
+#      dest_v1[set%in%c("DrosRTEC", "DrosEU"),month:=as.numeric(tstrsplit(collectionDate, "/")[[1]])]
+#      dest_v1[set%in%c("DrosRTEC", "DrosEU"),day:=  as.numeric(tstrsplit(collectionDate, "/")[[2]])]
+#      dest_v1[is.na(exactDate) & is.na(day), exactDate:=F]
+#      dest_v1[exactDate==F & is.na(day), day:=15]
+#      dest_v1[sampleId=="NC_ra_03_n", year:=2003]
+#      dest_v1[sampleId=="NC_ra_03_n", month:=NA]
+#
+#    ### for DGN
+#      dest_v1[set%in%c("dgn"),year:= as.numeric(tstrsplit(collectionDate, "/")[[1]])]
+#      dest_v1[set%in%c("dgn"),month:=as.numeric(tstrsplit(collectionDate, "/")[[2]])]
+#
+#    ### padd the missing info
+#      dest_v1[is.na(exactDate) & is.na(month), exactDate:=F]
+#      dest_v1[exactDate==F & is.na(month), month:=6]
+#
+#      dest_v1[is.na(exactDate) & is.na(year), exactDate:=F]
+#
+#      dest_v1[is.na(exactDate), exactDate:=T]
+#
+#    dest_v1[,c("exactDate", "year", "month", "day"), with=F]
+#
+#    dest_v1[,yday:=yday(ymd(paste(year, month, day, sep="-")))]
+#
+#    dest_v1[is.na(yday)]
+#    table(dest_v1$exactDate)
 
-    ### for DGN
-      dest_v1[set%in%c("dgn"),year:= as.numeric(tstrsplit(collectionDate, "/")[[1]])]
-      dest_v1[set%in%c("dgn"),month:=as.numeric(tstrsplit(collectionDate, "/")[[2]])]
 
-    ### padd the missing info
-      dest_v1[is.na(exactDate) & is.na(month), exactDate:=F]
-      dest_v1[exactDate==F & is.na(month), month:=6]
-
-      dest_v1[is.na(exactDate) & is.na(year), exactDate:=F]
-
-      dest_v1[is.na(exactDate), exactDate:=T]
-
-    dest_v1[,c("exactDate", "year", "month", "day"), with=F]
-
-    dest_v1[,yday:=yday(ymd(paste(year, month, day, sep="-")))]
-
-    dest_v1[is.na(yday)]
-    table(dest_v1$exactDate)
 
   ### some naming conventions
     setnames(dest_v1, "type", "library_type")
@@ -104,10 +106,11 @@
     droseu.full <- merge(droseu_sample, droseu_lib, by="sampleId", all=T)
 
   ### clean up a bit
+    setnames(droseu.full, "Year", "year")
     droseu <- droseu.full[,
                           c("sampleId", "SequencingId",
                             "city_orig", "city", "Country.x", "Country.y",
-                            "Date.x", "Day_apprx", "Month", "Year", "Date_Exact", "Date_Comp",
+                            "min_day", "max_day", "min_month", "max_month", "year",
                             "lat", "long", "altitude",
                             "nFlies",   "bio_rep", "tech_rep", "exp_rep", "loc_rep",
                             "Sampling strategy", "Wild/F1", "Fruit type", "Collectors name.x"), with=F]
@@ -120,17 +123,9 @@
     ### does the country name from the Microgen and the Metadata sheets align? YES
     table(droseu$Country.x==droseu$Country.y); droseu[droseu$Country.x!=droseu$Country.y] ### these are just some simple discrepancies beteween names; Believe Country.x
 
-### date stuff
-  droseu[is.na(Month), date:=paste(Year, NA, NA, se="-")]
-  droseu[,date:=ymd(paste(Year, Month, Day_apprx, sep="-"))]
-  droseu[,yday:=yday(date)]
-  droseu[,year:=Year]
-
 ## other stuff
   droseu[,type:="pooled"]
   droseu[,set:="DrosEU_3"]
-  droseu[Date_Exact=="EXACT", exactDate:=T]
-  droseu[Date_Exact=="APPROX", exactDate:=F]
 
 ### rename new droseu data
   setnames(droseu,
@@ -139,7 +134,6 @@
 
   setnames(droseu, "type", "library_type")
   setnames(droseu, "Wild_F1", "fly_type")
-  setnames(droseu, "Date.x", "date_orig")
   setnames(droseu, "Collectors name.x", "collector")
   setnames(droseu, "Fruit type", "fruit_type")
 
@@ -154,30 +148,20 @@
   cville[,library_type:="pooled"]
   cville[,set:="cville"]
 
-  cville[,exactDate:=T]
   setnames(cville, "sample_type", "fly_type")
   setnames(cville, "Seq_strategy", "library_type")
   cville[,sampling_strategy:="Sweep Netting + Aspiration"]
-  cville[,date_orig:="collectionDate"]
   cville[,fruit_type:=loc_rep]
 
 ### Other published data
   pub <- as.data.table(read_excel("/Users/alanbergland/Documents/GitHub/DESTv2/populationInfo/OriginalMetadata/DESTplus_Metadata.xlsx"))
   pub[,Date.orig:=paste(year, Month, Day, sep="-")]
 
-  pub[,exactDate:=F]
-  pub[Day=="NA", Day:=15]
-
-  pub[,Day:=as.numeric(as.character(Day))]
   pub[,year:=as.numeric(as.character(year))]
 
-  pub[,Date:=ymd(paste(year, Month, Day, sep="-"))]
-  pub[,yday:=yday(Date)]
-  pub[!is.na(Date)]
   pub[,set:="dest_plus"]
   setnames(pub, "sampleType", "fly_type")
   setnames(pub, "Sequencing Platform", "seq_platform")
-  setnames(pub, "Date.orig", "date_orig")
   setnames(pub, "type", "library_type")
   setnames(pub, "Collector", "collector")
   setnames(pub, "SRA_Accesion", "SRA_Accession")
@@ -186,7 +170,7 @@
 ### merge together
 
   commonCols <- c("sampleId", "set", "SequencingId",
-                  "year", "yday", "date_orig", "exactDate",
+                  "year", "min_day", "max_day", "min_month", "max_month",
                   "locality", "lat", "long",
                   "country", "city",
                   "bio_rep", "tech_rep", "exp_rep", "loc_rep", "fruit_type",
@@ -222,6 +206,9 @@
   dest_v2 <- merge(dest_v2, dest_countries[,c("tmpId", "continent"), with=F], by="tmpId", all.x=T)
 
   setnames(dest_v2, "name", "province")
+  dest_v2[,province:=stri_trans_general(str = province,
+                                      id = "Latin-ASCII")]
+
 
   dest_v2[,continent:=gsub(" ", "_", continent)]
 
@@ -246,8 +233,23 @@
   tmp[nCities>1]
 
 ### make date string
-  dest_v2[,date_string:=as.character(make_date(year) + yday - 1)]
-  dest_v2[is.na(yday)]
+
+  dest_v2[,min_jday:=yday(ymd(paste(year, min_month, min_day, sep="-")))]
+  dest_v2[,max_jday:=yday(ymd(paste(year, max_month, max_day, sep="-")))]
+
+  dest_v2[is.na(max_jday)]
+
+  dest_v2[,jday:=round(min_jday/2 + max_jday/2)]
+  dest_v2[,exactDate:=jday==min_jday]
+
+  dest_v2[,min_month:=month(make_date(year) + min_jday - 1)]
+  dest_v2[,max_month:=month(make_date(year) + max_jday - 1)]
+
+
+  table(dest_v2$exactDate, dest_v2$set)
+
+  dest_v2[,date_string:=as.character(make_date(year) + jday - 1)]
+  dest_v2[is.na(jday)]
   dest_v2[,pre:=paste(locality, date_string, sep="_")]
 
   tmp <- dest_v2[,.N, tmpId]
@@ -271,11 +273,27 @@
     table(dest_v2[,.N,sampleId]$N)
     dest_v2[,.N,sampleId][N>1]
 
+### get elevation
+  library(elevatr)
+
+
 ### output
-  setkey(dest_v2, sampleId)
   dest_v2 <- dest_v2[,-c("pre", "tmpId", "date_string"), with=F]
-  
-  write.csv(, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_12Jan2023.csv")
+
+  colOrder <- c("sampleId", "sampleId_orig", "locality",
+                "lat", "long",
+                "continent", "country", "city", "province",
+                "min_day", "max_day", "min_month", "max_month", "year", "jday", "exactDate",
+                "bio_rep", "tech_rep", "exp_rep", "loc_rep", "fruit_type", "subsample",
+                "nFlies", "fly_type", "library_type", "sampling_strategy", "seq_platform", "set",
+                "collector", "SRA_Accession", "reference")
+
+  dest_v2 <- dest_v2[,colOrder, with=F]
+  setkey(dest_v2, sampleId)
+
+
+
+  write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_12Jan2023.csv")
 
 
 
