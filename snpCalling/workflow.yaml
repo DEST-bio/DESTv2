@@ -1,7 +1,7 @@
 #To run the example, exchange '/scratch/jho5ze/DEST_snakemake with your path to the DEST_freeze1 in all relevant lines below'
 
 script_directory: /scratch/aob2x/DESTv2/snpCalling #Location of the snpCalling scripts (from git repo)
-working_directory: /scratch/aob2x/DESTv2_output/ #Directory where all the data will be processed and where output will be written
+working_directory: /scratch/aob2x/DESTv2_output #Directory where all the data will be processed and where output will be written
 pipeline_output_directory: /project/berglandlab/DEST/dest_mapped/*/* #/project/berglandlab/DEST/dest_mapped/pipeline_output #Directory holding the masked SYNC files from the main pipeline output
 popSet: all #Population to use: "all"
 method: PoolSNP #Method to use for variant calling: "PoolSNP" or "SNAPE"
@@ -10,4 +10,4 @@ mac: 5 #50 #Minmum allele count (only used with PoolSNP method)
 version: test
 poolsnp_jobs: 999 #Number of jobs to break the run_poolsnp.sh step into
 snpEff_path: ~/snpEff #Where to find the .jar for snpEff and the config file to use
-jobs_file: /scratch/aob2x//DESTv2/snpCalling/test/jobs.csv #path to filename, if NA it will run the full genome automatically
+jobs_file: /scratch/aob2x/DESTv2/snpCalling/test/jobs.csv #path to filename, if NA it will run the full genome automatically

@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
 module purge
-module load gcc/7.1.0  openmpi/3.1.4
-module load htslib bcftools parallel intel/18.0 intelmpi/18.0 mvapich2/2.3.1 R/3.6.3 python/3.6.6 vcftools/0.1.16
+module load gcc/7.1.0 openmpi/3.1.4
+#module load htslib bcftools parallel intel/18.0 intelmpi/18.0 mvapich2/2.3.1 R/3.6.3 python/3.6.6 vcftools/0.1.16
+module load htslib bcftools parallel intel/18.0 intelmpi/18.0 R/3.6.3 python/3.6.6 vcftools/0.1.16
+
+### r, mvapch, parallel
+
 
 ## Run params
   popSet=${1}
