@@ -10,7 +10,7 @@ wd = Path(config["working_directory"])
 sd = Path(config["script_directory"])
 nJobs = config["poolsnp_jobs"]
 
-poolseq_path = config["pipeline_output_directory"]
+poolseq_path = config["pipeline_output"]
 #poolseq_path = "/project/berglandlab/DEST/dest_mapped/*/*"
 
 input_sync_files = glob.glob(poolseq_path)
@@ -66,7 +66,7 @@ rule runSNP_calling:
         expand("{wd}/sub_vcfs/{{jobid}}.{{popset}}.{{method}}.{{maf}}.{{mac}}.{{version}}.vcf.gz", wd=config['working_directory'])
     resources:
         log_dir=str(log_dir)
-    shell : "bash scatter_gather_annotate/scatter.sh {config[popSet]} {config[method]} {config[maf]} {config[mac]} {config[version]} {wildcards.jobid} {config[script_directory]} {config[working_directory]} {config[pipeline_output_directory]}"
+    shell : "bash scatter_gather_annotate/scatter.sh {config[popSet]} {config[method]} {config[maf]} {config[mac]} {config[version]} {wildcards.jobid} {config[script_directory]} {config[working_directory]} {config[pipeline_output]}"
 
 def get_files_to_gather(wildcards):
     job_ids = open(job_file_path).readlines()
