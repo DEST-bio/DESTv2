@@ -23,19 +23,21 @@ module load htslib bcftools parallel intel/18.0 intelmpi/18.0 mvapich2/2.3.1 R/3
 
 ## get list of SNYC files based on popSet & method
 ### full list
-  syncPath1orig="${9}/*/*masked.sync.gz"
-  syncPath2orig="${10}/*/*masked.sync.gz"
+  pipeline_output_directory=${9}
+  #pipeline_output_directory="/project/berglandlab/DEST/dest_mapped/*/*"
+  syncPath="${pipeline_output_directory}/*masked.sync.gz"
+  #syncPath2orig="${10}/*/*masked.sync.gz"
 
 ### target pops
-  if [[ "${popSet}" == "PoolSeq" ]]; then
-    syncPath1=""
-    syncPath2=${syncPath2orig}
-  elif [[ "${popSet}" == "all" ]]; then
-    syncPath1=${syncPath1orig}
-    syncPath2=${syncPath2orig}
-  fi
+  #if [[ "${popSet}" == "PoolSeq" ]]; then
+  #  syncPath1=""
+  #  syncPath2=${syncPath2orig}
+  #elif [[ "${popSet}" == "all" ]]; then
+  #  syncPath1=${syncPath1orig}
+  #  syncPath2=${syncPath2orig}
+  #fi
 
-echo $( ls ${syncPath1} ${syncPath2})
+echo $( ls ${syncPath} )
 
 ## get job
 #   job=$( cat ${wd}/${jobs} | sed "${SLURM_ARRAY_TASK_ID}q;d" )
@@ -75,10 +77,10 @@ echo "Temp dir is $tmpdir"
 
   if [[ "${method}" == "SNAPE" ]]; then
     echo "SNAPE" ${method}
-    parallel -j 1 subsection ::: $( ls ${syncPath1} ${syncPath2} | grep "SNAPE" | grep "monomorphic" ) ::: ${job} ::: ${tmpdir}
+    parallel -j 1 subsection ::: $( ls ${syncPath} | grep "SNAPE" | grep "monomorphic" ) ::: ${job} ::: ${tmpdir}
   elif [[ "${method}" == "PoolSNP" ]]; then
     echo "PoolSNP" ${method}
-    parallel -j 1 subsection ::: $( ls ${syncPath1} ${syncPath2} | grep -v "SNAPE" ) ::: ${job} ::: ${tmpdir}
+    parallel -j 1 subsection ::: $( ls ${syncPath} | grep -v "SNAPE" ) ::: ${job} ::: ${tmpdir}
   fi
 
 ### paste function

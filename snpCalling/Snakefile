@@ -2,20 +2,18 @@ from math import floor, ceil
 from pathlib import Path
 from glob import glob
 import os
+import glob
 
 configfile: "workflow.yaml"
-
-
-poolseq_path = Path(config["poolseq_sync_directory"])
-other_path = Path(config["other_sync_directory"])
 
 wd = Path(config["working_directory"])
 sd = Path(config["script_directory"])
 nJobs = config["poolsnp_jobs"]
 
-input_sync_files = [str(poolseq_path / file) for file in os.listdir(poolseq_path)]
-if config["popSet"] == "all":
-    input_sync_files += [str(other_path / file) for file in os.listdir(other_path)]
+poolseq_path = config["pipeline_output_directory"]
+#poolseq_path = "/project/berglandlab/DEST/dest_mapped/*/*"
+
+input_sync_files = glob.glob(poolseq_path)
 
 log_dir = wd / "logs"
 if not log_dir.exists():
@@ -25,7 +23,7 @@ if not log_dir.exists():
 if config["jobs_file"] == "NA":
     job_file_path = wd / "jobs.csv"
     CHRS=["2L", "2R", "3L", "3R", "4", "X", "Y", "mitochondrion_genome"]
-    
+
     chr_lens = dict()
     with open(config["script_directory"] + "/scatter_gather_annotate/holo_dmel_6.12.fa.fai") as src:
         for line in src.readlines():
@@ -67,7 +65,7 @@ rule runSNP_calling:
         expand("{wd}/sub_vcfs/{{jobid}}.{{popset}}.{{method}}.{{maf}}.{{mac}}.{{version}}.vcf.gz", wd=config['working_directory'])
     resources:
         log_dir=str(log_dir)
-    shell : "bash scatter_gather_annotate/scatter.sh {config[popSet]} {config[method]} {config[maf]} {config[mac]} {config[version]} {wildcards.jobid} {config[script_directory]} {config[working_directory]} {config[other_sync_directory]} {config[poolseq_sync_directory]}"
+    shell : "bash scatter_gather_annotate/scatter.sh {config[popSet]} {config[method]} {config[maf]} {config[mac]} {config[version]} {wildcards.jobid} {config[script_directory]} {config[working_directory]} {config[pipeline_output_directory]}"
 
 def get_files_to_gather(wildcards):
     job_ids = open(job_file_path).readlines()

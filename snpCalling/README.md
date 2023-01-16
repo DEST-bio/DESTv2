@@ -4,7 +4,7 @@
 This is a short walkthrough to generate annotated VCF files from previously generated masked SYNC files with the scripts at [DEST_freeze1/mappingPipeline](https://github.com/DEST-bio/DEST_freeze1/tree/main/mappingPipeline).
 
 This pipeline has three basic steps:
-  1. Slice the each gSYNC file into non-overlapping regions and call SNPs. SNP-calling can be performed using PoolSNP or SNAPE. Note that the VCF files produced for SNAPE are processed through PoolSNP using a special flag. (`DEST_freeze1/snpCalling/scatter_gather_annotate/scatter.sh`)
+  1. Slice each gSYNC file into non-overlapping regions and call SNPs. SNP-calling can be performed using PoolSNP or SNAPE. Note that the VCF files produced for SNAPE are processed through PoolSNP using a special flag. (`DEST_freeze1/snpCalling/scatter_gather_annotate/scatter.sh`)
   2. Combine sub-sections of the VCF (`DEST_freeze1/snpCalling/scatter_gather_annotate/gather.sh`)
   3. Annotate the VCF and convert to various formats (`DEST_freeze1/snpCalling/scatter_gather_annotate/annotate.sh`)
 
@@ -21,9 +21,8 @@ The config file `slurm/config.yaml` defines the cluster specific snakemake profi
 The config file `workflow.yaml` holds other pipeline parameters which should be changed to fit your needs:
  * `script_directory`: Where the `snpCalling` scripts are located. Should be the path to this directory (`DEST_freeze1/snpCalling`) wherever you have cloned this repo.
  * `working_directory`: Directory where all the data will be processed and where output will be written
- * `poolseq_sync_directory`: Directory holding the masked SYNC files from the main pipeline output. They should all have the common suffix `*masked.sync.gz`
- * `other_sync_directory`: Directory holding the other masked SYNC files. Again, should have the common suffix `*masked.sync.gz`. Currently, this directory is where the DGN data are.
- * `popSet`: Population to use: either `all` or `PoolSeq`. `all` uses both paths listed above to find masked SYNC files. `PoolSeq` only uses `poolseq_sync_directory`
+ * `pipeline_output_directory`: Directory holding the masked SYNC files from the main pipeline output. They should all have the common suffix `*masked.sync.gz`
+ * `popSet`: Population to use: only option is `all`
  * `method`: Method to use for variant calling: `PoolSNP` or `SNAPE`
  * `maf`: Minimum allele frequency (only used with `PoolSNP` method; use NA for `SNAPE`)
  * `mac`: Minmum allele count (only used with `PoolSNP` method; use NA for `SNAPE`)
