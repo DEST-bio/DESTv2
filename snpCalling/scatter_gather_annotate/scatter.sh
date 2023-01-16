@@ -45,6 +45,8 @@ module load htslib/1.10.2 bcftools/1.9 parallel/20200322 intel/18.0 intelmpi/18.
 echo $( ls ${syncPath} )
 
 ## get job
+  cat ${wd}/jobs.txt
+  echo ${SLURM_ARRAY_TASK_ID}
   job=$( cat ${wd}/jobs.txt | sed "${SLURM_ARRAY_TASK_ID}q;d" )
   jobid=$( echo ${job} | sed 's/,/_/g' )
   echo "Job region is " $job
