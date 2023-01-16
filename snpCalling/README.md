@@ -53,13 +53,14 @@ ls -lh /scratch/aob2x/DESTv2_output/sub_vcfs/
 less -S /scratch/aob2x/DESTv2_output/sub_vcfs/2L_1_137508.all.PoolSNP.001.5.test.vcf.gz
 ls -lh /scratch/aobq2x/DESTv2_output/sub_bcf/
 
+
 rm /scratch/aob2x/DESTv2_output/snpEff*
 rm /scratch/aob2x/DESTv2_output/dest*
 rm /scratch/aob2x/DESTv2_output/sub_vcfs/*
 rm /scratch/aob2x/DESTv2_output/sub_bcf/*
 
-cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46000839.err
-cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46000839.out
+cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46004808.err
+cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46004808.out
 
 
 ### Output files

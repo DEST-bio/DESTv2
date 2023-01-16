@@ -13,7 +13,8 @@ jobId=gsub("mitochondrionGenome", "mitochondrion_genome", jobId)
 ### libraries
   library(data.table)
   library(foreach)
-
+  library(doMC)
+  registerDoMC(4)
 ### get input files
   files <- list.files(tmpdir, pattern=jobId)
   length(files)
@@ -33,8 +34,9 @@ jobId=gsub("mitochondrionGenome", "mitochondrion_genome", jobId)
   end = rev(tstrsplit(jobId, "_"))[[1]]
 
   #files <- files[-1]
+
 ### import
-  o <- foreach(files.i=files, .errorhandling="pass")%do%{
+  o <- foreach(files.i=files, .errorhandling="pass")%dopar%{
     #files.i=files[10]
     tmp <- fread(files.i)
     if(dim(tmp)[1]==0) {

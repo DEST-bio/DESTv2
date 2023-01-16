@@ -75,10 +75,10 @@ module load htslib/1.10.2 bcftools/1.9 parallel/20200322 intel/18.0 intelmpi/18.
 
   if [[ "${method}" == "SNAPE" ]]; then
     echo "SNAPE" ${method}
-    parallel -j 1 subsection ::: $( ls ${pipeline_output}/*/*/*.masked.sync.gz | tr '  ' '\n' | grep "SNAPE" | grep "monomorphic" | tr '\n' ' ' ) ::: ${job} ::: ${tmpdir}
+    parallel -j 4 subsection ::: $( ls ${pipeline_output}/*/*/*.masked.sync.gz | tr '  ' '\n' | grep "SNAPE" | grep "monomorphic" | tr '\n' ' ' ) ::: ${job} ::: ${tmpdir}
   elif [[ "${method}" == "PoolSNP" ]]; then
     echo "PoolSNP" ${method}
-    parallel -j 1 subsection ::: $( ls ${pipeline_output}/*/*/*.masked.sync.gz | tr '  ' '\n' | grep -v "SNAPE" ) ::: ${job} ::: ${tmpdir}
+    parallel -j 4 subsection ::: $( ls ${pipeline_output}/*/*/*.masked.sync.gz | tr '  ' '\n' | grep -v "SNAPE" ) ::: ${job} ::: ${tmpdir}
   fi
 
 echo ${pipeline_output} | tr '  ' '\n' | grep "SNAPE" | grep "monomorphic" | tr '\n' ' '
