@@ -3,7 +3,7 @@
 module purge
 module load gcc/7.1.0 openmpi/3.1.4
 #module load htslib bcftools parallel intel/18.0 intelmpi/18.0 mvapich2/2.3.1 R/3.6.3 python/3.6.6 vcftools/0.1.16
-module load htslib bcftools parallel intel/18.0 intelmpi/18.0 R/3.6.3 python/3.6.6 vcftools/0.1.16
+module load htslib/1.10.2 bcftools/1.9 parallel/20200322 intel/18.0 intelmpi/18.0 R/3.6.3 python/3.6.6 vcftools/0.1.16
 
 ### r, mvapch, parallel
 
@@ -29,7 +29,7 @@ module load htslib bcftools parallel intel/18.0 intelmpi/18.0 R/3.6.3 python/3.6
 ### full list
   pipeline_output_directory=${9}
   #pipeline_output_directory="/project/berglandlab/DEST/dest_mapped/*/*"
-  syncPath="${pipeline_output_directory}/*masked.sync.gz"
+  syncPath="${pipeline_output_directory}/*/*masked.sync.gz"
   #syncPath2orig="${10}/*/*masked.sync.gz"
 
 ### target pops

@@ -40,8 +40,12 @@ snakemake --profile /scratch/aob2x/DESTv2/snpCalling/slurm -n
 
 Then, if everything looks OK, run:
 ```bash
-snakemake --profile slurm
+snakemake --profile /scratch/aob2x/DESTv2/snpCalling/slurm
 ```
+
+rm /scratch/aob2x/DESTv2_output/sub_vcfs/*
+cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.45999264.err
+
 
 ### Output files
 VCF, BCF, and GDS files are output to `<working_directory>/dest.<popSet>.<method>.<maf>.<mac>.<version>.ann.*`.

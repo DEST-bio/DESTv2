@@ -2,7 +2,7 @@
 
 module purge
 
-module load htslib bcftools intel/18.0 intelmpi/18.0 parallel
+module load htslib/1.10.2 bcftools/1.9 intel/18.0 intelmpi/18.0 parallel/20200322
 
 popSet=${1}
 method=${2}
