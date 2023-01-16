@@ -36,17 +36,29 @@ add to path
 
 First, do a dry run with snakemake. This outputs the jobs which will be submitted, checks that everything snakemake needs for initialization is present, checks for syntax issues, etc. From `DEST_freeze1/snpCalling`, run
 ```bash
-module load gcc/9.2.0 openmpi/3.1.6 python/3.7.7
+module load gcc/9.2.0 openmpi/3.1.6 python/3.7.7 snakemake/6.0.5
+cd /scratch/aob2x/DESTv2/snpCalling
 snakemake --profile /scratch/aob2x/DESTv2/snpCalling/slurm -n
 ```
 
 Then, if everything looks OK, run:
 ```bash
-snakemake --profile /scratch/aob2x/DESTv2/snpCalling/slurm
+snakemake --forcerun --profile /scratch/aob2x/DESTv2/snpCalling/slurm
 ```
 
+cd /scratch/aob2x/DESTv2_output/logs
+
+ls -lh /scratch/aob2x/DESTv2_output
+ls -lh /scratch/aob2x/DESTv2_output/sub_vcfs/
+less -S /scratch/aob2x/DESTv2_output/sub_vcfs/2L_1_137508.all.PoolSNP.001.5.test.vcf.gz
+ls -lh /scratch/aobq2x/DESTv2_output/sub_bcf/
+
+rm /scratch/aob2x/DESTv2_output/snpEff*
+rm /scratch/aob2x/DESTv2_output/dest*
 rm /scratch/aob2x/DESTv2_output/sub_vcfs/*
-cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.45999264.err
+rm /scratch/aob2x/DESTv2_output/sub_bcf/*
+
+cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.45999972.err
 
 
 ### Output files

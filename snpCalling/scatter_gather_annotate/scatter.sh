@@ -17,18 +17,19 @@ module load htslib/1.10.2 bcftools/1.9 parallel/20200322 intel/18.0 intelmpi/18.
   jobid=${6}
   job=$( echo $jobid | sed 's/_/,/g')
   script_dir=${7}
+  wd=${8}
+  pipeline_output_directory=${9}
+
+  # popSet="all"; method="poolSNP"; maf="001"; mac=5; jobs="jobs.csv"; script_dir="/scratch/aob2x/DESTv2/snpCalling"; wd="/scratch/aob2x/DESTv2_output"; SLURM_JOB_ID=1; pipeline_output_directory="/project/berglandlab/DEST/dest_mapped/*/*"
 
 ## working & temp directory
-  wd=${8}
-  outdir="${wd}/sub_vcfs"
+  outdir="${wd}/sub_vcfs" # outdir=${wd}"/sub_vcfs"
     if [ ! -d $outdir ]; then
         mkdir $outdir
     fi
 
 ## get list of SNYC files based on popSet & method
 ### full list
-  pipeline_output_directory=${9}
-  #pipeline_output_directory="/project/berglandlab/DEST/dest_mapped/*/*"
   syncPath="${pipeline_output_directory}/*masked.sync.gz"
   #syncPath2orig="${10}/*/*masked.sync.gz"
 
@@ -44,16 +45,16 @@ module load htslib/1.10.2 bcftools/1.9 parallel/20200322 intel/18.0 intelmpi/18.
 echo $( ls ${syncPath} )
 
 ## get job
-#   job=$( cat ${wd}/${jobs} | sed "${SLURM_ARRAY_TASK_ID}q;d" )
-#   jobid=$( echo ${job} | sed 's/,/_/g' )
-  echo $job
+  job=$( cat ${wd}/${jobs} | sed "${SLURM_ARRAY_TASK_ID}q;d" )
+  jobid=$( echo ${job} | sed 's/,/_/g' )
+  echo "Job region is " $job
 
 ## set up RAM disk
   [ ! -d /dev/shm/$USER/ ] && mkdir /dev/shm/$USER/
   [ ! -d /dev/shm/$USER/${SLURM_JOB_ID} ] && mkdir /dev/shm/$USER/${SLURM_JOB_ID}
   tmpdir=/dev/shm/$USER/${SLURM_JOB_ID}
 
-echo "Temp dir is $tmpdir"
+  echo "Temp dir is $tmpdir"
 
 ## get sub section
   subsection () {
