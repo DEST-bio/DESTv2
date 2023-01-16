@@ -46,7 +46,7 @@ echo $( ls ${syncPath} )
 
 ## get job
   cat ${wd}/jobs.txt
-  echo ${SLURM_ARRAY_TASK_ID}
+  echo "slurm task: "${SLURM_ARRAY_TASK_ID}
   job=$( cat ${wd}/jobs.txt | sed "${SLURM_ARRAY_TASK_ID}q;d" )
   jobid=$( echo ${job} | sed 's/,/_/g' )
   echo "Job region is " $job
