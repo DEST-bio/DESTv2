@@ -20,7 +20,8 @@ module load htslib/1.10.2 bcftools/1.9 parallel/20200322 intel/18.0 intelmpi/18.
   wd=${8}
   pipeline_output_directory=${9}
 
-  # popSet="all"; method="poolSNP"; maf="001"; mac=5; jobs="jobs.csv"; script_dir="/scratch/aob2x/DESTv2/snpCalling"; wd="/scratch/aob2x/DESTv2_output"; SLURM_JOB_ID=1; pipeline_output_directory="/project/berglandlab/DEST/dest_mapped/*/*"
+  # popSet="all"; method="poolSNP"; maf="001"; mac=5; jobs="jobs.csv"; script_dir="/scratch/aob2x/DESTv2/snpCalling"; wd="/scratch/aob2x/DESTv2_output"; SLURM_JOB_ID=1;
+  # pipeline_output="/project/berglandlab/DEST/dest_mapped/*/*/*masked.sync.gz"
 
 ## working & temp directory
   outdir="${wd}/sub_vcfs" # outdir=${wd}"/sub_vcfs"
@@ -30,9 +31,8 @@ module load htslib/1.10.2 bcftools/1.9 parallel/20200322 intel/18.0 intelmpi/18.
 
 ## get list of SNYC files based on popSet & method
 ### full list
-  echo "pipeline_output_directory: "${pipeline_output_directory}
-  syncPath="${pipeline_output_directory}/*masked.sync.gz"
-  echo $( ls ${syncPath} )
+  echo "pipeline_output: "${pipeline_output}
+  echo $( ls ${pipeline_output} )
 
 ## get job
   cat ${wd}/jobs.csv
@@ -74,11 +74,14 @@ module load htslib/1.10.2 bcftools/1.9 parallel/20200322 intel/18.0 intelmpi/18.
 
   if [[ "${method}" == "SNAPE" ]]; then
     echo "SNAPE" ${method}
-    parallel -j 1 subsection ::: $( ls ${syncPath} | grep "SNAPE" | grep "monomorphic" ) ::: ${job} ::: ${tmpdir}
+    parallel -j 1 subsection ::: $( echo ${pipeline_output} | tr '  ' '\n' | grep "SNAPE" | grep "monomorphic" | tr '\n' ' ' ) ::: ${job} ::: ${tmpdir}
   elif [[ "${method}" == "PoolSNP" ]]; then
     echo "PoolSNP" ${method}
-    parallel -j 1 subsection ::: $( ls ${syncPath} | grep -v "SNAPE" ) ::: ${job} ::: ${tmpdir}
+    parallel -j 1 subsection ::: $( echo ${pipeline_output} | tr '  ' '\n' | grep -v "SNAPE" | tr '\n' ' ' ) ::: ${job} ::: ${tmpdir}
   fi
+
+echo ${pipeline_output} | tr '  ' '\n' | grep "SNAPE" | grep "monomorphic" | tr '\n' ' '
+
 
 ### paste function
   echo "paste"

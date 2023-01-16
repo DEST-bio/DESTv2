@@ -58,8 +58,8 @@ rm /scratch/aob2x/DESTv2_output/dest*
 rm /scratch/aob2x/DESTv2_output/sub_vcfs/*
 rm /scratch/aob2x/DESTv2_output/sub_bcf/*
 
-cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46000381.err
-cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46000381.out
+cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46000839.err
+cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46000839.out
 
 
 ### Output files
