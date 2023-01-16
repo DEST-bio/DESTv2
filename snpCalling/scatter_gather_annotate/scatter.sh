@@ -30,11 +30,12 @@ module load htslib/1.10.2 bcftools/1.9 parallel/20200322 intel/18.0 intelmpi/18.
 
 ## get list of SNYC files based on popSet & method
 ### full list
+  echo "pipeline_output_directory: "${pipeline_output_directory}
   syncPath="${pipeline_output_directory}/*masked.sync.gz"
   echo $( ls ${syncPath} )
 
 ## get job
-  cat ${wd}/jobs.txt
+  cat ${wd}/jobs.csv
 #job=$( cat ${wd}/jobs.txt | sed "${SLURM_ARRAY_TASK_ID}q;d" )
 #jobid=$( echo ${job} | sed 's/,/_/g' )
   echo "jobid is " $jobid
