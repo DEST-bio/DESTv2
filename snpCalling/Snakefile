@@ -77,14 +77,14 @@ rule gatherPoolSnp:
     input:
         get_files_to_gather
     output:
-        expand("{wd}/sub_bcf/dest.{{chr}}.{{popSet}}.{{method}}.{{maf}}.{{mac}}.{{version}}.vcg.gz", wd=config['working_directory'])
+        expand("{wd}/sub_bcf/dest.{{chr}}.{{popSet}}.{{method}}.{{maf}}.{{mac}}.{{version}}.vcf.gz", wd=config['working_directory'])
     resources:
         log_dir=str(log_dir), ntasks_per_node=20, time_limit=240
     shell:  "bash scatter_gather_annotate/gather.sh {config[popSet]} {config[method]} {config[maf]} {config[mac]} {config[version]} {config[working_directory]} {wildcards.chr}"
 
 rule annotate:
     input:
-        expand("{wd}/sub_bcf/dest.{chr}.{{popset}}.{{method}}.{{maf}}.{{mac}}.{{version}}.bcf", wd=config['working_directory'], chr=CHRS)
+        expand("{wd}/sub_bcf/dest.{chr}.{{popset}}.{{method}}.{{maf}}.{{mac}}.{{version}}.vcf.gz", wd=config['working_directory'], chr=CHRS)
     output:
         expand("{wd}/dest.{{popset}}.{{method}}.{{maf}}.{{mac}}.{{version}}.ann.vcf.gz", wd=config["working_directory"])
     resources:
