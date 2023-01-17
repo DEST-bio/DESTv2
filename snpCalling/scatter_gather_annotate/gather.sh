@@ -30,6 +30,6 @@ echo "Concatenating"
 bcftools concat \
 --threads 20 \
 -f $outdir/vcfs_order.${chr}.${popSet}.${method}.${maf}.${mac}.${version}.sort \
--O v \
+-O z \
 -n \
--o $bcf_outdir/dest.${chr}.${popSet}.${method}.${maf}.${mac}.${version}.bcf
+-o $bcf_outdir/dest.${chr}.${popSet}.${method}.${maf}.${mac}.${version}.vcf.gz

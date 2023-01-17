@@ -43,7 +43,7 @@ snakemake --profile /scratch/aob2x/DESTv2/snpCalling/slurm -n
 
 Then, if everything looks OK, run:
 ```bash
-snakemake --forcerun --profile /scratch/aob2x/DESTv2/snpCalling/slurm
+nohup snakemake --forcerun --profile /scratch/aob2x/DESTv2/snpCalling/slurm &
 ```
 
 cd /scratch/aob2x/DESTv2_output/logs
@@ -60,7 +60,7 @@ rm /scratch/aob2x/DESTv2_output/sub_vcfs/*
 rm /scratch/aob2x/DESTv2_output/sub_bcf/*
 
 cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46004808.err
-cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46004808.out
+cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46005235.out
 
 
 ### Output files
