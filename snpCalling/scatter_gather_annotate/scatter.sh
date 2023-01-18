@@ -121,6 +121,10 @@ module load htslib/1.10.2 bcftools/1.9 parallel/20200322 intel/18.0 intelmpi/18.
 
   cat ${tmpdir}/${jobid}.${popSet}.${method}.${maf}.${mac}.${version}.vcf | vcf-sort | bgzip -c > ${outdir}/${jobid}.${popSet}.${method}.${maf}.${mac}.${version}.vcf.gz
   tabix -p vcf ${outdir}/${jobid}.${popSet}.${method}.${maf}.${mac}.${version}.vcf.gz
+
+  bcftools annotate -c CHROM,FROM,TO,ID -a ${script_dir}/scatter_gather_annotate/repeat_bed/repeats.sort.bed.gz ${outdir}/${jobid}.${popSet}.${method}.${maf}.${mac}.${version}.vcf.gz > \
+  ${outdir}/${jobid}.${popSet}.${method}.${maf}.${mac}.${version}.repeat.vcf.gz
+  
   #echo "vcf -> bcf "
   #bcftools view -Ou ${tmpdir}/${jobid}.vcf.gz > ${outdir}/${jobid}.bcf
 
