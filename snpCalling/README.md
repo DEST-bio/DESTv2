@@ -43,15 +43,20 @@ snakemake --profile /scratch/aob2x/DESTv2/snpCalling/slurm -n
 
 Then, if everything looks OK, run:
 ```bash
-nohup snakemake --forcerun --profile /scratch/aob2x/DESTv2/snpCalling/slurm &
+mkdir /scratch/aob2x/DESTv2_output/
+mkdir /scratch/aob2x/DESTv2_output/logs/
+
+module load gcc/9.2.0 openmpi/3.1.6 python/3.7.7 snakemake/6.0.5
+cd /scratch/aob2x/DESTv2/snpCalling
+snakemake --profile /scratch/aob2x/DESTv2/snpCalling/slurm
 ```
 
 cd /scratch/aob2x/DESTv2_output/logs
 
 ls -lh /scratch/aob2x/DESTv2_output
 ls -lh /scratch/aob2x/DESTv2_output/sub_vcfs/
-less -S /scratch/aob2x/DESTv2_output/sub_vcfs/2L_1_137508.all.PoolSNP.001.5.test.vcf.gz
-ls -lh /scratch/aobq2x/DESTv2_output/sub_bcf/
+less -S /scratch/aob2x/DESTv2_output/dest.all.PoolSNP.001.5.test.ann.vcf
+ls -lh /scratch/aob2x/DESTv2_output/sub_bcf/
 
 
 rm /scratch/aob2x/DESTv2_output/snpEff*
@@ -59,9 +64,10 @@ rm /scratch/aob2x/DESTv2_output/dest*
 rm /scratch/aob2x/DESTv2_output/sub_vcfs/*
 rm /scratch/aob2x/DESTv2_output/sub_bcf/*
 
-cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46004808.err
-cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46005235.out
+cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46009067.err
+cat /scratch/aob2x/DESTv2_output/logs/*.46009067.err
 
+cd /scratch/aob2x/DESTv2_output/sub_vcfs/
 
 ### Output files
 VCF, BCF, and GDS files are output to `<working_directory>/dest.<popSet>.<method>.<maf>.<mac>.<version>.ann.*`.
