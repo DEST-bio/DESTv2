@@ -125,7 +125,7 @@ module load htslib/1.10.2 bcftools/1.9 parallel/20200322 intel/18.0 intelmpi/18.
 
   module load gcc/9.2.0 bedtools/2.29.2
 
-  bedtools intersect -sorted -v \
+  bedtools intersect -sorted -v -header \
   -b ${script_dir}/scatter_gather_annotate/repeat_bed/repeats.sort.bed.gz \
   -a ${outdir}/${jobid}.${popSet}.${method}.${maf}.${mac}.${version}.vcf.gz |
   bgzip -c > \
