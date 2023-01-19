@@ -304,10 +304,12 @@
   dest_v2[is.na(min_day)]
 
   dest_v2[grepl("UA_L'v_Dro", locality), locality:="UA_Lviv_Dro"]
-  dest_v2[grepl("UA_L'v_Dro", sampleId), sampleId:=paste(locality, 
+  dest_v2[grepl("UA_L'v_Dro", sampleId), sampleId:=paste(locality, as.character(make_date(year) + jday - 1), sep="_")]
+  dest_v2[locality=="UA_Lviv_Dro"]
 
-summary(lm(as.numeric(as.character(totalreads))~DNA_result-1, dest_v2))
-summary(lm(as.numeric(as.character(totalreads))~library_result-1, dest_v2))
+### save
+  write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_19Jan2023.csv")
+
 
 #### need to add
   • library/DNA quality
