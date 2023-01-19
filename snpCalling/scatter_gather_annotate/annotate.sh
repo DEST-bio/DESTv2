@@ -16,31 +16,31 @@ snpEffPath=${7}
 cd ${wd}
 
 echo "index"
-  bcftools index -f ${wd}/sub_bcf/dest.2L.${popSet}.${method}.${maf}.${mac}.${version}.vcf.gz
-  bcftools index -f ${wd}/sub_bcf/dest.2R.${popSet}.${method}.${maf}.${mac}.${version}.vcf.gz
-  bcftools index -f ${wd}/sub_bcf/dest.3L.${popSet}.${method}.${maf}.${mac}.${version}.vcf.gz
-  bcftools index -f ${wd}/sub_bcf/dest.3R.${popSet}.${method}.${maf}.${mac}.${version}.vcf.gz
-  bcftools index -f ${wd}/sub_bcf/dest.X.${popSet}.${method}.${maf}.${mac}.${version}.vcf.gz
-  bcftools index -f ${wd}/sub_bcf/dest.Y.${popSet}.${method}.${maf}.${mac}.${version}.vcf.gz
-  bcftools index -f ${wd}/sub_bcf/dest.4.${popSet}.${method}.${maf}.${mac}.${version}.vcf.gz
-  bcftools index -f ${wd}/sub_bcf/dest.mitochondrion_genome.${popSet}.${method}.${maf}.${mac}.${version}.vcf.gz
+  bcftools index -f ${wd}/sub_bcf/dest.2L.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
+  bcftools index -f ${wd}/sub_bcf/dest.2R.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
+  bcftools index -f ${wd}/sub_bcf/dest.3L.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
+  bcftools index -f ${wd}/sub_bcf/dest.3R.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
+  bcftools index -f  ${wd}/sub_bcf/dest.X.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
+  bcftools index -f  ${wd}/sub_bcf/dest.Y.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
+  bcftools index -f  ${wd}/sub_bcf/dest.4.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
+  bcftools index -f ${wd}/sub_bcf/dest.mitochondrion_genome.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
 
 
 echo "concat"
   bcftools concat \
   -n \
   -O z \
-  ${wd}/sub_bcf/dest.*.${popSet}.${method}.${maf}.${mac}.${version}.vcf.gz \
-  -o ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.vcf.gz
+  ${wd}/sub_bcf/dest.*.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz \
+  -o ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
 
 echo "convert to vcf & annotate"
   bcftools view \
   --threads 10 \
-  ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.vcf.gz | \
+  ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz | \
   java -jar ${snpEffPath}/snpEff.jar \
   eff \
   BDGP6.86 - > \
-  ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.ann.vcf
+  ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.vcf
 
 
 echo "fix header" #this is now fixed in PoolSNP.py
@@ -54,8 +54,8 @@ echo "fix header" #this is now fixed in PoolSNP.py
 #  bcftools reheader --threads 10 -h ${wd}/tmp.header -o ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.header.bcf ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.bcf
 
 echo "make GDS"
-  Rscript --vanilla ${wd}/../DESTv2/snpCalling/scatter_gather_annotate/vcf2gds.R ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.ann.vcf
+  Rscript --vanilla ${wd}/../DESTv2/snpCalling/scatter_gather_annotate/vcf2gds.R ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.vcf
 
 echo "bgzip & tabix"
-  bgzip -c ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.ann.vcf > ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.ann.vcf.gz
-  tabix -p vcf ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.ann.vcf.gz
+  bgzip -c ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.vcf > ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.vcf.gz
+  tabix -p vcf ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.vcf.gz

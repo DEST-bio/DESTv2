@@ -58,15 +58,15 @@ ls -lh /scratch/aob2x/DESTv2_output/sub_vcfs/
 less -S /scratch/aob2x/DESTv2_output/dest.all.PoolSNP.001.5.test.ann.vcf
 ls -lh /scratch/aob2x/DESTv2_output/sub_bcf/
 
-
+less -S /scratch/aob2x/DESTv2_output/sub_vcfs/vcfs_order.2L.all.PoolSNP.001.5.test.sort
 rm /scratch/aob2x/DESTv2_output/snpEff*
 rm /scratch/aob2x/DESTv2_output/dest*
 rm /scratch/aob2x/DESTv2_output/sub_vcfs/*
 rm /scratch/aob2x/DESTv2_output/sub_bcf/*
 rm /scratch/aob2x/DESTv2_output/logs/*
 
-cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46009067.err
-cat /scratch/aob2x/DESTv2_output/logs/*.46009067.err
+cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46082050.err
+cat /scratch/aob2x/DESTv2_output/logs/*.46082107.err
 
 cd /scratch/aob2x/DESTv2_output/sub_vcfs/
 
