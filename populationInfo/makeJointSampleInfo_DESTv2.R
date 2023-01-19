@@ -297,6 +297,14 @@
   write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_13Jan2023.csv")
 
 
+### some cleanup
+  dest_v2 <- fread(file="DESTv2/populationInfo/dest_v2.samps_13Jan2023.csv")
+
+  dest_v2[grepl("NA", sampleId), sampleId:=paste(locality, "_", year, "-MM-DD", sep="")]
+  dest_v2[is.na(min_day)]
+
+  dest_v2[grepl("UA_L'v_Dro", locality), locality:="UA_Lviv_Dro"]
+  dest_v2[grepl("UA_L'v_Dro", sampleId), sampleId:=paste(locality, 
 
 summary(lm(as.numeric(as.character(totalreads))~DNA_result-1, dest_v2))
 summary(lm(as.numeric(as.character(totalreads))~library_result-1, dest_v2))

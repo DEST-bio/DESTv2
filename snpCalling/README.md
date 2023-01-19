@@ -65,8 +65,8 @@ rm /scratch/aob2x/DESTv2_output/sub_vcfs/*
 rm /scratch/aob2x/DESTv2_output/sub_bcf/*
 rm /scratch/aob2x/DESTv2_output/logs/*
 
-cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46082050.err
-cat /scratch/aob2x/DESTv2_output/logs/*.46082107.err
+cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46082608.err
+cat /scratch/aob2x/DESTv2_output/logs/*.46082608.err
 
 cd /scratch/aob2x/DESTv2_output/sub_vcfs/
 

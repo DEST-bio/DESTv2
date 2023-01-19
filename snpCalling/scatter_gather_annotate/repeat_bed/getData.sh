@@ -47,7 +47,8 @@ bcftools annotate -c CHROM,FROM,TO,ID -O v -h hdr.txt \
 module load gcc/9.2.0 bedtools/2.29.2
 bedtools intersect -sorted -v \
 -b /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/repeat_bed/repeats.sort.bed.gz \
--a /scratch/aob2x/DESTv2_output/sub_vcfs/2L_275017_312524.all.SNAPE.001.5.test.repeat.vcf.gz > ~/tmp.vcf
+-a /scratch/aob2x/DESTv2_output/sub_vcfs/2L_275017_312524.all.SNAPE.001.5.test.repeat.vcf.gz |
+bgzip 
 
 less -S ~/tmp.vcf
 

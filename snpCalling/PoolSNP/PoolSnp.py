@@ -108,8 +108,8 @@ print("##Parameters=<ID=MaximumMissingFraction,Number="+str(options.mis)+",Type=
 print("""##INFO=<ID=ADP,Number=1,Type=Float,Description=\"Average per-sample depth of bases\">
 ##INFO=<ID=DP,Number=1,Type=Integer,Description=\"Combined read depth across all samples\">
 ##INFO=<ID=NC,Number=1,Type=Integer,Description=\"Number of samples not called\">
-##INFO=<ID=AC,Number=1,Type=Integer,Description=\"Total number of allele counts of the ALT alleles\">
-##INFO=<ID=AF,Number=1,Type=Float,Description=\"Allele frequency of the ALT alleles across all samples\">
+##INFO=<ID=AC,Number=.,Type=Integer,Description=\"Total number of allele counts of the ALT alleles\">
+##INFO=<ID=AF,Number=.,Type=Float,Description=\"Allele frequency of the ALT alleles across all samples\">
 ##FORMAT=<ID=GT,Number=1,Type=String,Description=\"Genotype\">
 ##FORMAT=<ID=RD,Number=1,Type=Integer,Description=\"Reference Counts\">
 ##FORMAT=<ID=AD,Number=1,Type=Integer,Description=\"Alternative Counts\">
