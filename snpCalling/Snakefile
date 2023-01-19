@@ -63,7 +63,7 @@ rule runSNP_calling:
         job_file=job_file_path,
         input_files=input_sync_files
     output:
-        expand("{wd}/sub_vcfs/{{jobid}}.{{popset}}.{{method}}.{{maf}}.{{mac}}.{{version}}.vcf.gz", wd=config['working_directory'])
+        expand("{wd}/sub_vcfs/{{jobid}}.{{popset}}.{{method}}.{{maf}}.{{mac}}.{{version}}.norep.vcf.gz", wd=config['working_directory'])
     resources:
         log_dir=str(log_dir)
     shell : "bash scatter_gather_annotate/scatter.sh {config[popSet]} {config[method]} {config[maf]} {config[mac]} {config[version]} {wildcards.jobid} {config[script_directory]} {config[working_directory]} {config[pipeline_output]}"
@@ -71,22 +71,22 @@ rule runSNP_calling:
 def get_files_to_gather(wildcards):
     job_ids = open(job_file_path).readlines()
     job_ids = [i.strip().replace(",", "_") for i in job_ids if i.strip() != ""]
-    return [f"{config['working_directory']}/sub_vcfs/{job_id}.{wildcards.popSet}.{wildcards.method}.{wildcards.maf}.{wildcards.mac}.{wildcards.version}.vcf.gz" for job_id in job_ids if wildcards.chr in job_id]
+    return [f"{config['working_directory']}/sub_vcfs/{job_id}.{wildcards.popSet}.{wildcards.method}.{wildcards.maf}.{wildcards.mac}.{wildcards.version}.norep.vcf.gz" for job_id in job_ids if wildcards.chr in job_id]
 
 rule gatherPoolSnp:
     input:
         get_files_to_gather
     output:
-        expand("{wd}/sub_bcf/dest.{{chr}}.{{popSet}}.{{method}}.{{maf}}.{{mac}}.{{version}}.vcf.gz", wd=config['working_directory'])
+        expand("{wd}/sub_bcf/dest.{{chr}}.{{popSet}}.{{method}}.{{maf}}.{{mac}}.{{version}}.norep.vcf.gz", wd=config['working_directory'])
     resources:
         log_dir=str(log_dir), ntasks_per_node=20, time_limit=240
     shell:  "bash scatter_gather_annotate/gather.sh {config[popSet]} {config[method]} {config[maf]} {config[mac]} {config[version]} {config[working_directory]} {wildcards.chr}"
 
 rule annotate:
     input:
-        expand("{wd}/sub_bcf/dest.{chr}.{{popset}}.{{method}}.{{maf}}.{{mac}}.{{version}}.vcf.gz", wd=config['working_directory'], chr=CHRS)
+        expand("{wd}/sub_bcf/dest.{chr}.{{popset}}.{{method}}.{{maf}}.{{mac}}.{{version}}.norep.vcf.gz", wd=config['working_directory'], chr=CHRS)
     output:
-        expand("{wd}/dest.{{popset}}.{{method}}.{{maf}}.{{mac}}.{{version}}.ann.vcf.gz", wd=config["working_directory"])
+        expand("{wd}/dest.{{popset}}.{{method}}.{{maf}}.{{mac}}.{{version}}.norep.ann.vcf.gz", wd=config["working_directory"])
     resources:
         log_dir=str(log_dir), ntasks_per_node=10, time_limit=1440, memory_limit=20
     shell:  "bash scatter_gather_annotate/annotate.sh {config[popSet]} {config[method]} {config[maf]} {config[mac]} {config[version]} {config[working_directory]} {config[snpEff_path]}"
