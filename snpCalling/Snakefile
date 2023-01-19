@@ -50,7 +50,7 @@ else:
 
 rule all:
     input:
-        expand("{wd}/dest.{popset}.{method}.{maf}.{mac}.{version}.ann.vcf.gz", \
+        expand("{wd}/dest.{popset}.{method}.{maf}.{mac}.{version}.norep.ann.vcf.gz", \
                 wd=config["working_directory"], \
                 popset=config["popSet"], \
                 method=config["method"], \
