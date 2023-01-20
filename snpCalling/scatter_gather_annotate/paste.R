@@ -5,7 +5,7 @@ job=args[1]
 tmpdir=args[2]
 method=args[3]
 
-#job="2L_138316_276631"; tmpdir="/dev/shm/aob2x/1/2"; method="PoolSNP"
+#job="2L_1_137508"; tmpdir="/dev/shm/aob2x/1/"; method="PoolSNP"
 job=gsub("mitochondrion_genome", "mitochondrionGenome", job)
 jobId=gsub(",", "_", job)
 jobId=gsub("mitochondrionGenome", "mitochondrion_genome", jobId)
@@ -15,7 +15,7 @@ jobId=gsub("mitochondrionGenome", "mitochondrion_genome", jobId)
   library(foreach)
   library(doMC)
   registerDoMC(4)
-  
+
 ### get input files
   files <- list.files(tmpdir, pattern=jobId)
   length(files)
@@ -59,7 +59,8 @@ jobId=gsub("mitochondrionGenome", "mitochondrion_genome", jobId)
   ow <- dcast(o, V1+V2~pop, value.var="V4")
 
 ## get reference
-  ow.ref <- o[pop=="AT_gr_12_fall", c("V1", "V2", "V3"), with=F]
+  popu <- unique(o$pop)
+  ow.ref <- o[pop==popu[1], c("V1", "V2", "V3"), with=F]
 
   setkey(ow, V1, V2)
   setkey(ow.ref, V1, V2)
