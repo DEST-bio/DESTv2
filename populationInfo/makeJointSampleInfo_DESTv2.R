@@ -304,8 +304,13 @@
   dest_v2[is.na(min_day)]
 
   dest_v2[grepl("UA_L'v_Dro", locality), locality:="UA_Lviv_Dro"]
-  dest_v2[grepl("UA_L'v_Dro", sampleId), sampleId:=paste(locality, as.character(make_date(year) + jday - 1), sep="_")]
+  dest_v2[grepl("UA_L'v_Dro", sampleId), sampleId:=paste(locality, subsample, as.character(make_date(year) + jday - 1), sep="_")]
   dest_v2[locality=="UA_Lviv_Dro"]
+
+  dest_v2[locality=="EG_Al _Cai", locality:="EG_Al_Cai"]
+  dest_v2[locality=="EG_Al_Cai", sampleId:=paste(locality, subsample, as.character(make_date(year) + jday - 1), sep="_")]
+
+  dest_v2[sample=="NA_NA_w50_1_NA", sampleId:="SIM_SIM_w501_1_NA"]
 
 ### save
   write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_19Jan2023.csv")

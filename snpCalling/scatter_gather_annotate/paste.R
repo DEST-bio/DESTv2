@@ -15,6 +15,7 @@ jobId=gsub("mitochondrionGenome", "mitochondrion_genome", jobId)
   library(foreach)
   library(doMC)
   registerDoMC(4)
+  
 ### get input files
   files <- list.files(tmpdir, pattern=jobId)
   length(files)
