@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#SBATCH -J check_fastq_encoding # A single job name for the array
+#SBATCH -J runSnakemake # A single job name for the array
 #SBATCH --ntasks-per-node=1 # one core
 #SBATCH -N 1 # on one node
 #SBATCH -t 01:00:00 ### 1 hours

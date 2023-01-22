@@ -21,7 +21,7 @@ module load htslib/1.10.2 bcftools/1.9 parallel/20200322 intel/18.0 intelmpi/18.
   pipeline_output=${9}
 
   #### popSet="all"; method="poolSNP"; maf="001"; mac=5; jobs="jobs.csv"; script_dir="/scratch/aob2x/DESTv2/snpCalling"; wd="/scratch/aob2x/DESTv2_output"; SLURM_JOB_ID=1;
-  #### pipeline_output="/project/berglandlab/DEST/dest_mapped/"
+  #### pipeline_output="/project/berglandlab/DEST/dest_mapped/"; job="2L,1,10000"
 
 ## working & temp directory
   outdir="${wd}/sub_vcfs" #### outdir=${wd}"/sub_vcfs"

@@ -51,11 +51,19 @@ cd /scratch/aob2x/DESTv2/snpCalling
 snakemake --profile /scratch/aob2x/DESTv2/snpCalling/slurm
 ```
 
+
+```bash
+sbatch /scratch/aob2x/DESTv2/snpCalling/runSnakemake.sh
+sacct -j 46126167
+sacct -u aob2x
+```
+
+
 cd /scratch/aob2x/DESTv2_output/logs
 
 ls -lh /scratch/aob2x/DESTv2_output
 ls -lh /scratch/aob2x/DESTv2_output/sub_vcfs/
-less -S /scratch/aob2x/DESTv2_output/dest.all.PoolSNP.001.5.test.ann.vcf
+less -S /scratch/aob2x/DESTv2_output/dest.all.PoolSNP.001.5.test.norep.ann.vcf
 ls -lh /scratch/aob2x/DESTv2_output/sub_bcf/
 
 less -S /scratch/aob2x/DESTv2_output/sub_vcfs/vcfs_order.2L.all.PoolSNP.001.5.test.sort
@@ -64,6 +72,7 @@ rm /scratch/aob2x/DESTv2_output/dest*
 rm /scratch/aob2x/DESTv2_output/sub_vcfs/*
 rm /scratch/aob2x/DESTv2_output/sub_bcf/*
 rm /scratch/aob2x/DESTv2_output/logs/*
+rm /scratch/aob2x/DESTv2_output/TEST*
 
 cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46082608.err
 cat /scratch/aob2x/DESTv2_output/logs/*.46082608.err
