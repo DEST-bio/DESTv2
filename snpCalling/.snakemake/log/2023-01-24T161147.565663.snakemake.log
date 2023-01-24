@@ -1,0 +1,805 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 100
+Job counts:
+	count	jobs
+	1	all
+	1	annotate
+	8	gatherPoolSnp
+	1002	runSNP_calling
+	1012
+Select jobs to execute...
+
+[Tue Jan 24 16:11:50 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_14575849_14713356.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 109
+    wildcards: jobid=2L_14575849_14713356, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 109 with external jobid 'Submitted batch job 46211810'.
+
+[Tue Jan 24 16:11:50 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2R_19789777_19927205.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 319
+    wildcards: jobid=2R_19789777_19927205, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 319 with external jobid 'Submitted batch job 46211811'.
+
+[Tue Jan 24 16:11:50 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_21615761_21753440.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 723
+    wildcards: jobid=3R_21615761_21753440, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 723 with external jobid 'Submitted batch job 46211812'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/X_16796351_16934025.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 888
+    wildcards: jobid=X_16796351_16934025, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 888 with external jobid 'Submitted batch job 46211813'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_1101441_1239120.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 574
+    wildcards: jobid=3R_1101441_1239120, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 574 with external jobid 'Submitted batch job 46211814'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_14713357_14850864.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 110
+    wildcards: jobid=2L_14713357_14850864, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 110 with external jobid 'Submitted batch job 46211815'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2R_19927206_20064634.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 320
+    wildcards: jobid=2R_19927206_20064634, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 320 with external jobid 'Submitted batch job 46211816'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_21753441_21891120.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 724
+    wildcards: jobid=3R_21753441_21891120, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 724 with external jobid 'Submitted batch job 46211817'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/X_16934026_17071700.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 889
+    wildcards: jobid=X_16934026_17071700, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 889 with external jobid 'Submitted batch job 46211818'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/X_826051_963725.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 941
+    wildcards: jobid=X_826051_963725, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 941 with external jobid 'Submitted batch job 46211819'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/X_1652101_1789775.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 943
+    wildcards: jobid=X_1652101_1789775, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 943 with external jobid 'Submitted batch job 46211820'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/X_13354476_13492150.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 870
+    wildcards: jobid=X_13354476_13492150, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 870 with external jobid 'Submitted batch job 46211821'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/X_13767501_13905175.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 975
+    wildcards: jobid=X_13767501_13905175, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 975 with external jobid 'Submitted batch job 46211822'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_2753601_2891280.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 586
+    wildcards: jobid=3R_2753601_2891280, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 586 with external jobid 'Submitted batch job 46211823'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/X_13492151_13629825.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 871
+    wildcards: jobid=X_13492151_13629825, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 871 with external jobid 'Submitted batch job 46211824'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_10175593_10313100.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 77
+    wildcards: jobid=2L_10175593_10313100, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 77 with external jobid 'Submitted batch job 46211825'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_4818801_4956480.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 601
+    wildcards: jobid=3R_4818801_4956480, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 601 with external jobid 'Submitted batch job 46211826'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_21340401_21478080.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 721
+    wildcards: jobid=3R_21340401_21478080, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 721 with external jobid 'Submitted batch job 46211827'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_25470801_25608480.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 751
+    wildcards: jobid=3R_25470801_25608480, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 751 with external jobid 'Submitted batch job 46211829'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_2891281_3028960.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 587
+    wildcards: jobid=3R_2891281_3028960, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 587 with external jobid 'Submitted batch job 46211830'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_4956481_5094160.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 602
+    wildcards: jobid=3R_4956481_5094160, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 602 with external jobid 'Submitted batch job 46211831'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_21478081_21615760.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 722
+    wildcards: jobid=3R_21478081_21615760, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 722 with external jobid 'Submitted batch job 46211832'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/X_15970301_16107975.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 977
+    wildcards: jobid=X_15970301_16107975, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 977 with external jobid 'Submitted batch job 46211833'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2R_22400928_22538356.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 338
+    wildcards: jobid=2R_22400928_22538356, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 338 with external jobid 'Submitted batch job 46211834'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3L_7130449_7267572.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 412
+    wildcards: jobid=3L_7130449_7267572, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 412 with external jobid 'Submitted batch job 46211835'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3L_11244169_11381292.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 442
+    wildcards: jobid=3L_11244169_11381292, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 442 with external jobid 'Submitted batch job 46211836'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_9775281_9912960.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 637
+    wildcards: jobid=3R_9775281_9912960, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 637 with external jobid 'Submitted batch job 46211837'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_26296881_26434560.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 757
+    wildcards: jobid=3R_26296881_26434560, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 757 with external jobid 'Submitted batch job 46211838'.
+
+[Tue Jan 24 16:11:51 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_28362081_28499760.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 772
+    wildcards: jobid=3R_28362081_28499760, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 772 with external jobid 'Submitted batch job 46211839'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/X_21477301_21614975.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 907
+    wildcards: jobid=X_21477301_21614975, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 907 with external jobid 'Submitted batch job 46211840'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_26434561_26572240.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 758
+    wildcards: jobid=3R_26434561_26572240, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 758 with external jobid 'Submitted batch job 46211841'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_28499761_28637440.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 773
+    wildcards: jobid=3R_28499761_28637440, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 773 with external jobid 'Submitted batch job 46211842'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/X_21614976_21752650.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 908
+    wildcards: jobid=X_21614976_21752650, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 908 with external jobid 'Submitted batch job 46211843'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_9912961_10050640.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 638
+    wildcards: jobid=3R_9912961_10050640, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 638 with external jobid 'Submitted batch job 46211844'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_17326009_17463516.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 129
+    wildcards: jobid=2L_17326009_17463516, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 129 with external jobid 'Submitted batch job 46211845'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_19388629_19526136.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 144
+    wildcards: jobid=2L_19388629_19526136, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 144 with external jobid 'Submitted batch job 46211846'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2R_22538357_22675785.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 339
+    wildcards: jobid=2R_22538357_22675785, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 339 with external jobid 'Submitted batch job 46211847'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3L_7267573_7404696.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 413
+    wildcards: jobid=3L_7267573_7404696, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 413 with external jobid 'Submitted batch job 46211848'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3L_11381293_11518416.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 443
+    wildcards: jobid=3L_11381293_11518416, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 443 with external jobid 'Submitted batch job 46211849'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_28637441_28775120.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 774
+    wildcards: jobid=3R_28637441_28775120, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 774 with external jobid 'Submitted batch job 46211850'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/X_22303351_22441025.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 909
+    wildcards: jobid=X_22303351_22441025, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 909 with external jobid 'Submitted batch job 46211851'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_17463517_17601024.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 130
+    wildcards: jobid=2L_17463517_17601024, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 130 with external jobid 'Submitted batch job 46211852'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_19526137_19663644.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 145
+    wildcards: jobid=2L_19526137_19663644, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 145 with external jobid 'Submitted batch job 46211853'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2R_22675786_22813214.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 340
+    wildcards: jobid=2R_22675786_22813214, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 340 with external jobid 'Submitted batch job 46211854'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3L_7404697_7541820.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 414
+    wildcards: jobid=3L_7404697_7541820, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 414 with external jobid 'Submitted batch job 46211855'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3L_11518417_11655540.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 444
+    wildcards: jobid=3L_11518417_11655540, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 444 with external jobid 'Submitted batch job 46211856'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_10050641_10188320.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 639
+    wildcards: jobid=3R_10050641_10188320, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 639 with external jobid 'Submitted batch job 46211857'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_26572241_26709920.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 759
+    wildcards: jobid=3R_26572241_26709920, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 759 with external jobid 'Submitted batch job 46211858'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_17601025_17738532.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 131
+    wildcards: jobid=2L_17601025_17738532, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 131 with external jobid 'Submitted batch job 46211859'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_19663645_19801152.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 146
+    wildcards: jobid=2L_19663645_19801152, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 146 with external jobid 'Submitted batch job 46211860'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2R_22813215_22950643.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 341
+    wildcards: jobid=2R_22813215_22950643, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 341 with external jobid 'Submitted batch job 46211861'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3L_7541821_7678944.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 415
+    wildcards: jobid=3L_7541821_7678944, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 415 with external jobid 'Submitted batch job 46211862'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3L_11655541_11792664.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 445
+    wildcards: jobid=3L_11655541_11792664, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 445 with external jobid 'Submitted batch job 46211863'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_10188321_10326000.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 640
+    wildcards: jobid=3R_10188321_10326000, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 640 with external jobid 'Submitted batch job 46211864'.
+
+[Tue Jan 24 16:11:52 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_26709921_26847600.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 760
+    wildcards: jobid=3R_26709921_26847600, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 760 with external jobid 'Submitted batch job 46211865'.
+
+[Tue Jan 24 16:11:53 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_28775121_28912800.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 775
+    wildcards: jobid=3R_28775121_28912800, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 775 with external jobid 'Submitted batch job 46211866'.
+
+[Tue Jan 24 16:11:53 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/X_22441026_22578700.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 910
+    wildcards: jobid=X_22441026_22578700, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 910 with external jobid 'Submitted batch job 46211867'.
+
+[Tue Jan 24 16:11:53 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_17738533_17876040.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 132
+    wildcards: jobid=2L_17738533_17876040, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 132 with external jobid 'Submitted batch job 46211868'.
+
+[Tue Jan 24 16:11:53 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_19801153_19938660.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 147
+    wildcards: jobid=2L_19801153_19938660, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 147 with external jobid 'Submitted batch job 46211869'.
+
+[Tue Jan 24 16:11:53 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2R_22950644_23088072.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 342
+    wildcards: jobid=2R_22950644_23088072, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 342 with external jobid 'Submitted batch job 46211870'.
+
+[Tue Jan 24 16:11:53 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3L_7678945_7816068.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 416
+    wildcards: jobid=3L_7678945_7816068, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 416 with external jobid 'Submitted batch job 46211871'.
+
+[Tue Jan 24 16:11:53 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3L_11792665_11929788.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 446
+    wildcards: jobid=3L_11792665_11929788, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 446 with external jobid 'Submitted batch job 46211872'.
+
+[Tue Jan 24 16:11:53 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_10326001_10463680.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 641
+    wildcards: jobid=3R_10326001_10463680, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 641 with external jobid 'Submitted batch job 46211873'.
+
+[Tue Jan 24 16:11:53 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_26847601_26985280.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 761
+    wildcards: jobid=3R_26847601_26985280, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 761 with external jobid 'Submitted batch job 46211874'.
+
+[Tue Jan 24 16:11:54 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_28912801_29050480.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 776
+    wildcards: jobid=3R_28912801_29050480, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 776 with external jobid 'Submitted batch job 46211875'.
+
+[Tue Jan 24 16:11:54 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/X_22716376_22854050.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 911
+    wildcards: jobid=X_22716376_22854050, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 911 with external jobid 'Submitted batch job 46211876'.
+
+[Tue Jan 24 16:11:54 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_17876041_18013548.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 133
+    wildcards: jobid=2L_17876041_18013548, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 133 with external jobid 'Submitted batch job 46211877'.
+
+[Tue Jan 24 16:11:54 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_19938661_20076168.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 148
+    wildcards: jobid=2L_19938661_20076168, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 148 with external jobid 'Submitted batch job 46211878'.
+
+[Tue Jan 24 16:11:54 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3L_7816069_7953192.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 417
+    wildcards: jobid=3L_7816069_7953192, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 417 with external jobid 'Submitted batch job 46211880'.
+
+[Tue Jan 24 16:11:54 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3L_11929789_12066912.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 447
+    wildcards: jobid=3L_11929789_12066912, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 447 with external jobid 'Submitted batch job 46211881'.
+
+[Tue Jan 24 16:11:54 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_10463681_10601360.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 642
+    wildcards: jobid=3R_10463681_10601360, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 642 with external jobid 'Submitted batch job 46211882'.
+
+[Tue Jan 24 16:11:54 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_26985281_27122960.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 762
+    wildcards: jobid=3R_26985281_27122960, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 762 with external jobid 'Submitted batch job 46211883'.
+
+[Tue Jan 24 16:11:54 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3R_29050481_29188160.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 777
+    wildcards: jobid=3R_29050481_29188160, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 777 with external jobid 'Submitted batch job 46211884'.
+
+[Tue Jan 24 16:11:54 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/X_22854051_22991725.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 912
+    wildcards: jobid=X_22854051_22991725, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 912 with external jobid 'Submitted batch job 46211885'.
+
+[Tue Jan 24 16:11:54 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_18013549_18151056.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 134
+    wildcards: jobid=2L_18013549_18151056, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 134 with external jobid 'Submitted batch job 46211886'.
+
+[Tue Jan 24 16:11:54 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_20076169_20213676.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 149
+    wildcards: jobid=2L_20076169_20213676, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 149 with external jobid 'Submitted batch job 46211887'.
+
+[Tue Jan 24 16:11:54 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2R_23088073_23225501.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 343
+    wildcards: jobid=2R_23088073_23225501, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 343 with external jobid 'Submitted batch job 46211888'.
+
+[Tue Jan 24 16:11:54 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3L_7953193_8090316.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 418
+    wildcards: jobid=3L_7953193_8090316, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 418 with external jobid 'Submitted batch job 46211889'.
+
+[Tue Jan 24 16:11:54 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/3L_12066913_12204036.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 448
+    wildcards: jobid=3L_12066913_12204036, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 448 with external jobid 'Submitted batch job 46211890'.
+
+Terminating processes on user request, this might take some time.
+Will exit after finishing currently running jobs.
+Cancelling snakemake on user request.

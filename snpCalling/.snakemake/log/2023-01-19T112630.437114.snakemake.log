@@ -1,0 +1,87 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 100
+Job counts:
+	count	jobs
+	1	all
+	1	annotate
+	1	gatherPoolSnp
+	4	runSNP_calling
+	7
+Select jobs to execute...
+
+[Thu Jan 19 11:26:31 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_412525_450032.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 4
+    wildcards: jobid=2L_412525_450032, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 4 with external jobid 'Submitted batch job 46081767'.
+
+[Thu Jan 19 11:26:31 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_550033_587540.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 5
+    wildcards: jobid=2L_550033_587540, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 5 with external jobid 'Submitted batch job 46081768'.
+
+[Thu Jan 19 11:26:31 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_687541_725048.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 6
+    wildcards: jobid=2L_687541_725048, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 6 with external jobid 'Submitted batch job 46081769'.
+
+[Thu Jan 19 11:26:31 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_275017_312524.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 3
+    wildcards: jobid=2L_275017_312524, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 3 with external jobid 'Submitted batch job 46081770'.
+[Thu Jan 19 11:38:31 2023]
+Finished job 6.
+1 of 7 steps (14%) done
+[Thu Jan 19 11:42:31 2023]
+Finished job 4.
+2 of 7 steps (29%) done
+[Thu Jan 19 11:42:31 2023]
+Finished job 5.
+3 of 7 steps (43%) done
+[Thu Jan 19 11:42:31 2023]
+Finished job 3.
+4 of 7 steps (57%) done
+Select jobs to execute...
+
+[Thu Jan 19 11:42:32 2023]
+rule gatherPoolSnp:
+    input: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_275017_312524.all.PoolSNP.001.5.test.norep.vcf.gz, /scratch/aob2x/DESTv2_output/sub_vcfs/2L_412525_450032.all.PoolSNP.001.5.test.norep.vcf.gz, /scratch/aob2x/DESTv2_output/sub_vcfs/2L_550033_587540.all.PoolSNP.001.5.test.norep.vcf.gz, /scratch/aob2x/DESTv2_output/sub_vcfs/2L_687541_725048.all.PoolSNP.001.5.test.norep.vcf.gz
+    output: /scratch/aob2x/DESTv2_output/sub_bcf/dest.2L.all.PoolSNP.001.5.test.norep.vcf.gz
+    jobid: 2
+    wildcards: chr=2L, popSet=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=20, memory_limit=36, time_limit=240, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 2 with external jobid 'Submitted batch job 46081909'.
+[Thu Jan 19 11:42:52 2023]
+Error in rule gatherPoolSnp:
+    jobid: 2
+    output: /scratch/aob2x/DESTv2_output/sub_bcf/dest.2L.all.PoolSNP.001.5.test.norep.vcf.gz
+    shell:
+        bash scatter_gather_annotate/gather.sh all PoolSNP 001 5 test /scratch/aob2x/DESTv2_output 2L
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 46081909
+
+Error executing rule gatherPoolSnp on cluster (jobid: 2, external: Submitted batch job 46081909, jobscript: /gpfs/gpfs0/scratch/aob2x/DESTv2/snpCalling/.snakemake/tmp.bi60_glc/snakejob.gatherPoolSnp.2.sh). For error details see the cluster log and the log files of the involved rule(s).
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /gpfs/gpfs0/scratch/aob2x/DESTv2/snpCalling/.snakemake/log/2023-01-19T112630.437114.snakemake.log

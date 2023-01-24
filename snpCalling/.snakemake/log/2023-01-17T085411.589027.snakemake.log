@@ -1,0 +1,22 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 100
+Job counts:
+	count	jobs
+	1	all
+	1	annotate
+	2
+Select jobs to execute...
+
+[Tue Jan 17 08:54:13 2023]
+rule annotate:
+    input: /scratch/aob2x/DESTv2_output/sub_bcf/dest.2L.all.PoolSNP.001.5.test.vcf.gz
+    output: /scratch/aob2x/DESTv2_output/dest.all.PoolSNP.001.5.test.ann.vcf.gz
+    jobid: 1
+    wildcards: popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=10, memory_limit=20, time_limit=1440, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 1 with external jobid 'Submitted batch job 46009043'.
+Terminating processes on user request, this might take some time.
+Will exit after finishing currently running jobs.
+Complete log: /gpfs/gpfs0/scratch/aob2x/DESTv2/snpCalling/.snakemake/log/2023-01-17T085411.589027.snakemake.log

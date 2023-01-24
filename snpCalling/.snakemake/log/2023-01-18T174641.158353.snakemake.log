@@ -1,0 +1,101 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 100
+Job counts:
+	count	jobs
+	1	all
+	1	annotate
+	1	gatherPoolSnp
+	4	runSNP_calling
+	7
+Select jobs to execute...
+
+[Wed Jan 18 17:46:41 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_275017_312524.all.SNAPE.001.5.test.vcf.gz
+    jobid: 3
+    wildcards: jobid=2L_275017_312524, popset=all, method=SNAPE, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 3 with external jobid 'Submitted batch job 46055391'.
+
+[Wed Jan 18 17:46:42 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_412525_450032.all.SNAPE.001.5.test.vcf.gz
+    jobid: 4
+    wildcards: jobid=2L_412525_450032, popset=all, method=SNAPE, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 4 with external jobid 'Submitted batch job 46055392'.
+
+[Wed Jan 18 17:46:42 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_687541_725048.all.SNAPE.001.5.test.vcf.gz
+    jobid: 6
+    wildcards: jobid=2L_687541_725048, popset=all, method=SNAPE, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 6 with external jobid 'Submitted batch job 46055393'.
+
+[Wed Jan 18 17:46:42 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_550033_587540.all.SNAPE.001.5.test.vcf.gz
+    jobid: 5
+    wildcards: jobid=2L_550033_587540, popset=all, method=SNAPE, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 5 with external jobid 'Submitted batch job 46055394'.
+[Wed Jan 18 17:56:52 2023]
+Finished job 6.
+1 of 7 steps (14%) done
+[Wed Jan 18 17:59:02 2023]
+Finished job 3.
+2 of 7 steps (29%) done
+[Wed Jan 18 18:00:22 2023]
+Finished job 4.
+3 of 7 steps (43%) done
+[Wed Jan 18 18:00:32 2023]
+Finished job 5.
+4 of 7 steps (57%) done
+Select jobs to execute...
+
+[Wed Jan 18 18:00:32 2023]
+rule gatherPoolSnp:
+    input: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_275017_312524.all.SNAPE.001.5.test.vcf.gz, /scratch/aob2x/DESTv2_output/sub_vcfs/2L_412525_450032.all.SNAPE.001.5.test.vcf.gz, /scratch/aob2x/DESTv2_output/sub_vcfs/2L_550033_587540.all.SNAPE.001.5.test.vcf.gz, /scratch/aob2x/DESTv2_output/sub_vcfs/2L_687541_725048.all.SNAPE.001.5.test.vcf.gz
+    output: /scratch/aob2x/DESTv2_output/sub_bcf/dest.2L.all.SNAPE.001.5.test.vcf.gz
+    jobid: 2
+    wildcards: chr=2L, popSet=all, method=SNAPE, maf=001, mac=5, version=test
+    resources: ntasks_per_node=20, memory_limit=36, time_limit=240, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 2 with external jobid 'Submitted batch job 46055909'.
+[Wed Jan 18 18:00:42 2023]
+Finished job 2.
+5 of 7 steps (71%) done
+Select jobs to execute...
+
+[Wed Jan 18 18:00:42 2023]
+rule annotate:
+    input: /scratch/aob2x/DESTv2_output/sub_bcf/dest.2L.all.SNAPE.001.5.test.vcf.gz
+    output: /scratch/aob2x/DESTv2_output/dest.all.SNAPE.001.5.test.ann.vcf.gz
+    jobid: 1
+    wildcards: popset=all, method=SNAPE, maf=001, mac=5, version=test
+    resources: ntasks_per_node=10, memory_limit=20, time_limit=1440, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 1 with external jobid 'Submitted batch job 46055919'.
+[Wed Jan 18 18:02:02 2023]
+Error in rule annotate:
+    jobid: 1
+    output: /scratch/aob2x/DESTv2_output/dest.all.SNAPE.001.5.test.ann.vcf.gz
+    shell:
+        bash scatter_gather_annotate/annotate.sh all SNAPE 001 5 test /scratch/aob2x/DESTv2_output ~/snpEff
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 46055919
+
+Error executing rule annotate on cluster (jobid: 1, external: Submitted batch job 46055919, jobscript: /gpfs/gpfs0/scratch/aob2x/DESTv2/snpCalling/.snakemake/tmp.w8myeld0/snakejob.annotate.1.sh). For error details see the cluster log and the log files of the involved rule(s).
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /gpfs/gpfs0/scratch/aob2x/DESTv2/snpCalling/.snakemake/log/2023-01-18T174641.158353.snakemake.log

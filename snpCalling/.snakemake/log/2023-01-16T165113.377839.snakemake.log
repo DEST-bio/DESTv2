@@ -1,0 +1,54 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 100
+Job counts:
+	count	jobs
+	1	all
+	1	annotate
+	1	gatherPoolSnp
+	4	runSNP_calling
+	7
+Select jobs to execute...
+
+[Mon Jan 16 16:51:16 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_137509_275016.all.PoolSNP.001.5.test.vcf.gz
+    jobid: 4
+    wildcards: jobid=2L_137509_275016, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 4 with external jobid 'Submitted batch job 46005235'.
+
+[Mon Jan 16 16:51:20 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_1_137508.all.PoolSNP.001.5.test.vcf.gz
+    jobid: 3
+    wildcards: jobid=2L_1_137508, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 3 with external jobid 'Submitted batch job 46005236'.
+
+[Mon Jan 16 16:51:21 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_275017_412524.all.PoolSNP.001.5.test.vcf.gz
+    jobid: 5
+    wildcards: jobid=2L_275017_412524, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 5 with external jobid 'Submitted batch job 46005237'.
+
+[Mon Jan 16 16:51:21 2023]
+rule runSNP_calling:
+    input: /scratch/aob2x/DESTv2_output/jobs.csv, /project/berglandlab/DEST/dest_mapped
+    output: /scratch/aob2x/DESTv2_output/sub_vcfs/2L_412525_550032.all.PoolSNP.001.5.test.vcf.gz
+    jobid: 6
+    wildcards: jobid=2L_412525_550032, popset=all, method=PoolSNP, maf=001, mac=5, version=test
+    resources: ntasks_per_node=4, memory_limit=36, time_limit=120, log_dir=/scratch/aob2x/DESTv2_output/logs
+
+Submitted job 6 with external jobid 'Submitted batch job 46005238'.
+Terminating processes on user request, this might take some time.
+Will exit after finishing currently running jobs.
+Complete log: /gpfs/gpfs0/scratch/aob2x/DESTv2/snpCalling/.snakemake/log/2023-01-16T165113.377839.snakemake.log

@@ -1,0 +1,16 @@
+Building DAG of jobs...
+File path /scratch/aob2x/DESTv2_output//dest.all.PoolSNP.001.5.test.ann.vcf.gz contains double '/'. This is likely unintended. It can also lead to inconsistent results of the file-matching approach used by Snakemake.
+File path /scratch/aob2x/DESTv2_output//sub_bcf/dest.2L.all.PoolSNP.001.5.test.bcf contains double '/'. This is likely unintended. It can also lead to inconsistent results of the file-matching approach used by Snakemake.
+File path /scratch/aob2x/DESTv2_output//dest.all.PoolSNP.001.5.test.ann.vcf.gz contains double '/'. This is likely unintended. It can also lead to inconsistent results of the file-matching approach used by Snakemake.
+InputFunctionException in line 75 of /gpfs/gpfs0/scratch/aob2x/DESTv2/snpCalling/Snakefile:
+Error:
+  PermissionError: [Errno 13] Permission denied: '/scratch/jho5ze/DEST_snakemake/DEST_freeze1/snpCalling/test/jobs.csv'
+Wildcards:
+  chr=2L
+  popSet=all
+  method=PoolSNP
+  maf=001
+  mac=5
+  version=test
+Traceback:
+  File "/gpfs/gpfs0/scratch/aob2x/DESTv2/snpCalling/Snakefile", line 71, in get_files_to_gather

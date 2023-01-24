@@ -1,0 +1,13 @@
+Building DAG of jobs...
+InputFunctionException in line 75 of /gpfs/gpfs0/scratch/aob2x/DESTv2/snpCalling/Snakefile:
+Error:
+  FileNotFoundError: [Errno 2] No such file or directory: 'jobs.csv'
+Wildcards:
+  chr=2L
+  popSet=all
+  method=PoolSNP
+  maf=001
+  mac=5
+  version=test
+Traceback:
+  File "/gpfs/gpfs0/scratch/aob2x/DESTv2/snpCalling/Snakefile", line 71, in get_files_to_gather
