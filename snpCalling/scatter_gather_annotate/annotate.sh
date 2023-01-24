@@ -59,3 +59,6 @@ echo "make GDS"
 echo "bgzip & tabix"
   bgzip -c ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.vcf > ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.vcf.gz
   tabix -p vcf ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.vcf.gz
+
+  rm ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.vcf
+  rm ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf
