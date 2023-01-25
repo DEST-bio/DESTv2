@@ -48,13 +48,16 @@ mkdir /scratch/aob2x/DESTv2_output/logs/
 
 module load gcc/9.2.0 openmpi/3.1.6 python/3.7.7 snakemake/6.0.5
 cd /scratch/aob2x/DESTv2/snpCalling
+
+head -n 100 jobs_genome.csv | tail -n4 > ~/jobs_small.csv
+
 snakemake --profile /scratch/aob2x/DESTv2/snpCalling/slurm
 ```
 
 
 ```bash
 sbatch /scratch/aob2x/DESTv2/snpCalling/runSnakemake.sh
-sacct -j 46205112
+sacct -j 46215128
 sacct -u aob2x
 ```
 
@@ -72,7 +75,6 @@ rm /scratch/aob2x/DESTv2_output/dest*
 rm /scratch/aob2x/DESTv2_output/sub_vcfs/*
 rm /scratch/aob2x/DESTv2_output/sub_bcf/*
 rm /scratch/aob2x/DESTv2_output/logs/*
-rm /scratch/aob2x/DESTv2_output/TEST*
 
 cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46205114.err
 cat /scratch/aob2x/DESTv2_output/logs/*.46205114.out
