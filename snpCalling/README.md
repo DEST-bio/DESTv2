@@ -22,7 +22,7 @@ The config file `workflow.yaml` holds other pipeline parameters which should be 
  * `script_directory`: Where the `snpCalling` scripts are located. Should be the path to this directory (`DEST_freeze1/snpCalling`) wherever you have cloned this repo.
  * `working_directory`: Directory where all the data will be processed and where output will be written
  * `pipeline_output_directory`: Directory holding the masked SYNC files from the main pipeline output. They should all have the common suffix `*masked.sync.gz`
- * `popSet`: Population to use: only option is `all`
+ * `popSet`: Population to use: `all` (to include DGN) or `PoolSeq`
  * `method`: Method to use for variant calling: `PoolSNP` or `SNAPE`
  * `maf`: Minimum allele frequency (only used with `PoolSNP` method; use NA for `SNAPE`)
  * `mac`: Minmum allele count (only used with `PoolSNP` method; use NA for `SNAPE`)
@@ -49,15 +49,17 @@ mkdir /scratch/aob2x/DESTv2_output/logs/
 module load gcc/9.2.0 openmpi/3.1.6 python/3.7.7 snakemake/6.0.5
 cd /scratch/aob2x/DESTv2/snpCalling
 
-head -n 100 jobs_genome.csv | tail -n4 > ~/jobs_small.csv
+head -n 100 jobs_genome.csv | tail -n4 > /scratch/aob2x/DESTv2_output/jobs.csv
 
-snakemake --profile /scratch/aob2x/DESTv2/snpCalling/slurm
+snakemake --unlock --profile /scratch/aob2x/DESTv2/snpCalling/slurm
+
+
 ```
 
 
 ```bash
 sbatch /scratch/aob2x/DESTv2/snpCalling/runSnakemake.sh
-sacct -j 46215128
+sacct -j 46215323
 sacct -u aob2x
 ```
 
@@ -66,8 +68,8 @@ cd /scratch/aob2x/DESTv2_output/logs
 
 ls -lh /scratch/aob2x/DESTv2_output
 ls -lh /scratch/aob2x/DESTv2_output/sub_vcfs/
-less -S /scratch/aob2x/DESTv2_output/dest.all.PoolSNP.001.5.test.norep.ann.vcf
-ls -lh /scratch/aob2x/DESTv2_output/sub_bcf/
+less -S /scratch/aob2x/DESTv2_output/jobs.csv
+ls -lh /scratch/aob2x/DESTv2_output/logs/ | grep -v "smallBam"
 
 less -S /scratch/aob2x/DESTv2_output/sub_vcfs/vcfs_order.2L.all.PoolSNP.001.5.test.sort
 rm /scratch/aob2x/DESTv2_output/snpEff*
@@ -75,9 +77,10 @@ rm /scratch/aob2x/DESTv2_output/dest*
 rm /scratch/aob2x/DESTv2_output/sub_vcfs/*
 rm /scratch/aob2x/DESTv2_output/sub_bcf/*
 rm /scratch/aob2x/DESTv2_output/logs/*
+#rm /scratch/aob2x/DESTv2_output/jobs.csv
 
-cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46205114.err
-cat /scratch/aob2x/DESTv2_output/logs/*.46205114.out
+cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46215324.err
+cat /scratch/aob2x/DESTv2_output/logs/*.46215327*out
 
 cd /scratch/aob2x/DESTv2_output/sub_vcfs/
 

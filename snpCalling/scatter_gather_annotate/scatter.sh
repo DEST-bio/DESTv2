@@ -73,13 +73,17 @@ module load htslib/1.10.2 bcftools/1.9 parallel/20200322 intel/18.0 intelmpi/18.
 
   echo "subset"
 
-  if [[ "${method}" == "SNAPE" ]]; then
+  if [[ "${method}" == "SNAPE" && "${popSet}" == "PoolSeq"]]; then
     echo "SNAPE" ${method}
-    parallel -j 4 subsection ::: $( ls ${pipeline_output}/*/*/*.masked.sync.gz | tr '  ' '\n' | grep "SNAPE" | grep "monomorphic" | tr '\n' ' ' ) ::: ${job} ::: ${tmpdir}
-  elif [[ "${method}" == "PoolSNP" ]]; then
+    parallel -j 4 subsection ::: $( ls ${pipeline_output}/*/*/*.masked.sync.gz | tr '  ' '\n' | grep "SNAPE" | grep "monomorphic" | wc -l tr '\n' ' ' ) ::: ${job} ::: ${tmpdir}
+  elif [[ "${method}" == "PoolSNP" && "${popSet}" == "all"]]; then
     echo "PoolSNP" ${method}
     parallel -j 4 subsection ::: $( ls ${pipeline_output}/*/*/*.masked.sync.gz | tr '  ' '\n' | grep -v "SNAPE" ) ::: ${job} ::: ${tmpdir}
+  elif [[ "${method}" == "PoolSNP" && "${popSet}" == "PoolSeq"]]; then
+    echo "PoolSNP" ${method}
+    parallel -j 4 subsection ::: $( ls ${pipeline_output}/*/*/*.masked.sync.gz | tr '  ' '\n' | grep -v "SNAPE" | grep -v "DGN" | wc -l ) ::: ${job} ::: ${tmpdir}
   fi
+
 
 
 
