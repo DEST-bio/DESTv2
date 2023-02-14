@@ -294,18 +294,20 @@
   dest_v2 <- dest_v2[,colOrder, with=F]
   setkey(dest_v2, sampleId)
 
-  write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_13Jan2023.csv")
+
+
+  # write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_13Jan2023.csv")
 
 
 ### some cleanup
   dest_v2 <- fread(file="DESTv2/populationInfo/dest_v2.samps_13Jan2023.csv")
 
-  dest_v2[grepl("NA", sampleId), sampleId:=paste(locality, "_", year, "-MM-DD", sep="")]
+  dest_v2[grepl("NA", sampleId), sampleId:=paste(locality, "_", subsample, "_", year, "-MM-DD", sep="")]
   dest_v2[is.na(min_day)]
 
-  dest_v2[grepl("UA_L'v_Dro", locality), locality:="UA_Lviv_Dro"]
+  dest_v2[grepl("UA_L'v_Dro", locality), locality:="UA_Lvi_Dro"]
   dest_v2[grepl("UA_L'v_Dro", sampleId), sampleId:=paste(locality, subsample, as.character(make_date(year) + jday - 1), sep="_")]
-  dest_v2[locality=="UA_Lviv_Dro"]
+  dest_v2[locality=="UA_Lvi_Dro"]
 
   dest_v2[locality=="EG_Al _Cai", locality:="EG_Al_Cai"]
   dest_v2[locality=="EG_Al_Cai", sampleId:=paste(locality, subsample, as.character(make_date(year) + jday - 1), sep="_")]
@@ -313,13 +315,9 @@
   dest_v2[sampleId=="NA_NA_w50_1_NA", sampleId:="SIM_SIM_w501_1_NA"]
 
 ### save
-  write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_19Jan2023.csv")
+  # write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_19Jan2023.csv")
 
-
-#### need to add
-  • library/DNA quality
-
-
+### 
 
 
 
