@@ -73,6 +73,15 @@
     droseu[SequencingId%in%low_qual, low_qual:=T]
     droseu[is.na(low_qual), low_qual:=F]
 
+    reseq<- c("DrosEu-111","DrosEu-190","DrosEu-231","DrosEu-232","DrosEu-144","DrosEu-145","DrosEu-92","DrosEu-96","DrosEu-105","DrosEu-167",
+    "DrosEu-121","DrosEu-84","DrosEu-83","DrosEu-158","DrosEu-210","DrosEu-211","DrosEu-236","DrosEu-169","DrosEu-50","DrosEu-160",
+    "DrosEu-233","DrosEu-205","DrosEu-197","DrosEu-139","DrosEu-162","DrosEu-199","DrosEu-157","DrosEu-25","DrosEu-72","DrosEu-152","DrosEu-177","DrosEu-142")
+
+
+    droseu[!SequencingId%in%reseq & low_qual==T, no_seq:=T]
+    droseu[is.na(no_seq), no_seq:=F]
+
+
   ## other stuff
     droseu[,type:="pooled"]
     droseu[,set:="DrosEU_3"]
@@ -137,6 +146,15 @@
   setnames(pub, "SRA_Accesion", "SRA_Accession")
   setnames(pub, "REFERENCE", "reference")
 
+### South American samples
+  sa <- as.data.table(read_excel("/Users/alanbergland/Documents/GitHub/DESTv2/populationInfo/OriginalMetadata/DrosEU_SA_Metadada_DESTv2.xlsx"))
+  setnames(sa, "Collector", "collector")
+  setnames(sa, "Country", "country")
+  sa[,type:="pooled"]
+  sa[,set:="DrosEU_3_sa"]
+  sa[,seq_platform:="NovaSeq6000"]
+  sa[,long:=long*-1]
+
 ### merge together
 
   commonCols <- c("sampleId", "set", "SequencingId", "low_qual",
@@ -156,13 +174,16 @@
           droseu[,reference:=NA]
 
 
-  dest_v2 <- rbindlist(list(droseu[,commonCols[commonCols%in%names(droseu)], with=F],
+  dest_v2 <- rbindlist(list(droseu[no_seq==F,commonCols[commonCols%in%names(droseu)], with=F],
                             dest_v1[,commonCols[commonCols%in%names(dest_v1)], with=F],
                             cville[,commonCols[commonCols%in%names(cville)], with=F],
-                            pub[,commonCols[commonCols%in%names(pub)], with=F]),
+                            pub[,commonCols[commonCols%in%names(pub)], with=F],
+                            sa[,commonCols[commonCols%in%names(sa)], with=F]),
                           fill=T)
 
   dest_v2[,tmpId:=c(1:dim(dest_v2)[1])]
+
+  dest_v2[set=="DrosEU_3_sa"]
 
 ### fix a few problematic longitudes
   dest_v2[city=="Muthill", long:=ifelse(long>0, -1*long, long)]
@@ -204,6 +225,7 @@
   dest_v2[city=="Mariupol-1", loc_rep:="Mariupol-1"]
   dest_v2[city=="Mariupol-2", city:="Mariupol"]
   dest_v2[city=="Mariupol-1", city:="Mariupol"]
+  dest_v2[city=="La Vega - Finca mata de la guadua", city:="LaVega - Finca mata de la guadua"]
 
   dest_v2[city=="Raleigh" & set=="dgn", exp_rep:="insilico pool"]
   dest_v2[city=="Raleigh" & set=="DrosRTEC", exp_rep:="pool-seq"]
@@ -261,6 +283,7 @@
       tmp <- as.data.frame(dest_v2[,names(dest_v2)[i],with=F])
       tmp.class <- class(tmp[,1])
       tmp[,1] <- gsub(",", ";", tmp[,1])
+
       tmp[,1] <- stri_trans_general(str = tmp[,1],
                                     id = "Latin-ASCII")
       class(tmp[,1]) <- tmp.class
@@ -294,13 +317,11 @@
   dest_v2 <- dest_v2[,colOrder, with=F]
   setkey(dest_v2, sampleId)
 
-
-
   # write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_13Jan2023.csv")
 
 
 ### some cleanup
-  dest_v2 <- fread(file="DESTv2/populationInfo/dest_v2.samps_13Jan2023.csv")
+  #dest_v2 <- fread(file="DESTv2/populationInfo/dest_v2.samps_13Jan2023.csv")
 
   dest_v2[grepl("NA", sampleId), sampleId:=paste(locality, "_", subsample, "_", year, "-MM-DD", sep="")]
   dest_v2[is.na(min_day)]
@@ -317,7 +338,8 @@
 ### save
   # write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_19Jan2023.csv")
 
-### 
+###
+  write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_17Feb2023.csv")
 
 
 
