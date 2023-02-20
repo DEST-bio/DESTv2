@@ -226,7 +226,7 @@ RUN rm -rf /opt/DESTv2/ && \
 ENV PATH="/opt/DESTv2/mappingPipeline/scripts:${PATH}"
 
 #Command to execute on "docker run" of this image
-ENTRYPOINT ["/bin/bash", "/opt/DESTv2/mappingPipeline/scripts/fq_to_sync_pipeline.sh"]
+ENTRYPOINT ["/bin/bash", "/opt/DESTv2/mappingPipeline/scripts/fq_to_sync_pipeline.v2wSEopt.sh"]
 
 #Default parameters passed to the above function call. Can be overridden by supplying parameters after image name in "docker run"
 CMD ["--help"]
