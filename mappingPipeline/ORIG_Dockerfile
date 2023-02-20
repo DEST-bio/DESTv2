@@ -202,10 +202,10 @@ ENV PATH="/opt/snape-pooled:${PATH}"
 
 #Clone the repo
 
-RUN git clone https://github.com/DEST-bio/DESTv2.git
+RUN git clone https://github.com/DEST-bio/DEST_freeze1.git
 
 #Setup the hologenome
-RUN /opt/DESTv2/mappingPipeline/scripts/hologene_gen.sh
+RUN /opt/DEST_freeze1/mappingPipeline/scripts/hologene_gen.sh
 RUN bwa index /opt/hologenome/holo_dmel_6.12.fa && \
     samtools faidx /opt/hologenome/raw/D_melanogaster_r6.12.fasta && \
     samtools faidx /opt/hologenome/holo_dmel_6.12.fa && \
@@ -215,18 +215,18 @@ RUN bwa index /opt/hologenome/holo_dmel_6.12.fa && \
 
 ARG CACHE_BUST=06:03:2020:1800
 
-RUN python3 /opt/DESTv2/mappingPipeline/scripts/PickleRef.py \
+RUN python3 /opt/DEST_freeze1/mappingPipeline/scripts/PickleRef.py \
     --ref /opt/hologenome/raw/D_melanogaster_r6.12.fasta  \
     --output /opt/hologenome/raw/D_melanogaster_r6.12.fasta.pickled > pickled_ref.out
 
 WORKDIR /opt
-RUN rm -rf /opt/DESTv2/ && \
+RUN rm -rf /opt/DEST_freeze1/ && \
     git clone https://github.com/DEST-bio/DEST_freeze1.git
 
-ENV PATH="/opt/DESTv2/mappingPipeline/scripts:${PATH}"
+ENV PATH="/opt/DEST_freeze1/mappingPipeline/scripts:${PATH}"
 
 #Command to execute on "docker run" of this image
-ENTRYPOINT ["/bin/bash", "/opt/DESTv2/mappingPipeline/scripts/fq_to_sync_pipeline.sh"]
+ENTRYPOINT ["/bin/bash", "/opt/DEST_freeze1/mappingPipeline/scripts/fq_to_sync_pipeline.sh"]
 
 #Default parameters passed to the above function call. Can be overridden by supplying parameters after image name in "docker run"
 CMD ["--help"]

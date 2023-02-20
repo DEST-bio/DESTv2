@@ -343,6 +343,14 @@
 
 
 
+### basic plots
+sampPlot <- ggplot(dest_v2) +
+            geom_line(aes(x= jday, y=lat, group=locality), linetype="dashed") +
+            geom_point(aes(x=jday, y=lat, color=continent, shape=exactDate), size=.75) +
+            facet_grid(set~year) +
+            theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+sampPlot
 
 
 
