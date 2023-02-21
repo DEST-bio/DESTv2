@@ -7,13 +7,12 @@
   library(SeqArray)
 
 ### load meta-data file
-  samps <- fread("/scratch/aob2x/DESTv2/populationInfo/dest_v2.samps_17Feb2023.csv")
+  samps <- fread("/scratch/aob2x/DESTv2/populationInfo/dest_v2.samps_21Feb2023.csv")
 
 ### open GDS for common SNPs (PoolSNP)
   genofile <- seqOpen("/scratch/aob2x/DESTv2_output/dest.all.PoolSNP.001.5.test.norep.ann.gds", allow.duplicate=T)
 
 ### all of the samples there?
-  setkey()
   table(samps$sampleId%in%seqGetData(genofile, "sample.id"))
   samps$sampleId[!samps$sampleId%in%seqGetData(genofile, "sample.id")]
   seqGetData(genofile, "sample.id")[!seqGetData(genofile, "sample.id")%in%samps$sampleId]
