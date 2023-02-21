@@ -205,7 +205,9 @@ ENV PATH="/opt/snape-pooled:${PATH}"
 RUN git clone https://github.com/DEST-bio/DESTv2.git
 
 #Setup the hologenome
-RUN /opt/DESTv2/mappingPipeline/scripts/hologene_gen.sh
+RUN /opt/DESTv2/mappingPipeline/scripts/hologene_gen.v2.sh
+
+
 RUN bwa index /opt/hologenome/holo_dmel_6.12.fa && \
     samtools faidx /opt/hologenome/raw/D_melanogaster_r6.12.fasta && \
     samtools faidx /opt/hologenome/holo_dmel_6.12.fa && \
