@@ -83,4 +83,16 @@ rm *gz
 
 ##### create D. melanogaster "hologenome" from individual species fasta files
 # cat /opt/hologenome/raw/D_melanogaster_r6.12.fasta /opt/hologenome/raw/S_cerevisiae.fasta /opt/hologenome/raw/A_pomorum.fasta /opt/hologenome/raw/C_intestini.fasta /opt/hologenome/raw/C_morbifer.fasta /opt/hologenome/raw/E_faecalis.fasta /opt/hologenome/raw/P_alcalifaciens.fasta /opt/hologenome/raw/P_burhodogranariea.fasta /opt/hologenome/raw/P_entomophila.fasta /opt/hologenome/raw/P_rettgeri.fasta /opt/hologenome/raw/W_pipientis.fasta | gzip > ../holo_dmel_6.12.fa.gz
-cat /opt/hologenome/raw/D_melanogaster_r6.12.fasta /opt/hologenome/raw/D_simulans.fasta /opt/hologenome/raw/S_cerevisiae.fasta /opt/hologenome/raw/A_pomorum.fasta /opt/hologenome/raw/C_intestini.fasta /opt/hologenome/raw/C_morbifer.fasta /opt/hologenome/raw/E_faecalis.fasta /opt/hologenome/raw/P_alcalifaciens.fasta /opt/hologenome/raw/P_burhodogranariea.fasta /opt/hologenome/raw/P_entomophila.fasta /opt/hologenome/raw/P_rettgeri.fasta /opt/hologenome/raw/W_pipientis.fasta > ../holo_dmel_6.12.fa
+cat /opt/hologenome/raw/D_melanogaster_r6.12.fasta \
+#/opt/hologenome/raw/D_simulans.fasta \
+/opt/hologenome/raw/S_cerevisiae.fasta \
+/opt/hologenome/raw/A_pomorum.fasta \
+/opt/hologenome/raw/C_intestini.fasta \
+/opt/hologenome/raw/C_morbifer.fasta \
+/opt/hologenome/raw/E_faecalis.fasta \
+/opt/hologenome/raw/P_alcalifaciens.fasta \
+/opt/hologenome/raw/P_burhodogranariea.fasta \
+/opt/hologenome/raw/P_entomophila.fasta \
+/opt/hologenome/raw/P_rettgeri.fasta \
+/opt/hologenome/raw/W_pipientis.fasta \
+> ../holo_dmel_6.12.fa
