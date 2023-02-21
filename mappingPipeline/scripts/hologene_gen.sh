@@ -14,7 +14,7 @@
 
 mkdir -p /opt/hologenome/raw
 cd /opt/hologenome/raw
-simulans=/opt/DEST_freeze1/mappingPipeline/D_simulans.fasta.gz
+simulans=/opt/DESTv2/mappingPipeline/D_simulans.fasta.gz
 
 ## D. melanogaster (only contains ONE copy of mitochondrion)
 curl -O ftp://ftp.flybase.net/genomes/Drosophila_melanogaster/dmel_r6.12_FB2016_04/fasta/dmel-all-chromosome-r6.12.fasta.gz

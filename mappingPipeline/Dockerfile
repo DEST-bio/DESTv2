@@ -221,7 +221,8 @@ RUN python3 /opt/DESTv2/mappingPipeline/scripts/PickleRef.py \
 
 WORKDIR /opt
 RUN rm -rf /opt/DESTv2/ && \
-    git clone https://github.com/DEST-bio/DEST_freeze1.git
+    git clone https://github.com/DEST-bio/DESTv2.git
+    ###https://github.com/DEST-bio/DEST_freeze1.git ### old git; Version 1
 
 ENV PATH="/opt/DESTv2/mappingPipeline/scripts:${PATH}"
 
