@@ -333,13 +333,16 @@
   dest_v2[locality=="EG_Al _Cai", locality:="EG_Al_Cai"]
   dest_v2[locality=="EG_Al_Cai", sampleId:=paste(locality, subsample, as.character(make_date(year) + jday - 1), sep="_")]
 
-  dest_v2[sampleId=="NA_NA_w50_1_NA", sampleId:="SIM_SIM_w501_1_NA"]
+  dest_v2[sampleId=="NA_NA_w50_1_NA", sampleId:="SIM_SIM_w501_1_NA-MM-DD"]
 
 ### save
   # write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_19Jan2023.csv")
 
 ###
-  write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_17Feb2023.csv")
+  write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_21Feb2023.csv")
+
+###
+
 
 
 
