@@ -25,7 +25,7 @@ gunzip -c dmel-all-chromosome-r6.12.fasta.gz | sed 's/ type=.*//g'> D_melanogast
 #cp $simulans /opt/hologenome/raw
 curl -LJO https://github.com/DEST-bio/DEST_freeze1/blob/main/mappingPipeline/D_simulans.fasta.gz?raw=true
 mv D_simulans.fasta.gz?raw=true D_simulans.fasta.gz
-gunzip D_simulans.fasta.gz
+gunzip -c D_simulans.fasta.gz > D_simulans.fasta
 
 ## S. cerevisiae
 curl -O http://sgd-archive.yeastgenome.org/sequence/S288C_reference/genome_releases/S288C_reference_genome_R64-2-1_20150113.tgz
