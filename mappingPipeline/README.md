@@ -194,3 +194,15 @@ ${wd}/DEST_freeze1/populationInfo/samps_10Nov2020.csv
 ```
 
 After this step has been completed, you are ready to move to the second step of the pipeline. "SNP calling, VCF and GDS generation"
+
+
+#### updading the Docker
+wget https://download.docker.com/linux/static/stable/x86_64/docker-23.0.1.tgz
+
+cd /scratch/aob2x/DESTv2
+docker build -f Dockerfile . -t YOURNAME/dest_v2:latest
+
+
+
+
+~/singularity build -f Dockerfile . -t alanbergland/dest_v2:latest
