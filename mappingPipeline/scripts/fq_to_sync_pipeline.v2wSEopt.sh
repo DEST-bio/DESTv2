@@ -83,7 +83,10 @@ case $key in
     -h|--help)
     echo "Usage:"
     echo "  singularity run [options] <image> -h          Display this help message."
+    echo "	Pair-end reads mode --> requires:"
     echo "  singularity run [options] <image> <fastq_file_1_path> <fastq_file_2_path> <sample_name> <output_dir> <num_cores>"
+    echo "	Single-end reads mode --> requires:"
+    echo "  singularity run [options] <image> <fastq_file_Single_path> <sample_name> <output_dir> <num_cores>"
     exit 0
     shift # past argument
     ;;
