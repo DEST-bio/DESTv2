@@ -1,8 +1,8 @@
 #!/bin/bash
 
-### Updated to version 2.3 by Joaquin C. B. Nunez
+### Updated by Joaquin C. B. Nunez
 ### Questions: contact me at jnunez2@uvm.edu
-version=2.3
+version=2.4
 ### Feb. 10, 2023
 
 check_exit_status () {
