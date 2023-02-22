@@ -203,7 +203,8 @@ ENV PATH="/opt/snape-pooled:${PATH}"
 #Clone the repo
 
 ##RUN git clone https://github.com/DEST-bio/DESTv2.git
-RUN git clone https://github.com/DEST-bio/DESTv2.git && cd DESTv2 && git checkout f3b89a0 && cd ../
+RUN git clone https://github.com/DEST-bio/DESTv2.git && cd DESTv2 && git checkout main && cd ../
+
 
 #Setup the hologenome
 RUN /opt/DESTv2/mappingPipeline/scripts/hologene_gen.v2.sh
@@ -233,4 +234,5 @@ ENTRYPOINT ["/bin/bash", "/opt/DESTv2/mappingPipeline/scripts/fq_to_sync_pipelin
 
 #Default parameters passed to the above function call. Can be overridden by supplying parameters after image name in "docker run"
 CMD ["--help"]
+
 
