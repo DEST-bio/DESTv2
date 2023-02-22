@@ -355,6 +355,8 @@ fi
 
   java -jar $PICARD MergeSamFiles I=$output/$sample/${sample}.merged.bam SO=coordinate USE_THREADING=true O=$output/$sample/${sample}.sorted_merged.bam
 
+  echo "Mapped as SE done!"
+	
   fi
   #### ^^^^ Done mapping as single end
 
@@ -416,8 +418,6 @@ fi
   #samtools mpileup $output/$sample/${sample}.mel.bam -B -f /opt/hologenome/raw/D_melanogaster_r6.12.fasta > $output/$sample/${sample}.mel_mpileup.txt
 
   check_exit_status "mpileup" $?
-
-fi
 
 if [ $do_poolsnp -eq "1" ]; then
 
