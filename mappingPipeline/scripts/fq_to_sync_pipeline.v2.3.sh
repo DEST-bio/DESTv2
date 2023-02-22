@@ -1,5 +1,10 @@
 #!/bin/bash
 
+### Updated to version 2.3 by Joaquin C. B. Nunez
+### Questions: contact me at jnunez2@uvm.edu
+version=2.3
+### Feb. 10, 2023
+
 check_exit_status () {
   if [ ! "$2" -eq "0" ]; then
     echo "Step $1 failed with exit status $2"
@@ -8,7 +13,8 @@ check_exit_status () {
   echo "Checked step $1"
 }
 
-do_single=0
+#### DEFAULT parameters
+do_single_end=0
 read1="test_file_1"
 read2="test_file_2"
 sample="default_sample_name"
@@ -29,6 +35,8 @@ do_prep=1
 do_snape=0
 do_poolsnp=0
 
+
+### Parse positional arguments
 # Credit: https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 POSITIONAL=()
 while [[ $# -gt 0 ]]
@@ -36,12 +44,10 @@ do
 key="$1"
 
 case $key in
-    -dse|--do_single)
-    do_single=1
-    read2="empty"
+	-do_se|--single_end)
+	do_single_end=1
     shift # past argument
-    ;;
-    #### ^^^ add paired end
+	;;
     -dps|--do_poolsnp)
     do_poolsnp=1
     shift # past argument
@@ -83,9 +89,10 @@ case $key in
     -h|--help)
     echo "Usage:"
     echo "  singularity run [options] <image> -h          Display this help message."
-    echo "	Pair-end reads mode --> requires:"
+    echo "  Pair-end reads mode add --sequencing = 'pe'; Single-end mode add --sequencing = 'se'"
+    echo "	Pair-end reads mode requires:"
     echo "  singularity run [options] <image> <fastq_file_1_path> <fastq_file_2_path> <sample_name> <output_dir> <num_cores>"
-    echo "	Single-end reads mode --> requires:"
+    echo "	Single-end reads mode requires:"
     echo "  singularity run [options] <image> <fastq_file_Single_path> <sample_name> <output_dir> <num_cores>"
     exit 0
     shift # past argument
@@ -131,50 +138,97 @@ case $key in
 esac
 done
 
+#####
+if [ $do_single_end -eq "1" ]
+	then
+	echo "Processing ---> single end run"
 
-######
+fi
+
+if [ $do_single_end -eq "0" ]
+	then
+	echo "Processing ---> paired end run"
+
+fi
+
+#####
+#####
+
 set -- "${POSITIONAL[@]}"
 
-if [ $# != 4 & do_single=0 ]
+#### --> Evaluate whether the pipeline is being used as Paired end or single end
+
+if [ $do_single_end -eq "0" ] && [ $# != 4 ]
   then
     echo "ERROR: For paired end reads (default) you need to supply <fastq_file_1_path> <fastq_file_2_path> <sample_name> <output_dir> as positional arguments, and no others"
     exit 1
 fi
 
-if [ $# != 3 & do_single=1 ]
+if [ $do_single_end -eq "1" ] && [ $# != 3 ]
   then
     echo "ERROR: For single end reads you need to supply <fastq_file_path> <sample_name> <output_dir> as positional arguments, and no others"
     exit 1
 fi
 
-if [ $# == 4 & do_single=0 ]
- then
+######
+
+if [ $do_single_end -eq "0"  ]
+	then
 read1=$1; shift
 read2=$1; shift
 sample=$1; shift
 output=$1; shift
 fi
 
-if [ $# == 3 & do_single=1 ]
- then
+if [ $do_single_end -eq "1" ]
+ 	then
 read1=$1; shift
 sample=$1; shift
 output=$1; shift
 fi
 
+########
 
-if [ ! -f "$read1" & do_single=0 ]; then
-  echo "ERROR: $read1 does not exist"
+echo -e "This is DEST v. ${version} \n Parameters as interpreted + those assumed by default --> \n"
+echo -e \
+"pe (0) or se (1)? =" $do_single_end "\n" \
+"r1 =" $read1 "\n" \
+"r2 =" $read2 "\n" \
+"sample name =" $sample "\n" \
+"output =" $output "\n" \
+"number of flies =" $nflies "\n" \
+"cpus =" $thread "\n" \
+"max cov =" $max_cov "\n" \
+"min cov =" $min_cov "\n" \
+"theta =" $theta "\n" \
+"D =" $D "\n" \
+"priot =" $priortype "\n" \
+"folded? =" $fold "\n" \
+"max snape ="$maxsnape "\n" \
+"base quality threshold =" $base_quality_threshold "\n" \
+"illumina quality coding =" $illumina_quality_coding "\n" \
+"min Indel =" $do_prep "\n" \
+"min snape? (0 = no; 1 = yes) -->" $do_snape "\n" \
+"min poolsnp? (0 = no; 1 = yes) -->" $do_poolsnp "\n"
+
+########
+
+
+if [ ! -f "$read1" ] && [ $do_single_end -eq "0"  ]; then
+  echo "ERROR: for paired end run"
+  echo "ERROR DETAILS: $read1 does not exist"
   exit 1
 fi
 
-if [ ! -f "$read2" & do_single=0 ]; then
-  echo "ERROR: $read2 does not exist"
+if [ ! -f "$read2" ] && [ $do_single_end -eq "0"  ]; then
+  echo "ERROR: for paired end run"
+  echo "ERROR DETAILS: $read2 does not exist"
   exit 1
 fi
 
-if [ ! -f "$read1" & do_single=1 ]; then
-  echo "ERROR: $read1 (the SE read set) does not exist"
+if [ ! -f "$read1" ] && [ $do_single_end -eq "1"  ]; then
+  echo "ERROR: for single end run"
+  echo "ERROR DETAILS: $read1 does not exist"
   exit 1
 fi
 
@@ -190,13 +244,14 @@ if [ ! -d $output/$sample/${sample}_fastqc/trimmed ]; then
   mkdir $output/$sample/${sample}_fastqc/trimmed
 fi
 
+########
+
+
 ##### Begin prep
-
-if [ $do_prep -eq "1" ]; then
-
-  #####
+#### Single end case
   
-  if [ $# == 3 & do_single=1 ]
+  if [ $# == 3 ] && [ $do_single_end -eq "1" ]
+	then
 
   fastqc $read1 -o $output/$sample/${sample}_fastqc
 
@@ -229,9 +284,10 @@ if [ $do_prep -eq "1" ]; then
 
 fi
 
-#### Single end case
+#### Paired end case
 
-if [ $# == 4 & do_single=0 ]
+  if [ $# == 4 ] && [ $do_single_end -eq "0" ]
+	then
 
   fastqc $read1 $read2 -o $output/$sample/${sample}_fastqc
 
@@ -264,9 +320,7 @@ fi
 
 
   ##### BWA mem portion
-  ##### BWA mem portion
-  ##### BWA mem portion
-  ##### BWA mem portion
+
 
   bwa mem -t $threads -M -R "@RG\tID:$sample\tSM:sample_name\tPL:illumina\tLB:lib1" /opt/hologenome/holo_dmel_6.12.fa $output/$sample/${sample}.1_un.fq.gz $output/$sample/${sample}.2_un.fq.gz | samtools view -@ $threads -Sbh -q 20 -F 0x100 - > $output/$sample/${sample}.merged_un.bam
 
