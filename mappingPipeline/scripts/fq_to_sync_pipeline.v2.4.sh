@@ -31,7 +31,7 @@ nflies=40
 base_quality_threshold=25
 illumina_quality_coding=1.8
 minIndel=5
-do_prep=1
+###do_prep=1
 do_snape=0
 do_poolsnp=0
 
@@ -52,10 +52,10 @@ case $key in
     do_poolsnp=1
     shift # past argument
     ;;
-    -dp|--do_prep)
-    do_prep=1
-    shift # past argument
-    ;;
+    #-dnp|--do_not_prep)
+    #do_prep=0
+    #shift # past argument
+    #;;
     -bq|--base-quality-threshold)
     base_quality_threshold="$2"
     shift # past argument
@@ -207,12 +207,12 @@ echo -e \
 "max snape ="$maxsnape "\n" \
 "base quality threshold =" $base_quality_threshold "\n" \
 "illumina quality coding =" $illumina_quality_coding "\n" \
-"min Indel =" $do_prep "\n" \
-"min snape? (0 = no; 1 = yes) -->" $do_snape "\n" \
-"min poolsnp? (0 = no; 1 = yes) -->" $do_poolsnp "\n"
+"minIndel =" $minIndel "\n" \
+"do Prep =" $do_prep "\n" \
+"do snape? (0 = no; 1 = yes) -->" $do_snape "\n" \
+"do poolsnp? (0 = no; 1 = yes) -->" $do_poolsnp "\n"
 
 ########
-
 
 if [ ! -f "$read1" ] && [ $do_single_end -eq "0"  ]; then
   echo "ERROR: for paired end run"
@@ -250,9 +250,11 @@ fi
 ##### Begin prep
 #### Single end case
   
-  if [ $# == 3 ] && [ $do_single_end -eq "1" ]
+  if [ $do_single_end -eq "1" ]
 	then
 
+  echo "begin read preparation | Single End Mode"
+   
   fastqc $read1 -o $output/$sample/${sample}_fastqc
 
   cutadapt \
@@ -273,12 +275,12 @@ fi
   check_exit_status "fastqc" $?
 
   #Automatically uses all available cores
-  bbmerge.sh \
-  in=$output/$sample/${sample}.trimmed1.fq.gz \
-  out=$output/$sample/${sample}.merged.fq.gz \
-  outu=$output/$sample/${sample}.1_un.fq.gz \
+  #bbmerge.sh \
+  #in=$output/$sample/${sample}.trimmed1.fq.gz \
+  #out=$output/$sample/${sample}.merged.fq.gz \
+  #outu=$output/$sample/${sample}.1_un.fq.gz \
 
-  check_exit_status "bbmerge" $?
+  #check_exit_status "bbmerge" $?
 
   rm $output/$sample/${sample}.trimmed*
 
@@ -286,8 +288,10 @@ fi
 
 #### Paired end case
 
-  if [ $# == 4 ] && [ $do_single_end -eq "0" ]
+  if [ $do_single_end -eq "0" ]
 	then
+
+  echo "begin read preparation | Paired End Mode"
 
   fastqc $read1 $read2 -o $output/$sample/${sample}_fastqc
 
@@ -318,9 +322,11 @@ fi
 
 fi
 
-
   ##### BWA mem portion
-
+  ##### Map as Paired end
+  
+  if [ $do_single_end -eq "0" ]
+  then
 
   bwa mem -t $threads -M -R "@RG\tID:$sample\tSM:sample_name\tPL:illumina\tLB:lib1" /opt/hologenome/holo_dmel_6.12.fa $output/$sample/${sample}.1_un.fq.gz $output/$sample/${sample}.2_un.fq.gz | samtools view -@ $threads -Sbh -q 20 -F 0x100 - > $output/$sample/${sample}.merged_un.bam
 
@@ -334,6 +340,25 @@ fi
   rm $output/$sample/${sample}.merged.fq.gz
 
   java -jar $PICARD MergeSamFiles I=$output/$sample/${sample}.merged.bam I=$output/$sample/${sample}.merged_un.bam SO=coordinate USE_THREADING=true O=$output/$sample/${sample}.sorted_merged.bam
+  
+  echo "Mapped as PE done!"
+  
+  fi
+  ### ^^^ This closes mapping as PE
+  
+  ### Begin Mapping as Single end
+  
+  if [ $do_single_end -eq "1" ]
+  then
+
+  bwa mem -t $threads -M -R "@RG\tID:$sample\tSM:sample_name\tPL:illumina\tLB:lib1" /opt/hologenome/holo_dmel_6.12.fa $output/$sample/${sample}.trimmed1.fq.gz | samtools view -@ $threads -Sbh -q 20 -F 0x100 - > $output/$sample/${sample}.merged.bam
+
+  java -jar $PICARD MergeSamFiles I=$output/$sample/${sample}.merged.bam SO=coordinate USE_THREADING=true O=$output/$sample/${sample}.sorted_merged.bam
+
+  fi
+  #### ^^^^ Done mapping as single end
+
+#### Continue with Picard and remove duplication
 
   check_exit_status "Picard_MergeSamFiles" $?
 
