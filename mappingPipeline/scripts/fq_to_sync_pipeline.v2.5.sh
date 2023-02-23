@@ -2,7 +2,7 @@
 
 ### Updated by Joaquin C. B. Nunez
 ### Questions: contact me at jnunez2@uvm.edu
-version=2.4
+## version=2.5
 ### Feb. 10, 2023
 
 check_exit_status () {
