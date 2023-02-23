@@ -4,9 +4,9 @@
 
 ## Citations (public releases)
 
-### Version 2: 
+#### Version 2: 
 
-### Version 1: [https://doi.org/10.1093/molbev/msab259](https://doi.org/10.1093/molbev/msab259)
+#### Version 1: [https://doi.org/10.1093/molbev/msab259](https://doi.org/10.1093/molbev/msab259)
 
 ## General Pipeline, Map to Hologenome w/ BWA-MEM
 ```mermaid
