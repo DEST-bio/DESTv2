@@ -281,7 +281,7 @@ fi
 
   #check_exit_status "bbmerge" $?
 
-  rm $output/$sample/${sample}.trimmed*
+  #rm $output/$sample/${sample}.trimmed*
 
 fi
 
@@ -359,6 +359,7 @@ fi
  	VALIDATION_STRINGENCY=SILENT
 
 
+  rm $output/$sample/${sample}.trimmed*
   echo "Mapped as SE done!"
 	
   fi
