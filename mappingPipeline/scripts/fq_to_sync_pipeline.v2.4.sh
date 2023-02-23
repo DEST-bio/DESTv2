@@ -352,7 +352,12 @@ fi
 
   bwa mem -t $threads -M -R "@RG\tID:$sample\tSM:sample_name\tPL:illumina\tLB:lib1" /opt/hologenome/holo_dmel_6.12.fa $output/$sample/${sample}.trimmed1.fq.gz | samtools view -@ $threads -Sbh -q 20 -F 0x100 - > $output/$sample/${sample}.merged.bam
 
-  java -jar $PICARD MergeSamFiles I=$output/$sample/${sample}.merged.bam SO=coordinate USE_THREADING=true O=$output/$sample/${sample}.sorted_merged.bam
+  java -jar $PICARD SortSam \
+ 	I=$output/$sample/${sample}.merged.bam \
+ 	O=$output/$sample/${sample}.sorted_merged.bam \
+ 	SO=coordinate \
+ 	VALIDATION_STRINGENCY=SILENT
+
 
   echo "Mapped as SE done!"
 	
