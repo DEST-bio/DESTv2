@@ -296,7 +296,9 @@
 ### a little more cleanup
   ### ghost population
     dest_v2 <- dest_v2[sampleId!="DE_Bad_Wal_1_NA"]
+    dest_v2 <- dest_v2[sampleId!="FR_Cot_Mar_1_2019-10-20"]
 
+    
   ### fruit
     dest_v2[fruit_type=="-",fruit_type:=NA]
 
