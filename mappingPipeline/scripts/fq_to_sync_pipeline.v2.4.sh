@@ -262,7 +262,6 @@ fi
   --minimum-length 75 \
   -o $output/$sample/${sample}.trimmed1.fq.gz \
   -b ACACTCTTTCCCTACACGACGCTCTTCCGATC \
-  -B CAAGCAGAAGACGGCATACGAGAT \
   -O 15 \
   -n 3 \
   --cores=$threads \
