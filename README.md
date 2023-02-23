@@ -11,8 +11,6 @@
 ## General Pipeline, Map to Hologenome w/ BWA-MEM
 ```mermaid
 graph LR
-1[SRA] --new in 2.0!--> 2[Single End]
-1[SRA] --Original--> 3[Pair End]
 2[Single End] -->  4[Prep+Merge] 
 3[Pair End] -->  5[Prep] 
 4[Prep]  --BWA-MEM--> 8[merged+unmerged] --> 10[Merge+Sort Sam]
