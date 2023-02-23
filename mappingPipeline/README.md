@@ -1,5 +1,9 @@
 # Scripts to download, map, call polymorphism in pooled sequencing data-sets for Drosophila
 
+## Changes in Version 2.0 (Spring 2023)
+
+**NEW!** The flag `--single_end` allows for the processing of single end (SE) reads  
+
 ## Description
 
 This set of scripts provides a pipeline to build wholeGenomeSync files for each population sample from raw FASTQ data and defines a Dockerfile to build a docker image which can act as a standalone tool to run the pipeline.
