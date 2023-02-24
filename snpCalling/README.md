@@ -42,6 +42,8 @@ snakemake --profile /scratch/aob2x/DESTv2/snpCalling/slurm -n
 ```
 
 Then, if everything looks OK, run:
+
+
 ```bash
 mkdir /scratch/aob2x/DESTv2_output/
 mkdir /scratch/aob2x/DESTv2_output/logs/
@@ -49,17 +51,11 @@ mkdir /scratch/aob2x/DESTv2_output/logs/
 module load gcc/9.2.0 openmpi/3.1.6 python/3.7.7 snakemake/6.0.5
 cd /scratch/aob2x/DESTv2/snpCalling
 
-head -n 100 jobs_genome.csv | tail -n4 > /scratch/aob2x/DESTv2_output/jobs.csv
-
-snakemake --unlock --profile /scratch/aob2x/DESTv2/snpCalling/slurm
+cp jobs_genome.csv /scratch/aob2x/DESTv2_output/jobs.csv
 
 
-```
-
-
-```bash
 sbatch /scratch/aob2x/DESTv2/snpCalling/runSnakemake.sh
-sacct -j 47118603
+sacct -j 47121982
 sacct -u aob2x
 ```
 

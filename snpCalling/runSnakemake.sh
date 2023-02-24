@@ -3,7 +3,7 @@
 #SBATCH -J runSnakemake # A single job name for the array
 #SBATCH --ntasks-per-node=1 # one core
 #SBATCH -N 1 # on one node
-#SBATCH -t 01:00:00 ### 1 hours
+#SBATCH -t 80:00:00 ### 1 hours
 #SBATCH --mem 1G
 #SBATCH -o /scratch/aob2x/DESTv2_output/logs/runSnakemake.%A_%a.out # Standard output
 #SBATCH -e /scratch/aob2x/DESTv2_output/logs/runSnakemake.%A_%a.err # Standard error
