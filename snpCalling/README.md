@@ -59,7 +59,7 @@ snakemake --unlock --profile /scratch/aob2x/DESTv2/snpCalling/slurm
 
 ```bash
 sbatch /scratch/aob2x/DESTv2/snpCalling/runSnakemake.sh
-sacct -j 47117397
+sacct -j 47118603
 sacct -u aob2x
 ```
 
