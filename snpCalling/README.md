@@ -55,7 +55,7 @@ cp jobs_genome.csv /scratch/aob2x/DESTv2_output/jobs.csv
 
 
 sbatch /scratch/aob2x/DESTv2/snpCalling/runSnakemake.sh
-sacct -j 47121982
+sacct -j 47123066
 sacct -u aob2x
 ```
 
@@ -64,21 +64,23 @@ cd /scratch/aob2x/DESTv2_output/logs
 
 ls -lh /scratch/aob2x/DESTv2_output
 ls -lh /scratch/aob2x/DESTv2_output/sub_vcfs/
+ls -lh /scratch/aob2x/DESTv2_output/sub_bcf/
+
 less -S /scratch/aob2x/DESTv2_output/jobs.csv
 ls -lh /scratch/aob2x/DESTv2_output/logs/
 
 
 less -S /scratch/aob2x/DESTv2_output/sub_vcfs/vcfs_order.2L.all.PoolSNP.001.5.test.sort
-rm /scratch/aob2x/DESTv2_output/snpEff*
-rm /scratch/aob2x/DESTv2_output/dest*
-rm /scratch/aob2x/DESTv2_output/sub_vcfs/*
-rm /scratch/aob2x/DESTv2_output/sub_bcf/*
-rm /scratch/aob2x/DESTv2_output/logs/*
+# rm /scratch/aob2x/DESTv2_output/snpEff*
+# rm /scratch/aob2x/DESTv2_output/dest*
+# rm /scratch/aob2x/DESTv2_output/sub_vcfs/*
+# rm /scratch/aob2x/DESTv2_output/sub_bcf/*
+# rm /scratch/aob2x/DESTv2_output/logs/*
 #rm /scratch/aob2x/DESTv2_output/jobs.csv
 
 cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46464670.err
-cat /scratch/aob2x/DESTv2_output/logs/*.46466174*out
-
+cat /scratch/aob2x/DESTv2_output/logs/*.47123080*err
+47122813
 cd /scratch/aob2x/DESTv2_output/sub_vcfs/
 
 ### Output files
