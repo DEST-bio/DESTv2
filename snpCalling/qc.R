@@ -12,7 +12,7 @@
 
 ### open metadata
   setwd("/scratch/aob2x/DESTv2/")
-  samps <- fread("populationInfo/dest_v2.samps_19Jan2023.csv")
+  samps <- fread("populationInfo/dest_v2.samps_21Feb2023.csv")
 
 ### function
   w2l <- function(d, sampleId, variantId, var) {
@@ -22,7 +22,8 @@
 
 ### depth
   snps.dt <- data.table(variant.id=seqGetData(genofile, "variant.id"),
-                        nAlleles=seqGetData(genofile, "$num_allele"))
+                        nAlleles=seqGetData(genofile, "$num_allele"),
+                        chr=seqGetData(genofile, "chromosome"))
 
   seqSetFilter(genofile, variant.id=snps.dt[nAlleles==2]$variant.id)
 

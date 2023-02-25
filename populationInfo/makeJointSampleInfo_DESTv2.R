@@ -298,7 +298,7 @@
     dest_v2 <- dest_v2[sampleId!="DE_Bad_Wal_1_NA"]
     dest_v2 <- dest_v2[sampleId!="FR_Cot_Mar_1_2019-10-20"]
 
-    
+
   ### fruit
     dest_v2[fruit_type=="-",fruit_type:=NA]
 
@@ -340,8 +340,12 @@
 ### save
   # write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_19Jan2023.csv")
 
+### remove two more ghost samples
+  dest_v2 <- fread("DESTv2/populationInfo/dest_v2.samps_21Feb2023.csv")
+  dest_v2 <- dest_v2[!sampleId%in%c("FR_Cot_Mar_1_2019-10-20", "US_Rho_Pro_6_2014-09-25")]
+
 ###
-  write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_21Feb2023.csv")
+  write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_25Feb2023.csv")
 
 ###
 

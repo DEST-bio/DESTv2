@@ -39,6 +39,8 @@ First, do a dry run with snakemake. This outputs the jobs which will be submitte
 module load gcc/9.2.0 openmpi/3.1.6 python/3.7.7 snakemake/6.0.5
 cd /scratch/aob2x/DESTv2/snpCalling
 snakemake --profile /scratch/aob2x/DESTv2/snpCalling/slurm -n
+
+snakemake --profile /scratch/aob2x/DESTv2/snpCalling/slurm --unlock
 ```
 
 Then, if everything looks OK, run:
@@ -51,11 +53,11 @@ mkdir /scratch/aob2x/DESTv2_output/logs/
 module load gcc/9.2.0 openmpi/3.1.6 python/3.7.7 snakemake/6.0.5
 cd /scratch/aob2x/DESTv2/snpCalling
 
-cp jobs_genome.csv /scratch/aob2x/DESTv2_output/jobs.csv
+#cp jobs_genome.csv /scratch/aob2x/DESTv2_output/jobs.csv
 
 
 sbatch /scratch/aob2x/DESTv2/snpCalling/runSnakemake.sh
-sacct -j 47123066
+sacct -j 47123571
 sacct -u aob2x
 ```
 
@@ -63,7 +65,7 @@ sacct -u aob2x
 cd /scratch/aob2x/DESTv2_output/logs
 
 ls -lh /scratch/aob2x/DESTv2_output
-ls -lh /scratch/aob2x/DESTv2_output/sub_vcfs/
+ls -lh /scratch/aob2x/DESTv2_output/sub_vcfs/ | wc -l
 ls -lh /scratch/aob2x/DESTv2_output/sub_bcf/
 
 less -S /scratch/aob2x/DESTv2_output/jobs.csv
@@ -71,15 +73,15 @@ ls -lh /scratch/aob2x/DESTv2_output/logs/
 
 
 less -S /scratch/aob2x/DESTv2_output/sub_vcfs/vcfs_order.2L.all.PoolSNP.001.5.test.sort
-# rm /scratch/aob2x/DESTv2_output/snpEff*
-# rm /scratch/aob2x/DESTv2_output/dest*
-# rm /scratch/aob2x/DESTv2_output/sub_vcfs/*
-# rm /scratch/aob2x/DESTv2_output/sub_bcf/*
-# rm /scratch/aob2x/DESTv2_output/logs/*
-#rm /scratch/aob2x/DESTv2_output/jobs.csv
+ rm /scratch/aob2x/DESTv2_output/snpEff*
+ rm /scratch/aob2x/DESTv2_output/dest*
+ rm /scratch/aob2x/DESTv2_output/sub_vcfs/*
+ rm /scratch/aob2x/DESTv2_output/sub_bcf/*
+ rm /scratch/aob2x/DESTv2_output/logs/*
+rm /scratch/aob2x/DESTv2_output/jobs.csv
 
 cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46464670.err
-cat /scratch/aob2x/DESTv2_output/logs/*.47123080*err
+cat /scratch/aob2x/DESTv2_output/logs/*.47123571*err
 47122813
 cd /scratch/aob2x/DESTv2_output/sub_vcfs/
 
