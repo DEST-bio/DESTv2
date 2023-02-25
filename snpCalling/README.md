@@ -47,8 +47,8 @@ Then, if everything looks OK, run:
 
 
 ```bash
-mkdir /scratch/aob2x/DESTv2_output/
-mkdir /scratch/aob2x/DESTv2_output/logs/
+mkdir /scratch/aob2x/DESTv2_output_PoolSNP_50/
+mkdir /scratch/aob2x/DESTv2_output_PoolSNP_50/logs/
 
 module load gcc/9.2.0 openmpi/3.1.6 python/3.7.7 snakemake/6.0.5
 cd /scratch/aob2x/DESTv2/snpCalling
@@ -57,7 +57,7 @@ cd /scratch/aob2x/DESTv2/snpCalling
 
 
 sbatch /scratch/aob2x/DESTv2/snpCalling/runSnakemake.sh
-sacct -j 47128534
+sacct -j 47129111
 sacct -u aob2x
 ```
 
@@ -81,7 +81,7 @@ less -S /scratch/aob2x/DESTv2_output/sub_vcfs/vcfs_order.2L.all.PoolSNP.001.5.te
 rm /scratch/aob2x/DESTv2_output/jobs.csv
 
 cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46464670.err
-cat /scratch/aob2x/DESTv2_output/logs/*.47128534*err
+cat /scratch/aob2x/DESTv2_output/logs/*.47129111*err
 47122813
 cd /scratch/aob2x/DESTv2_output/sub_vcfs/
 
