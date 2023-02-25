@@ -57,7 +57,7 @@ cd /scratch/aob2x/DESTv2/snpCalling
 
 
 sbatch /scratch/aob2x/DESTv2/snpCalling/runSnakemake.sh
-sacct -j 47123571
+sacct -j 47128534
 sacct -u aob2x
 ```
 
@@ -81,7 +81,7 @@ less -S /scratch/aob2x/DESTv2_output/sub_vcfs/vcfs_order.2L.all.PoolSNP.001.5.te
 rm /scratch/aob2x/DESTv2_output/jobs.csv
 
 cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46464670.err
-cat /scratch/aob2x/DESTv2_output/logs/*.47123571*err
+cat /scratch/aob2x/DESTv2_output/logs/*.47128534*err
 47122813
 cd /scratch/aob2x/DESTv2_output/sub_vcfs/
 
