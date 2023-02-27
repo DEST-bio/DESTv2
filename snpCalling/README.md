@@ -41,6 +41,7 @@ cd /scratch/aob2x/DESTv2/snpCalling
 snakemake --profile /scratch/aob2x/DESTv2/snpCalling/slurm -n
 
 snakemake --profile /scratch/aob2x/DESTv2/snpCalling/slurm --unlock
+snakemake -S
 ```
 
 Then, if everything looks OK, run:
@@ -57,22 +58,34 @@ cd /scratch/aob2x/DESTv2/snpCalling
 
 
 sbatch /scratch/aob2x/DESTv2/snpCalling/runSnakemake.sh
-sacct -j 47129111
+sacct -j 47142169
 sacct -u aob2x
 ```
 
 
 cd /scratch/aob2x/DESTv2_output/logs
 
-ls -lh /scratch/aob2x/DESTv2_output
-ls -lh /scratch/aob2x/DESTv2_output/sub_vcfs/ | wc -l
-ls -lh /scratch/aob2x/DESTv2_output/sub_bcf/
+ls -lh /scratch/aob2x/DESTv2_output | head
+ls -lS /scratch/aob2x/DESTv2_output_PoolSNP_50/sub_vcfs/ | wc -l
+ls -lh /scratch/aob2x/DESTv2_output_PoolSNP_50/sub_bcf/
+
+ls -lth /scratch/aob2x/DESTv2_output_PoolSNP_50/sub_vcfs/ | less
+
+less -S /scratch/aob2x/DESTv2_output_PoolSNP_50/sub_vcfs/3R_30151921_30289600.all.PoolSNP.001.50.25Feb2023.vcf.gz
 
 less -S /scratch/aob2x/DESTv2_output/jobs.csv
 ls -lh /scratch/aob2x/DESTv2_output/logs/
 
+find /scratch/aob2x/DESTv2_output_PoolSNP_50/sub_vcfs/ -type f -name "*.vcf.gz" -size -10k | \
+sed 's/norep.vcf.gz/\*/g' | sed 's/vcf.gz/\*/g' | sed 's/^/rm /g'
 
-less -S /scratch/aob2x/DESTv2_output/sub_vcfs/vcfs_order.2L.all.PoolSNP.001.5.test.sort
+
+
+zcat /scratch/aob2x/DESTv2_output_PoolSNP_50/sub_vcfs/3L_6170581_6307704.all.PoolSNP.001.50.25Feb2023.vcf.gz | less
+ls -lh /scratch/aob2x/DESTv2_output_PoolSNP_50/sub_vcfs/3L_6170581_6307704.all.PoolSNP.001.50.25Feb2023.vcf.gz
+
+
+
  rm /scratch/aob2x/DESTv2_output/snpEff*
  rm /scratch/aob2x/DESTv2_output/dest*
  rm /scratch/aob2x/DESTv2_output/sub_vcfs/*
@@ -80,8 +93,9 @@ less -S /scratch/aob2x/DESTv2_output/sub_vcfs/vcfs_order.2L.all.PoolSNP.001.5.te
  rm /scratch/aob2x/DESTv2_output/logs/*
 rm /scratch/aob2x/DESTv2_output/jobs.csv
 
-cat /scratch/aob2x/DESTv2_output/logs/runSNP_calling.46464670.err
-cat /scratch/aob2x/DESTv2_output/logs/*.47129111*err
+cat /scratch/aob2x/DESTv2_output_PoolSNP_50/logs/runSNP_calling.46464670.err
+cat /scratch/aob2x/DESTv2_output/logs/*.47142169*err | less -S
+
 47122813
 cd /scratch/aob2x/DESTv2_output/sub_vcfs/
 

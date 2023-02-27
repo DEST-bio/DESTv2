@@ -5,8 +5,8 @@
 #SBATCH -N 1 # on one node
 #SBATCH -t 80:00:00 ### 1 hours
 #SBATCH --mem 1G
-#SBATCH -o /scratch/aob2x/DESTv2_output/logs/runSnakemake.%A_%a.out # Standard output
-#SBATCH -e /scratch/aob2x/DESTv2_output/logs/runSnakemake.%A_%a.err # Standard error
+#SBATCH -o /scratch/aob2x/DESTv2_output_SNAPE/logs/runSnakemake.%A_%a.out # Standard output
+#SBATCH -e /scratch/aob2x/DESTv2_output_SNAPE/logs/runSnakemake.%A_%a.err # Standard error
 #SBATCH -p standard
 #SBATCH --account berglandlab_standard
 
