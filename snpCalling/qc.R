@@ -5,14 +5,19 @@
   library(data.table)
 
 ### open GDS
-  setwd("/scratch/aob2x/DESTv2_output")
-  genofile <- seqOpen("dest.all.PoolSNP.001.5.test.norep.ann.gds")
+  setwd("/project/berglandlab/DEST/gds")
+  genofile <- seqOpen("dest.all.PoolSNP.001.50.25Feb2023.norep.ann.gds")
   length(seqGetData(genofile, "sample.id"))
   length(seqGetData(genofile, "variant.id"))
 
+
+  genofile2 <- seqOpen("dest.all.PoolSNP.001.50.10Nov2020.ann.gds")
+  length(seqGetData(genofile2, "sample.id"))
+  length(seqGetData(genofile2, "variant.id"))
+
 ### open metadata
   setwd("/scratch/aob2x/DESTv2/")
-  samps <- fread("populationInfo/dest_v2.samps_21Feb2023.csv")
+  samps <- fread("populationInfo/dest_v2.samps_25Feb2023.csv")
 
 ### function
   w2l <- function(d, sampleId, variantId, var) {
@@ -25,7 +30,7 @@
                         nAlleles=seqGetData(genofile, "$num_allele"),
                         chr=seqGetData(genofile, "chromosome"))
 
-  seqSetFilter(genofile, variant.id=snps.dt[nAlleles==2]$variant.id)
+  seqSetFilter(genofile, variant.id=sample(snps.dt[nAlleles==2]$variant.id, 1e5))
 
   rd <- seqGetData(genofile, "annotation/format/DP")
 
