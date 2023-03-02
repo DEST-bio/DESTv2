@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:18.04@sha256:eb25b45bdceafdab343223bb76a5cd5c2491c6ac666d0dfa69530a87b06b8500
 
 # packaging dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
