@@ -1,7 +1,7 @@
 # Sample information
 
 ## Description
->  This directory contains scripts to generate meta-data files for the DEST dataset.
+>  This directory contains scripts to generate meta-data files for the DEST2 dataset. The 25Feb2023 version is the most recent and matches with the SNP calls that use the same date
 
 ## Sample metadata
   > `DEST_freeze1/populationInfo/makeJointSampleInfo.R` generates several files:

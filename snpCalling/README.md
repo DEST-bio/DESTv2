@@ -58,7 +58,7 @@ cd /scratch/aob2x/DESTv2/snpCalling
 
 
 sbatch /scratch/aob2x/DESTv2/snpCalling/runSnakemake.sh
-sacct -j 47151430
+sacct -j 47166878
 sacct -u aob2x
 ```
 
@@ -69,8 +69,8 @@ sacct -u aob2x
 cd /scratch/aob2x/DESTv2_output/logs
 
 ls -lh /scratch/aob2x/DESTv2_output | head
-ls -lS /scratch/aob2x/DESTv2_output_PoolSNP_50/sub_vcfs/ | wc -l
-ls -lh /scratch/aob2x/DESTv2_output_PoolSNP_50/sub_bcf/
+ls -lS /scratch/aob2x/DESTv2_output_PoolSNP_50/sub_vcfs/*SNAPE* | wc -l
+ls -lh /scratch/aob2x/DESTv2_output_PoolSNP_50/sub_bcf/*2L*
 
 ls -lth /scratch/aob2x/DESTv2_output_PoolSNP_50/sub_vcfs/ | less
 
