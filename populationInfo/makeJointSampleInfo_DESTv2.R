@@ -347,10 +347,75 @@
 ###
   write.csv(dest_v2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_25Feb2023.csv")
 
-###
+############
+### load in sequencing stats, quality control, phylocluster, collapsing table
+############
 
+### load samps
+  setwd("/Users/alanbergland/Documents/GitHub/")
 
+  samps <- fread(file="DESTv2/populationInfo/dest_v2.samps_25Feb2023.csv")
 
+### load sequencing stats
+  qc <- fread("DESTv2/populationInfo/seqStats_filter_collapse/QC.recomendations.csv")
+
+  samps <- merge(samps, qc, by="sampleId", all.x=T)
+  samps[is.na(Recomendation), Recomendation:="Pass"]
+
+### load in phylocluster
+  load("DESTv2/populationInfo/seqStats_filter_collapse/DEST.2.0.Pyloclust.Rdata")
+  clust <- as.data.table(clust)
+  samps <- merge(samps, clust, by="sampleId", all.x=T)
+
+### load in collapse sets
+  load("DESTv2/populationInfo/seqStats_filter_collapse/samps.QC.merger.Fournier.Rdata")
+  collap <- as.data.table(samps.QC.merger.Fournier)
+
+  rename <- function(x) {
+    # x <- collap[merger_id=="Stonewall_NA"]$sampleId
+    ss <- tstrsplit(x, "_")
+    paste(unique(ss[[1]]), unique(ss[[2]]), unique(ss[[3]]), "0", unique(ss[[5]]), sep="_")
+  }
+
+  collap.ag <- collap[,list(sampleId=rename(sampleId),
+                            locality=locality[1],
+                            lat=lat[1],
+                            long=long[1],
+                            continent=continent[1],
+                            country=country[1],
+                            city=city[1],
+                            province=province[1],
+                            min_day=min_day[1],
+                            max_day=max_day[1],
+                            min_month=min_month[1],
+                            max_month=max_month[1],
+                            year=year[1],
+                            jday=jday[1],
+                            exactDate=exactDate[1],
+                            sr_season=sr_season[1],
+                            bio_rep=NA,
+                            tech_rep=NA,
+                            exp_rep=NA,
+                            loc_rep=NA,
+                            fruit_type=fruit_type[1],
+                            subsample=0,
+                            nFlies=sum(nFlies),
+                            fly_type=fly_type[1],
+                            library_type=library_type[1],
+                            sampling_strategy=sampling_strategy[1],
+                            seq_platform=seq_platform[1],
+                            set=set[1],
+                            collector=collector[1],
+                            SRA_Accession=paste(SRA_Accession, collapse=";"),
+                            reference=reference[1],
+                            collapsedSamples=paste(sampleId, collapse=";")),
+                        list(merger_id)]
+
+  collap.ag[,c("merger_id"),with=F]
+
+  samps2 <- rbind(samps, collap.ag[,-c("merger_id"),with=F], fill=T)
+
+  
 
 ### basic plots
 sampPlot <- ggplot(dest_v2) +
