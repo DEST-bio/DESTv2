@@ -13,7 +13,7 @@ module load gcc/7.1.0 openmpi/3.1.4 R/4.1.1 gdal proj
 
 Rscript \
 --vanilla \
-1.Prepare_samples_to_collapse.R \
+2.Merge_samps_to_Collapse.R \
 ${SLURM_ARRAY_TASK_ID}
 
 
