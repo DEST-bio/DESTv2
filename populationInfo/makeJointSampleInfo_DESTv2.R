@@ -371,13 +371,23 @@
   load("DESTv2/populationInfo/seqStats_filter_collapse/samps.QC.merger.Fournier.Rdata")
   collap <- as.data.table(samps.QC.merger.Fournier)
 
-  rename <- function(x) {
+  rename <- function(x, locId) {
     # x <- collap[merger_id=="Stonewall_NA"]$sampleId
+
     ss <- tstrsplit(x, "_")
-    paste(unique(ss[[1]]), unique(ss[[2]]), unique(ss[[3]]), "0", unique(ss[[5]]), sep="_")
+
+    if(is.na(locId)) {
+      locId_N<-0
+    } else if(grepl("South", locId)){
+      locId_N<-0
+    } else if(grepl("North", locId)){
+      locId_N<- -1
+    }
+
+    paste(unique(ss[[1]]), unique(ss[[2]]), unique(ss[[3]]), locId_N, unique(ss[[5]]), sep="_")
   }
 
-  collap.ag <- collap[,list(sampleId=rename(sampleId),
+  collap.ag <- collap[Recomendation!="High Contamination",list(sampleId=rename(sampleId, locId=loc_rep),
                             locality=locality[1],
                             lat=lat[1],
                             long=long[1],
@@ -396,7 +406,6 @@
                             bio_rep=NA,
                             tech_rep=NA,
                             exp_rep=NA,
-                            loc_rep=NA,
                             fruit_type=fruit_type[1],
                             subsample=0,
                             nFlies=sum(nFlies),
@@ -408,14 +417,18 @@
                             collector=collector[1],
                             SRA_Accession=paste(SRA_Accession, collapse=";"),
                             reference=reference[1],
-                            collapsedSamples=paste(sampleId, collapse=";")),
-                        list(merger_id)]
+                            collapsedSamples=paste(sampleId, collapse=";"), .N),
+                        list(merger_id, loc_rep)]
 
-  collap.ag[,c("merger_id"),with=F]
+  collap.ag[,c("merger_id", "sampleId"),with=F]
 
   samps2 <- rbind(samps, collap.ag[,-c("merger_id"),with=F], fill=T)
 
-  
+### export
+  setnames(samps2, "Recomendation", "Recommendation")
+
+  write.csv(samps2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_25Feb2023.qc_merge.csv")
+
 
 ### basic plots
 sampPlot <- ggplot(dest_v2) +
