@@ -420,7 +420,7 @@
                             collapsedSamples=paste(sampleId, collapse=";"), .N),
                         list(merger_id, loc_rep)]
 
-  collap.ag[,c("merger_id", "sampleId"),with=F]
+  collap.ag[,c("merger_id", "sampleId", "loc_rep"),with=F]
 
   samps2 <- rbind(samps, collap.ag[,-c("merger_id"),with=F], fill=T)
 
