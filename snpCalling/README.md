@@ -35,6 +35,7 @@ The config file `workflow.yaml` holds other pipeline parameters which should be 
 add to path
 
 First, do a dry run with snakemake. This outputs the jobs which will be submitted, checks that everything snakemake needs for initialization is present, checks for syntax issues, etc. From `DEST_freeze1/snpCalling`, run
+
 ```bash
 module load gcc/9.2.0 openmpi/3.1.6 python/3.7.7 snakemake/6.0.5
 cd /scratch/aob2x/DESTv2/snpCalling
@@ -48,8 +49,8 @@ Then, if everything looks OK, run:
 
 
 ```bash
-mkdir /scratch/aob2x/DESTv2_output_SNAPE/
-mkdir /scratch/aob2x/DESTv2_output_SNAPE/logs/
+mkdir /scratch/aob2x/DESTv2_output_26April2023/
+mkdir /scratch/aob2x/DESTv2_output_26April2023/logs/
 
 module load gcc/9.2.0 openmpi/3.1.6 python/3.7.7 snakemake/6.0.5
 cd /scratch/aob2x/DESTv2/snpCalling
@@ -58,7 +59,7 @@ cd /scratch/aob2x/DESTv2/snpCalling
 
 
 sbatch /scratch/aob2x/DESTv2/snpCalling/runSnakemake.sh
-sacct -j 47166878
+sacct -j 49372220
 sacct -u aob2x
 ```
 
@@ -66,7 +67,7 @@ sacct -u aob2x
 
 
 
-cd /scratch/aob2x/DESTv2_output/logs
+cd /scratch/aob2x/DESTv2_output_26April2023/
 
 ls -lh /scratch/aob2x/DESTv2_output | head
 ls -lS /scratch/aob2x/DESTv2_output_PoolSNP_50/sub_vcfs/*SNAPE* | wc -l
@@ -89,11 +90,13 @@ ls -lh /scratch/aob2x/DESTv2_output_PoolSNP_50/sub_vcfs/3L_6170581_6307704.all.P
 
 
 
- rm /scratch/aob2x/DESTv2_output/snpEff*
- rm /scratch/aob2x/DESTv2_output/dest*
- rm /scratch/aob2x/DESTv2_output/sub_vcfs/*
- rm /scratch/aob2x/DESTv2_output/sub_bcf/*
- rm /scratch/aob2x/DESTv2_output/logs/*
+ rm /scratch/aob2x/DESTv2_output_26April2023/snpEff*
+ rm /scratch/aob2x/DESTv2_output_26April2023/dest*
+ rm /scratch/aob2x/DESTv2_output_26April2023/sub_vcfs/*
+ rm /scratch/aob2x/DESTv2_output_26April2023/sub_bcf/*
+ rm /scratch/aob2x/DESTv2_output_26April2023/logs/*
+
+
 rm /scratch/aob2x/DESTv2_output/jobs.csv
 
 cat /scratch/aob2x/DESTv2_output_PoolSNP_50/logs/runSNP_calling.46464670.err

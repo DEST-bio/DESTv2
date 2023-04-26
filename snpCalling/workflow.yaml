@@ -4,7 +4,7 @@ script_directory: /scratch/aob2x/DESTv2/snpCalling #Location of the snpCalling s
 working_directory: /scratch/aob2x/DESTv2_output_26April2023 #Directory where all the data will be processed and where output will be written
 pipeline_output: /project/berglandlab/DEST/dest_mapped/ #/project/berglandlab/DEST/dest_mapped/pipeline_output #Directory holding the masked SYNC files from the main pipeline output
 popSet: all #Population to use: "all" or "PoolSeq"
-method: PoolSP #Method to use for variant calling: "PoolSNP" or "SNAPE"
+method: PoolSNP #Method to use for variant calling: "PoolSNP" or "SNAPE"
 maf: "001" #Minimum allele frequency (only used with PoolSNP method) "001" for PO
 mac: 50 #50 #Minmum allele count (only used with PoolSNP method)
 version: 26April2023
