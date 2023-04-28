@@ -13,8 +13,8 @@
 ### cat /scratch/aob2x/DESTv2_output_SNAPE/logs/runSnakemake.49369837*.err
 
 ### sbatch /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/manual_gather.sh
-### sacct -j 49411615
-### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_gather.49411615*.err
+### sacct -j 49411616
+### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_gather.49411616*.out
 
 module purge
 
@@ -43,7 +43,7 @@ concatVCF() {
   cd ${outdir}
 #
   echo "generate list"
-  ls -d *.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz | grep ${chr} | sort -t"_" -k2n,2 -k4g,4 | \
+  ls -d *.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz | grep ${chr} | sort -t"_" -k2n,2 -k4g,4 \
   > $outdir/vcfs_order.${chr}.${popSet}.${method}.${maf}.${mac}.${version}.sort
 #
   echo "Concatenating"
