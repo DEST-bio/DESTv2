@@ -13,14 +13,13 @@
 ### cat /scratch/aob2x/DESTv2_output_SNAPE/logs/runSnakemake.49369837*.err
 
 ### sbatch /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/manual_annotate.sh
-### sacct -j 49411704
-### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_annotate.49412892*.err
+### sacct -j 49412924
+### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_annotate.49412924*.err
 
 module purge
 
-#module load  htslib/1.10.2 bcftools/1.9 intel/18.0 intelmpi/18.0 parallel/20200322 R/3.6.3
-module purge
-module load samtools
+module load  htslib/1.10.2 bcftools/1.9 intel/18.0 intelmpi/18.0 parallel/20200322 R/3.6.3 samtools
+
 popSet=all
 method=PoolSNP
 maf=001
