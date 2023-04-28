@@ -14,12 +14,13 @@
 
 ### sbatch /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/manual_annotate.sh
 ### sacct -j 49411704
-### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_annotate.49411704*.err
+### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_annotate.49412892*.err
 
 module purge
 
-module load  htslib/1.10.2 bcftools/1.9 intel/18.0 intelmpi/18.0 parallel/20200322 R/3.6.3
-
+#module load  htslib/1.10.2 bcftools/1.9 intel/18.0 intelmpi/18.0 parallel/20200322 R/3.6.3
+module purge
+module load samtools
 popSet=all
 method=PoolSNP
 maf=001
@@ -74,7 +75,14 @@ cd ${wd}
 
 echo "bgzip & tabix"
 #  bgzip -c ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.vcf > ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.vcf.gz
-  tabix -p vcf ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.vcf.gz
+  bgzip ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.vcf.gz
+
+  bcftools sort \
+  -o /scratch/aob2x/DESTv2_output_26April2023/dest.all.PoolSNP.001.50.26April2023.norep.ann.sort.vcf.gz \
+  -O z \
+  /scratch/aob2x/DESTv2_output_26April2023/dest.all.PoolSNP.001.50.26April2023.norep.ann.vcf.gz
+
+  tabix -p vcf ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.sort.vcf.gz
 
 
 # rm ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.vcf
