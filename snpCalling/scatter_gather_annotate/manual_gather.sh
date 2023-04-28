@@ -12,22 +12,24 @@
 
 ### cat /scratch/aob2x/DESTv2_output_SNAPE/logs/runSnakemake.49369837*.err
 
-### sbatch DESTv2/snpCalling/scatter_gather_annotate/manual_gather.sh
-### sacct -j
+### sbatch /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/manual_gather.sh
+### sacct -j 49411615
+### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_gather.49411615*.err
 
 module purge
 
 module load htslib/1.10.2 bcftools/1.9 intel/18.0 intelmpi/18.0 parallel/20200322
 
-popSet=all
-method=PoolSNP
-maf=001
-mac=50
-version=26April2023
-wd=/scratch/aob2x/DESTv2_output_26April2023
-
-
 concatVCF() {
+
+  popSet=all
+  method=PoolSNP
+  maf=001
+  mac=50
+  version=26April2023
+  wd=/scratch/aob2x/DESTv2_output_26April2023
+
+
   chr=${1}
 
   echo "Chromosome: $chr"
