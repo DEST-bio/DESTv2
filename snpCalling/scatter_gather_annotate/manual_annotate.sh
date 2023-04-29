@@ -13,7 +13,7 @@
 ### cat /scratch/aob2x/DESTv2_output_SNAPE/logs/runSnakemake.49369837*.err
 
 ### sbatch /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/manual_annotate.sh
-### sacct -j 49412949
+### sacct -j 49412961
 ### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_annotate.49412949*.err
 
 module purge
@@ -30,6 +30,12 @@ wd=/scratch/aob2x/DESTv2_output_26April2023
 snpEffPath=~/snpEff
 
 cd ${wd}
+
+git clone https://github.com/samtools/htslib.git
+git clone https://github.com/samtools/bcftools.git
+cd bcftools
+make
+
 
 # echo "index"
 #   bcftools index -f ${wd}/sub_bcf/dest.2L.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
@@ -81,13 +87,22 @@ echo "bgzip & tabix"
   #-O z \
   #/scratch/aob2x/DESTv2_output_26April2023/dest.all.PoolSNP.001.50.26April2023.norep.ann.vcf.gz
 
-  bgzip -d -c -@20 /scratch/aob2x/DESTv2_output_26April2023/dest.all.PoolSNP.001.50.26April2023.norep.ann.vcf.gz > /scratch/aob2x/DESTv2_output_26April2023/dest.all.PoolSNP.001.50.26April2023.norep.ann.vcf
+  #bgzip -d -c -@20 /scratch/aob2x/DESTv2_output_26April2023/dest.all.PoolSNP.001.50.26April2023.norep.ann.vcf.gz > /scratch/aob2x/DESTv2_output_26April2023/dest.all.PoolSNP.001.50.26April2023.norep.ann.vcf
 
-  cat /scratch/aob2x/DESTv2_output_26April2023/dest.all.PoolSNP.001.50.26April2023.norep.ann.vcf | vcf-sort > /scratch/aob2x/DESTv2_output_26April2023/dest.all.PoolSNP.001.50.26April2023.norep.ann.sort.vcf
+  #cat /scratch/aob2x/DESTv2_output_26April2023/dest.all.PoolSNP.001.50.26April2023.norep.ann.vcf | vcf-sort > /scratch/aob2x/DESTv2_output_26April2023/dest.all.PoolSNP.001.50.26April2023.norep.ann.sort.vcf
 
-  bgzip -c -@20 /scratch/aob2x/DESTv2_output_26April2023/dest.all.PoolSNP.001.50.26April2023.norep.ann.sort.vcf > /scratch/aob2x/DESTv2_output_26April2023/dest.all.PoolSNP.001.50.26April2023.norep.ann.sort.vcf.gz
+  #bgzip -c -@20 /scratch/aob2x/DESTv2_output_26April2023/dest.all.PoolSNP.001.50.26April2023.norep.ann.sort.vcf > /scratch/aob2x/DESTv2_output_26April2023/dest.all.PoolSNP.001.50.26April2023.norep.ann.sort.vcf.gz
 
-  tabix -p vcf ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.sort.vcf.gz
+  # bcftools reheader \
+  # -o /scratch/aob2x/DESTv2_output_26April2023/dest.all.PoolSNP.001.50.26April2023.norep.ann.reheader.vcf.gz \
+  # --threads 20 \
+  # --fai /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/holo_dmel_6.12.fa.fai \
+  # /scratch/aob2x/DESTv2_output_26April2023/dest.all.PoolSNP.001.50.26April2023.norep.ann.vcf.gz
+  #
+  # tabix -p vcf ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.vcf.gz
+
+  Rscript --vanilla /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/gds2vcf.R ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.gds
+  tabix -p vcf ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.new.vcf.gz
 
 
 # rm ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.vcf
