@@ -28,6 +28,7 @@ echo "index"
 
 echo "concat"
   bcftools concat \
+  -n \
   -O z \
   ${wd}/sub_bcf/dest.*.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz \
   -o ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz

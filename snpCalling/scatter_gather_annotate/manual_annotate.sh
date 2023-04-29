@@ -14,7 +14,7 @@
 
 ### sbatch /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/manual_annotate.sh
 ### sacct -j 49423370
-### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_annotate.49423370*.out
+### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_annotate.49423370*.err
 
 module purge
 
@@ -48,13 +48,12 @@ make
 #   bcftools index -f ${wd}/sub_bcf/dest.mitochondrion_genome.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
 #
 #
-# echo "concat"
-#   bcftools concat \
-#   -n \
-#   -O z \
-#   ${wd}/sub_bcf/dest.*.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz \
-#   -o ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
-#
+ echo "concat"
+   bcftools concat \
+   -O z \
+   ${wd}/sub_bcf/dest.*.${popSet}.${method}.${maf}.${mac}.${version}.norep.new.vcf.gz \
+   -o ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
+
 # echo "convert to vcf & annotate"
 #   bcftools view \
 #   --threads 10 \
@@ -101,8 +100,8 @@ echo "bgzip & tabix"
   #
   # tabix -p vcf ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.vcf.gz
 
-  Rscript --vanilla /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/gds2vcf.R ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.gds
-  tabix -p vcf ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.new.vcf.gz
+#  Rscript --vanilla /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/gds2vcf.R ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.gds
+#  tabix -p vcf ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.new.vcf.gz
 
 
 # rm ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.vcf
