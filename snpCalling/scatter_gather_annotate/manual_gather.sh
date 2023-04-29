@@ -49,7 +49,6 @@ concatVCF() {
   echo "Concatenating"
 #
   bcftools concat \
-  --threads 20 \
   -f $outdir/vcfs_order.${chr}.${popSet}.${method}.${maf}.${mac}.${version}.sort \
   -O z \
   -n \
