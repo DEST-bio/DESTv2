@@ -13,8 +13,8 @@
 ### cat /scratch/aob2x/DESTv2_output_SNAPE/logs/runSnakemake.49369837*.err
 
 ### sbatch /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/manual_annotate.sh
-### sacct -j 49423370
-### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_annotate.49423370*.err
+### sacct -j 49423658
+### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_annotate.49423658*.err
 
 module purge
 
@@ -31,11 +31,6 @@ snpEffPath=~/snpEff
 
 cd ${wd}
 
-git clone https://github.com/samtools/htslib.git
-git clone https://github.com/samtools/bcftools.git
-cd bcftools
-make
-
 
 # echo "index"
 #   bcftools index -f ${wd}/sub_bcf/dest.2L.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
@@ -51,8 +46,10 @@ make
  echo "concat"
    bcftools concat \
    -O z \
-   ${wd}/sub_bcf/dest.*.${popSet}.${method}.${maf}.${mac}.${version}.norep.new.vcf.gz \
-   -o ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
+   ${wd}/sub_bcf/dest.*.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz \
+   -o ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.new.vcf.gz
+
+   tabix -p vcf ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.new.vcf.gz
 
 # echo "convert to vcf & annotate"
 #   bcftools view \
