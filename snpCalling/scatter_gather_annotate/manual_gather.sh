@@ -13,8 +13,8 @@
 ### cat /scratch/aob2x/DESTv2_output_SNAPE/logs/runSnakemake.49369837*.err
 
 ### sbatch /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/manual_gather.sh
-### sacct -j 49411622
-### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_gather.49411616*.out
+### sacct -j 49423819
+### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_gather.49423819*.err
 
 module purge
 
@@ -47,7 +47,7 @@ concatVCF() {
   #> $outdir/vcfs_order.${chr}.${popSet}.${method}.${maf}.${mac}.${version}.sort
 
 
-  ls -d *.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz | grep "^${chr}_"| sort -t"_" -k2n,2 -k4g,4
+  ls -d *.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz | grep "^${chr}_"| sort -t"_" -k2n,2 -k4g,4 \
   > $outdir/vcfs_order.${chr}.${popSet}.${method}.${maf}.${mac}.${version}.sort
 
 
