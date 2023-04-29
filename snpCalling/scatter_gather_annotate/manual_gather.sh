@@ -1,9 +1,9 @@
 #!/bin/bash
 #
 #SBATCH -J manual_gather # A single job name for the array
-#SBATCH --ntasks-per-node=20 # one core
+#SBATCH --ntasks-per-node=8 # one core
 #SBATCH -N 1 # on one node
-#SBATCH -t 1:00:00 ### 1 hours
+#SBATCH -t 10:00:00 ### 1 hours
 #SBATCH --mem 20G
 #SBATCH -o /scratch/aob2x/DESTv2_output_26April2023/logs/manual_gather.%A_%a.out # Standard output
 #SBATCH -e /scratch/aob2x/DESTv2_output_26April2023/logs/manual_gather.%A_%a.err # Standard error
@@ -70,4 +70,4 @@ concatVCF() {
 }
 export -f concatVCF
 
-parallel concatVCF ::: 2L 2R 3L 3R 4 mitochondrion X Y
+parallel -j8 concatVCF ::: 2L 2R 3L 3R 4 mitochondrion X Y
