@@ -3,7 +3,7 @@
 #SBATCH -J manual_annotate # A single job name for the array
 #SBATCH --ntasks-per-node=20 # one core
 #SBATCH -N 1 # on one node
-#SBATCH -t 4:00:00 ### 1 hours
+#SBATCH -t 14:00:00 ### 1 hours
 #SBATCH --mem 40G
 #SBATCH -o /scratch/aob2x/DESTv2_output_26April2023/logs/manual_annotate.%A_%a.out # Standard output
 #SBATCH -e /scratch/aob2x/DESTv2_output_26April2023/logs/manual_annotate.%A_%a.err # Standard error
@@ -13,8 +13,8 @@
 ### cat /scratch/aob2x/DESTv2_output_SNAPE/logs/runSnakemake.49369837*.err
 
 ### sbatch /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/manual_annotate.sh
-### sacct -j 49423850
-### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_annotate.49423850*.err
+### sacct -j 49423859
+### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_annotate.49423859*.out
 
 module purge
 
@@ -53,13 +53,13 @@ cd ${wd}
    ${wd}/sub_bcf/vcf_order.genome
 
 
-   vcf-concat \
-   -f ${wd}/sub_bcf/vcf_order.genome \
-   -s \
-   |  \
-   bgzip -c > ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
-
-   tabix -p vcf ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
+#   vcf-concat \
+#   -f ${wd}/sub_bcf/vcf_order.genome \
+#   -s \
+#   |  \
+#   bgzip -c > ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
+#
+#   tabix -p vcf ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
 
  echo "convert to vcf & annotate"
    bcftools view \

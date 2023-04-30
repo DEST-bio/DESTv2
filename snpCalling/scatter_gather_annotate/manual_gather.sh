@@ -13,7 +13,7 @@
 ### cat /scratch/aob2x/DESTv2_output_SNAPE/logs/runSnakemake.49369837*.err
 
 ### sbatch /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/manual_gather.sh
-### sacct -j 49423819
+### sacct -j 49423829
 ### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_gather.49423819*.err
 
 module purge
