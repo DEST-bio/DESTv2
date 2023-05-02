@@ -7,7 +7,7 @@
   library(SeqArray)
 
 ### load meta-data file
-  samps <- fread("/scratch/aob2x/DESTv2/populationInfo/dest_v2.samps_25Feb2023.qc_merge.csv")
+  samps <- fread("/scratch/aob2x/DESTv2/populationInfo/dest_v2.samps_26April2023.csv")
 
 ### open GDS for common SNPs (PoolSNP)
   genofile <- seqOpen("/scratch/aob2x/DESTv2_output_26April2023/dest.all.PoolSNP.001.50.26April2023.norep.ann.gds", allow.duplicate=T)
@@ -30,8 +30,9 @@
   snp.dt[,af:=seqGetData(genofile, "annotation/info/AF")$data]
 
 ### samples
-  seqGetData(genofile, "sample.id")
+  newSamps <- seqGetData(genofile, "sample.id")
   dim(samps)
+  newSamps[grepl("AU_Que_Inn_-1_2014-02-15", newSamps)]
 
 ### function
   getData <- function(chr="2L", start=14617051, end=14617051) {
@@ -94,4 +95,5 @@
   }
 
 ### test
-  data <- getData(start=13749337, end=13749337, chr="2L")
+  data <- getData(start=14617051, end=14617051, chr="2L")
+  data[sampleId=="AU_Que_Inn_-1_2014-02-15"]

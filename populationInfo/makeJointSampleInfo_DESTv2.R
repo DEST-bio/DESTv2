@@ -429,7 +429,52 @@
 
   write.csv(samps2, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_25Feb2023.qc_merge.csv")
 
+### add in cluster assignments and seq stats for collapsed samples
+  samps2 <- fread(file="DESTv2/populationInfo/dest_v2.samps_25Feb2023.qc_merge.csv")
+  load("DESTv2/populationInfo/seqStats_filter_collapse/collapse.QC_data.collapse.Rdata")
+  load("DESTv2/populationInfo/seqStats_filter_collapse/collapse.sampleId.cluster.Rdata")
 
+  QC_data <- as.data.table(QC_data)
+
+  setnames(QC_data, "PCRdup", "pcrdup")
+  QC_data[,Recommendation:="Pass"]
+
+  setkey(QC_data, sampleId)
+  setkey(samps2, sampleId)
+
+  samps2[J(QC_data)]
+
+  collapse.temp <- merge(samps2[,-c("Cov", "Miss", "pcrdup", "SimCont.Norm", "Recommendation")], QC_data[,-"MAPPED_eff", with=F])
+  samps.temp <- samps2[!sampleId%in%collapse.temp$sampleId]
+
+  samps3 <- rbind(samps.temp, collapse.temp)
+
+  clust <- as.data.table(c.dat.plo)
+
+  samps4 <- merge(samps3[,-"km.res.cluster",with=F], clust, by="sampleId", all=T)
+
+
+  table(is.na(samps4$cluster), samps4$Recommendation)
+  dim(samps2)
+  dim(samps3)
+  dim(samps4)
+  dim(clust)
+
+### save
+
+  write.csv(samps4, quote=F, row.names=F, file="DESTv2/populationInfo/dest_v2.samps_26April2023.csv")
+
+
+
+
+
+
+
+
+
+
+
+##### defunct
 ### basic plots
 sampPlot <- ggplot(dest_v2) +
             geom_line(aes(x= jday, y=lat, group=locality), linetype="dashed") +
