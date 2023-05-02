@@ -13,8 +13,8 @@
 ### cat /scratch/aob2x/DESTv2_output_SNAPE/logs/runSnakemake.49369837*.err
 
 ### sbatch /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/manual_annotate.sh
-### sacct -j 49423859
-### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_annotate.49423859*.out
+### sacct -j 49432588
+### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_annotate.49432588*.out
 
 module purge
 

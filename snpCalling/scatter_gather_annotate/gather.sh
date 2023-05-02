@@ -2,7 +2,7 @@
 
 module purge
 
-module load htslib/1.10.2 bcftools/1.9 intel/18.0 intelmpi/18.0 parallel/20200322
+module load htslib/1.10.2 bcftools/1.9 intel/18.0 intelmpi/18.0 parallel/20200322 vcftools/0.1.16
 
 popSet=${1}
 method=${2}
@@ -22,15 +22,19 @@ fi
 outdir=$wd/sub_vcfs
 cd ${wd}
 
-echo "generate list"
-ls -d ${outdir}/*.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz | sort -t"_" -k2n,2 -k4g,4  | \
-grep /${chr}_ > $outdir/vcfs_order.${chr}.${popSet}.${method}.${maf}.${mac}.${version}.sort
+
+echo "making list"
+ls -d *.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz | grep "^${chr}_"| sort -t"_" -k2n,2 -k4g,4 \
+> $outdir/vcfs_order.${chr}.${popSet}.${method}.${maf}.${mac}.${version}.sort
+
 
 echo "Concatenating"
 
-bcftools concat \
---threads 20 \
+vcf-concat \
 -f $outdir/vcfs_order.${chr}.${popSet}.${method}.${maf}.${mac}.${version}.sort \
--O z \
--n \
--o $bcf_outdir/dest.${chr}.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
+-s | \
+bgzip -c > $bcf_outdir/dest.${chr}.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
+
+echo "tabix'ing"
+
+tabix -p vcf $bcf_outdir/dest.${chr}.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz

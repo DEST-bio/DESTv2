@@ -59,9 +59,16 @@ cd /scratch/aob2x/DESTv2/snpCalling
 
 
 sbatch /scratch/aob2x/DESTv2/snpCalling/runSnakemake.sh
-sacct -j 49372220
+sacct -j 49391517
 sacct -u aob2x
 ```
+
+
+
+
+
+
+
 
 
 

@@ -10,13 +10,13 @@
   samps <- fread("/scratch/aob2x/DESTv2/populationInfo/dest_v2.samps_21Feb2023.csv")
 
 ### open GDS for common SNPs (PoolSNP)
-  genofile <- seqOpen("/scratch/aob2x/DESTv2_output/dest.all.PoolSNP.001.5.test.norep.ann.gds", allow.duplicate=T)
+  genofile <- seqOpen("/scratch/aob2x/DESTv2_output_26April2023/dest.all.PoolSNP.001.50.26April2023.norep.ann.gds", allow.duplicate=T)
 
 ### all of the samples there?
   table(samps$sampleId%in%seqGetData(genofile, "sample.id"))
   samps$sampleId[!samps$sampleId%in%seqGetData(genofile, "sample.id")]
   seqGetData(genofile, "sample.id")[!seqGetData(genofile, "sample.id")%in%samps$sampleId]
-  
+
 ### common SNP.dt
   seqResetFilter(genofile)
   snp.dt <- data.table(chr=seqGetData(genofile, "chromosome"),
