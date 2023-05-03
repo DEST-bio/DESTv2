@@ -24,8 +24,11 @@ cd ${wd}
 
 
 echo "making list"
-ls -d *.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz | grep "^${chr}_"| sort -t"_" -k2n,2 -k4g,4 \
-> $outdir/vcfs_order.${chr}.${popSet}.${method}.${maf}.${mac}.${version}.sort
+
+ls -d ${outdir}/*.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz | \
+rev | cut -f1 -d '/' |rev | grep "^${chr}_"| sort -t"_" -k2n,2 -k4g,4 | \
+sed "s|^|$outdir|g" > $outdir/vcfs_order.${chr}.${popSet}.${method}.${maf}.${mac}.${version}.sort
+
 
 
 echo "Concatenating"
