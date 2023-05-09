@@ -53,13 +53,13 @@ cd ${wd}
    ${wd}/sub_bcf/vcf_order.genome
 
 
-#   vcf-concat \
-#   -f ${wd}/sub_bcf/vcf_order.genome \
-#   -s \
-#   |  \
-#   bgzip -c > ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
-#
-#   tabix -p vcf ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
+   vcf-concat \
+   -f ${wd}/sub_bcf/vcf_order.genome \
+   -s \
+   |  \
+   bgzip -c > ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
+
+   tabix -p vcf ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
 
  echo "convert to vcf & annotate"
    bcftools view \
