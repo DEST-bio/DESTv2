@@ -10,7 +10,7 @@
 #SBATCH -p standard
 #SBATCH --account berglandlab_standard
 
-### cat /scratch/aob2x/DESTv2_output_SNAPE/logs/runSnakemake.49369837*.err
+### cat /scratch/aob2x/DESTv2_output_26April2023/logs/runSnakemake.49471251*.err
 
 
 

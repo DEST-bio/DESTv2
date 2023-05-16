@@ -3,7 +3,7 @@
 #SBATCH -J manual_gather # A single job name for the array
 #SBATCH --ntasks-per-node=8 # one core
 #SBATCH -N 1 # on one node
-#SBATCH -t 10:00:00 ### 1 hours
+#SBATCH -t 14:00:00 ### 1 hours
 #SBATCH --mem 20G
 #SBATCH -o /scratch/aob2x/DESTv2_output_26April2023/logs/manual_gather.%A_%a.out # Standard output
 #SBATCH -e /scratch/aob2x/DESTv2_output_26April2023/logs/manual_gather.%A_%a.err # Standard error
@@ -13,8 +13,8 @@
 ### cat /scratch/aob2x/DESTv2_output_SNAPE/logs/runSnakemake.49369837*.err
 
 ### sbatch /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/manual_gather.sh
-### sacct -j 49423829
-### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_gather.49423819*.err
+### sacct -j 49570825
+### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_gather.49570749*.err
 
 module purge
 
@@ -40,15 +40,16 @@ concatVCF() {
   fi
 
   outdir=$wd/sub_vcfs
-  cd ${outdir}
+  cd ${wd}
 
   echo "generate list"
   #ls -d *.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz | grep '^${chr}_' | sort -t"_" -k2n,2 -k4g,4 \
   #> $outdir/vcfs_order.${chr}.${popSet}.${method}.${maf}.${mac}.${version}.sort
 
 
-  ls -d *.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz | grep "^${chr}_"| sort -t"_" -k2n,2 -k4g,4 \
-  > $outdir/vcfs_order.${chr}.${popSet}.${method}.${maf}.${mac}.${version}.sort
+  ls -d ${outdir}/*.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz | \
+  rev | cut -f1 -d '/' |rev | grep "^${chr}_"| sort -t"_" -k2n,2 -k4g,4 | \
+  sed "s|^|$outdir|g" > $outdir/vcfs_order.${chr}.${popSet}.${method}.${maf}.${mac}.${version}.sort
 
 
   echo "Concatenating"
