@@ -17,4 +17,4 @@
 module load gcc/7.1.0 openmpi/3.1.4 R/3.6.3
 
 Rscript --vanilla /scratch/aob2x/DEST_freeze1/snpCalling/scatter_gather_annotate/vcf2gds.R \
-/project/berglandlab/DEST/gds/dest.PoolSeq.SNAPE.NA.NA.10Nov2020.ann.vcf
+/project/berglandlab/DEST/vcf/dest.all.PoolSNP.001.50.8Jun2023.norep.AT_EScorrect.ann.vcf.gz
