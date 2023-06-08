@@ -10,15 +10,30 @@
 #SBATCH -p standard
 #SBATCH --account berglandlab_standard
 
-### cat /scratch/aob2x/DESTv2_output_SNAPE/logs/runSnakemake.49369837*.err
+
+
+
+
 
 ### sbatch /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/manual_gather.sh
 ### sacct -j 49570825
 ### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_gather.49570749*.err
+### cat /scratch/aob2x/DESTv2_output_SNAPE/logs/runSnakemake.49369837*.err
+
+
+
+
+
 
 module purge
-
 module load htslib/1.10.2 bcftools/1.9 intel/18.0 intelmpi/18.0 parallel/20200322 vcftools/0.1.16
+
+
+
+
+
+
+
 
 concatVCF() {
 

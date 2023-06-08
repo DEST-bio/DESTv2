@@ -44,6 +44,7 @@
     droseu_sample[city=="Charlottesville", lat:=37.9790]
     droseu_sample[city=="Charlottesville", long:=-78.4897]
 
+
   ### this is the DNA_library metadata
     droseu_lib <- as.data.table(read_excel("DESTv2/populationInfo/OriginalMetadata/AOB.JCBN.Final Extraction data _Microgen_DrosEU_2017-2021.xlsx"))
 
@@ -66,6 +67,8 @@
                             "lat", "long", "altitude",
                             "nFlies",   "bio_rep", "tech_rep", "exp_rep", "loc_rep",
                             "Sampling strategy", "Wild/F1", "Fruit type", "Collectors name.x"), with=F]
+
+
 
   ### First batch of sequencing includes all samples except these:
     low_qual <- c(32, 50, 76, 77, 83, 87, 92, 96, 107, 120, 121, 127,136, 139, 144, 158, 185, 205, 210, 215, 233, 235, 236, 241, 243, 244, 246, 247, 249, 250, 252, 253)
@@ -114,6 +117,9 @@
 
     droseu <- merge(droseu, qual.dt, all.x=T, by="SequencingId")
     dim(droseu)
+
+    droseu[SequencingId=="DrosEu-99"]
+
 
 ### Cville data
 
