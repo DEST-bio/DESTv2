@@ -259,7 +259,7 @@ fi
 
   cutadapt \
   -q 18 \
-  --minimum-length 75 \
+  --minimum-length 25 \
   -o $output/$sample/${sample}.trimmed1.fq.gz \
   -b ACACTCTTTCCCTACACGACGCTCTTCCGATC \
   -O 15 \
