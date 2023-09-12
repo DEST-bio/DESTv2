@@ -1,4 +1,0 @@
-Building DAG of jobs...
-MissingInputException in line 85 of /gpfs/gpfs0/scratch/aob2x/DESTv2/snpCalling/Snakefile:
-Missing input files for rule annotate:
-/scratch/aob2x/DESTv2_output/sub_bcf/dest.2L.all.PoolSNP.001.5.test.bcf

@@ -1,4 +1,0 @@
-FileNotFoundError in line 20 of /gpfs/gpfs0/scratch/aob2x/DESTv2/snpCalling/Snakefile:
-[Errno 2] No such file or directory: '/scratch/aob2x/DESTv2_output/logs'
-  File "/gpfs/gpfs0/scratch/aob2x/DESTv2/snpCalling/Snakefile", line 20, in <module>
-  File "/apps/software/standard/core/snakemake/6.0.5/lib/python3.8/pathlib.py", line 1287, in mkdir

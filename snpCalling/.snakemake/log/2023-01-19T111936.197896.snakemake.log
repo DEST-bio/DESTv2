@@ -1,4 +1,0 @@
-Building DAG of jobs...
-MissingInputException in line 51 of /gpfs/gpfs0/scratch/aob2x/DESTv2/snpCalling/Snakefile:
-Missing input files for rule all:
-/scratch/aob2x/DESTv2_output/dest.all.SNAPE.001.5.test.ann.vcf.gz
