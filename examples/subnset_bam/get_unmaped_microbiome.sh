@@ -11,7 +11,8 @@
 #SBATCH --account biol4559-aob2x
 
 ### Nov 2 2023
-### run as: sbatch --array=1-743 ~/DESTv2_data_paper/11.Seasonality_Analysis/alanVersion/fst/OutFLANK_Fst.sh
+### run as: sbatch --array=1-743 /scratch/aob2x/scratch/aob2x/DESTv2/examples/subnset_bam/get_unmaped_microbiome.sh
+
 ### sacct -j 54723955
 ### cat /scratch/aob2x/logs/dest_fst.54723955_46.out
 ### SLURM_ARRAY_TASK_ID=2
