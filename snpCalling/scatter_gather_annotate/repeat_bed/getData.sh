@@ -1,8 +1,10 @@
 cd /scratch/aob2x/DESTv2
+
 curl https://hgdownload.soe.ucsc.edu/goldenPath/dm6/database/windowmaskerSdust.txt.gz  >  snpCalling/scatter_gather_annotate/repeat_bed/windowmaskerSdust.txt.gz
 curl https://hgdownload.soe.ucsc.edu/goldenPath/dm6/database/microsat.txt.gz  >           snpCalling/scatter_gather_annotate/repeat_bed/microsat.txt.gz
 curl https://hgdownload.soe.ucsc.edu/goldenPath/dm6/database/simpleRepeat.txt.gz >        snpCalling/scatter_gather_annotate/repeat_bed/simpleRepeat.txt.gz
 curl https://hgdownload.soe.ucsc.edu/goldenPath/dm6/database/nestedRepeats.txt.gz >       snpCalling/scatter_gather_annotate/repeat_bed/nestedRepeats.txt.gz
+curl https://hgdownload.soe.ucsc.edu/goldenPath/dm6/database/rmsk.txt.gz >                snpCalling/scatter_gather_annotate/repeat_bed/rmsk.txt.gz
 
 cd /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/repeat_bed/
 gunzip *
@@ -48,7 +50,7 @@ module load gcc/9.2.0 bedtools/2.29.2
 bedtools intersect -sorted -v \
 -b /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/repeat_bed/repeats.sort.bed.gz \
 -a /scratch/aob2x/DESTv2_output/sub_vcfs/2L_275017_312524.all.SNAPE.001.5.test.repeat.vcf.gz |
-bgzip 
+bgzip
 
 less -S ~/tmp.vcf
 
