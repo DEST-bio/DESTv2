@@ -33,7 +33,7 @@
   # samtools idxstats ${inputFile} | grep -vE "2L|2R|3L|3R|4|X|Y|mitochondrion_genome|sim_2L|sim_2R|sim_3L|sim_3R|sim_4|sim_X|sim_mtDNA" | cut -f1,2 | awk '{print $1"\t"1"\t"$2}' > /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed
   # sed -i '$d' /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed
 
-  samtools view -@ 20 -L /scratch/aob2x/DESTv2_unmapped_reads_v2/nonDrosGenome.bed $inputFile $sim_chromosomes -b > /scratch/aob2x/DESTv2_unmapped_reads/nonDros.${fileStem}
+  samtools view -@ 20 -L /scratch/aob2x/DESTv2_unmapped_reads_v2/nonDrosGenome.bed $inputFile $sim_chromosomes -b > /scratch/aob2x/DESTv2_unmapped_reads_v2/nonDros.${fileStem}
 
 ### index
   samtools index /scratch/aob2x/DESTv2_unmapped_reads_v2/unmapped.${fileStem}
