@@ -13,8 +13,8 @@
 wd=/scratch/aob2x/dest
 ### grep -E "ES_ba_12|AT_gr_12" /scratch/aob2x/dest/DEST/populationInfo/samps.csv | cut -f1,13 -d',' > /scratch/aob2x/fastq/todl.csv
 ### run as: sbatch --array=2 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.sh
-### sacct -j 55090460
-### cat /scratch/aob2x/dest/slurmOutput/remap.55090460_2.out
+### sacct -j 55092480
+### cat /scratch/aob2x/dest/slurmOutput/remap.55092480_2.err
 
 module load sratoolkit/2.10.5 samtools/1.9 gcc/9.2.0 bwa/0.7.17 picard/2.23.4 cutadapt/3.4
 threads=10
@@ -66,15 +66,15 @@ threads=10
     /scratch/aob2x/dest/fastq/${sranum}_1.fastq \
     /scratch/aob2x/dest/fastq/${sranum}_2.fastq
   fi
-  
+
   echo "cutadapt done"
   ls -lh /scratch/aob2x/dest/fastq/*
 
 ### merge reads
   echo "bbmerge start"
   /scratch/aob2x/dest/bbmap/bbmerge.sh \
-  in1=/scratch/aob2x/dest/fastq/${sranum}.trimmed1 \
-  in2=/scratch/aob2x/dest/fastq/${sranum}.trimmed2 \
+  in1=/scratch/aob2x/dest/fastq/${sranum}.trimmed1.fq \
+  in2=/scratch/aob2x/dest/fastq/${sranum}.trimmed2.fq \
   out=/scratch/aob2x/dest/fastq/${sranum}.merged.fq \
   outu1=/scratch/aob2x/dest/fastq/${sranum}.1_un.fq \
   outu2=/scratch/aob2x/dest/fastq/${sranum}.2_un.fq
