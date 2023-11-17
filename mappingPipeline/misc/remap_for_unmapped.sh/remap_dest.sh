@@ -13,7 +13,7 @@
 wd=/scratch/aob2x/dest
 ### grep -E "ES_ba_12|AT_gr_12" /scratch/aob2x/dest/DEST/populationInfo/samps.csv | cut -f1,13 -d',' > /scratch/aob2x/fastq/todl.csv
 ### run as: sbatch --array=2 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.sh
-### sacct -j 55058574
+### sacct -j 55082950
 
 module load sratoolkit/2.10.5 samtools/1.9 gcc/9.2.0 bwa/0.7.17 picard/2.23.4
 
@@ -32,7 +32,7 @@ module load sratoolkit/2.10.5 samtools/1.9 gcc/9.2.0 bwa/0.7.17 picard/2.23.4
     ${sranum}
   fi
 
-  if [ ! -f "/scratch/aob2x/dest/fastq/${sranum}_1.fastq.gz" ]; then
+  if [ ! -f "/scratch/aob2x/dest/fastq/${sranum}_1.fastq" ]; then
 
     fasterq-dump \
     --split-files \
@@ -41,8 +41,8 @@ module load sratoolkit/2.10.5 samtools/1.9 gcc/9.2.0 bwa/0.7.17 picard/2.23.4
     -e 10 \
     /scratch/aob2x/dest/fastq/${sranum}.sra
 
-    gzip /scratch/aob2x/dest/fastq/${sranum}_1.fastq
-    gzip /scratch/aob2x/dest/fastq/${sranum}_2.fastq
+    # gzip /scratch/aob2x/dest/fastq/${sranum}_1.fastq
+    # gzip /scratch/aob2x/dest/fastq/${sranum}_2.fastq
 
     # rm /scratch/aob2x/fastq/${sranum}.sra
   fi
@@ -53,34 +53,34 @@ module load sratoolkit/2.10.5 samtools/1.9 gcc/9.2.0 bwa/0.7.17 picard/2.23.4
   cutadapt \
   -q 18 \
   --minimum-length 25 \
-  -o /scratch/aob2x/dest/fastq/${sranum}.trimmed1.fq.gz \
-  -p /scratch/aob2x/dest/fastq/${sranum}.trimmed2.fq.gz \
+  -o /scratch/aob2x/dest/fastq/${sranum}.trimmed1.fq \
+  -p /scratch/aob2x/dest/fastq/${sranum}.trimmed2.fq \
   -b ACACTCTTTCCCTACACGACGCTCTTCCGATC \
   -B CAAGCAGAAGACGGCATACGAGAT \
   -O 15 \
   -n 3 \
   --cores=$threads \
-  /scratch/aob2x/dest/fastq/${sranum}_1.fastq.gz \
-  /scratch/aob2x/dest/fastq/${sranum}_2.fastq.gz
+  /scratch/aob2x/dest/fastq/${sranum}_1.fastq \
+  /scratch/aob2x/dest/fastq/${sranum}_2.fastq
 
 ### merge reads
   /scratch/aob2x/dest/bbmap/bbmerge.sh \
-  in1=/scratch/aob2x/dest/fastq/${sranum}.trimmed1.fq.gz \
-  in2=/scratch/aob2x/dest/fastq/${sranum}.trimmed2.fq.gz \
-  out=/scratch/aob2x/dest/fastq/${sranum}.merged.fq.gz \
-  outu1=/scratch/aob2x/dest/fastq/${sranum}.1_un.fq.gz \
-  outu2=/scratch/aob2x/dest/fastq/${sranum}.2_un.fq.gz
+  in1=/scratch/aob2x/dest/fastq/${sranum}.trimmed1 \
+  in2=/scratch/aob2x/dest/fastq/${sranum}.trimmed2 \
+  out=/scratch/aob2x/dest/fastq/${sranum}.merged.fq \
+  outu1=/scratch/aob2x/dest/fastq/${sranum}.1_un.fq \
+  outu2=/scratch/aob2x/dest/fastq/${sranum}.2_un.fq
 
 ### remap
   bwa mem -t $threads -M -R "@RG\tID:${sranum}\tSM:${sample}\tPL:illumina\tLB:lib1" \
   /opt/hologenome/holo_dmel_6.12.fa \
-  /scratch/aob2x/dest/fastq/${sranum}.1_un.fq.gz \
-  /scratch/aob2x/dest/fastq/${sranum}.2_un.fq.gz | \
+  /scratch/aob2x/dest/fastq/${sranum}.1_un.fq \
+  /scratch/aob2x/dest/fastq/${sranum}.2_un.fq | \
   samtools view -@ $threads -Sbh - > /scratch/aob2x/dest/bam/${sample}.merged_un.bam
 
   bwa mem -t $threads -M -R "@RG\tID:${sranum}\tSM:${sample}\tPL:illumina\tLB:lib1" \
   /opt/hologenome/holo_dmel_6.12.fa \
-  /scratch/aob2x/dest/fastq/${sranum}.merged.fq.gz | \
+  /scratch/aob2x/dest/fastq/${sranum}.merged.fq | \
   samtools view -@ $threads -Sbh - > /scratch/aob2x/dest/bam/${sample}.merged.bam
 
   java -jar picard MergeSamFiles \
