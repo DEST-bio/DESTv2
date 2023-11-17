@@ -13,7 +13,7 @@
 wd=/scratch/aob2x/dest
 ### grep -E "ES_ba_12|AT_gr_12" /scratch/aob2x/dest/DEST/populationInfo/samps.csv | cut -f1,13 -d',' > /scratch/aob2x/fastq/todl.csv
 ### run as: sbatch --array=2 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.sh
-### sacct -j 55083350
+### sacct -j 55086148
 ### cat /scratch/aob2x/dest/slurmOutput/remap.55083350_2.err
 
 module load sratoolkit/2.10.5 samtools/1.9 gcc/9.2.0 bwa/0.7.17 picard/2.23.4 cutadapt/3.4
@@ -50,6 +50,7 @@ module load sratoolkit/2.10.5 samtools/1.9 gcc/9.2.0 bwa/0.7.17 picard/2.23.4 cu
 
 ### trim
   threads=10
+  echo "cutadapt start"
 
   cutadapt \
   -q 18 \
@@ -64,7 +65,11 @@ module load sratoolkit/2.10.5 samtools/1.9 gcc/9.2.0 bwa/0.7.17 picard/2.23.4 cu
   /scratch/aob2x/dest/fastq/${sranum}_1.fastq \
   /scratch/aob2x/dest/fastq/${sranum}_2.fastq
 
+  echo "cutadapt done"
+  ls -lh /scratch/aob2x/dest/fastq/*
+
 ### merge reads
+  echo "bbmerge start"
   /scratch/aob2x/dest/bbmap/bbmerge.sh \
   in1=/scratch/aob2x/dest/fastq/${sranum}.trimmed1 \
   in2=/scratch/aob2x/dest/fastq/${sranum}.trimmed2 \
@@ -72,7 +77,11 @@ module load sratoolkit/2.10.5 samtools/1.9 gcc/9.2.0 bwa/0.7.17 picard/2.23.4 cu
   outu1=/scratch/aob2x/dest/fastq/${sranum}.1_un.fq \
   outu2=/scratch/aob2x/dest/fastq/${sranum}.2_un.fq
 
+  echo "bbmerge end"
+  ls -lh /scratch/aob2x/dest/fastq/*
+
 ### remap
+  echo "remap start"
   bwa mem -t $threads -M -R "@RG\tID:${sranum}\tSM:${sample}\tPL:illumina\tLB:lib1" \
   /opt/hologenome/holo_dmel_6.12.fa \
   /scratch/aob2x/dest/fastq/${sranum}.1_un.fq \
@@ -91,8 +100,11 @@ module load sratoolkit/2.10.5 samtools/1.9 gcc/9.2.0 bwa/0.7.17 picard/2.23.4 cu
   USE_THREADING=true \
   O=/scratch/aob2x/dest/bam/${sample}.sorted_merged.bam
 
+  echo "remap done"
+  ls -lh /scratch/aob2x/dest/bam/*
 
 ### get unmapped reads
+  echo "get unmapped"
   samtools view -h -@ 20 -b -f 4 /scratch/aob2x/dest/bam/${sample}.sorted_merged.bam  > \
   /scratch/aob2x/dest/bam/${sample}.sorted_merged.unmapped.bam
 
@@ -106,3 +118,5 @@ module load sratoolkit/2.10.5 samtools/1.9 gcc/9.2.0 bwa/0.7.17 picard/2.23.4 cu
 ### index
   samtools index /scratch/aob2x/dest/bam/${sample}.sorted_merged.nonDros.bam
   samtools index /scratch/aob2x/dest/bam/${sample}.sorted_merged.nonDros.bam
+  echo "remap done"
+  ls -lh /scratch/aob2x/dest/bam/*
