@@ -44,7 +44,7 @@ module load sratoolkit/2.10.5 samtools/1.9 gcc/9.2.0 bwa/0.7.17 picard/2.23.4
     gzip /scratch/aob2x/dest/fastq/${sranum}_1.fastq
     gzip /scratch/aob2x/dest/fastq/${sranum}_2.fastq
 
-    rm /scratch/aob2x/fastq/${sranum}.sra
+    # rm /scratch/aob2x/fastq/${sranum}.sra
   fi
 
 ### trim
