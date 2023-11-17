@@ -13,7 +13,7 @@
 ### Nov 2 2023
 ### run as: sbatch --array=1-743 /scratch/aob2x/DESTv2/examples/subnset_bam/get_unmaped_microbiome.sh
 
-### sacct -j 54804087
+### sacct -j 54804238 | head
 ### cat /scratch/aob2x/logs/dest_fst.54723955_46.out
 ### SLURM_ARRAY_TASK_ID=2
 
@@ -40,4 +40,4 @@
   samtools index /scratch/aob2x/DESTv2_unmapped_reads_v2/nonDros.${fileStem}
 
 ### log
-  ls -lh /scratch/aob2x/DESTv2_unmapped_reads_v2/*
+  ls -lh /scratch/aob2x/DESTv2_unmapped_reads_v2/*${fileStem}*
