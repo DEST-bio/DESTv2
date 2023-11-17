@@ -13,7 +13,7 @@
 wd=/scratch/aob2x/dest
 ### grep -E "ES_ba_12|AT_gr_12" /scratch/aob2x/dest/DEST/populationInfo/samps.csv | cut -f1,13 -d',' > /scratch/aob2x/fastq/todl.csv
 ### run as: sbatch --array=2 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.sh
-### sacct -j 18750292
+### sacct -j 55058574
 
 module load sratoolkit/2.10.5 samtools/1.9 gcc/9.2.0 bwa/0.7.17 picard/2.23.4
 
@@ -26,10 +26,13 @@ module load sratoolkit/2.10.5 samtools/1.9 gcc/9.2.0 bwa/0.7.17 picard/2.23.4
   echo $sample " / " $sranum
 
 ### download if necesary
-  if [ -f "/scratch/aob2x/dest/fastq/${sranum}_1.fastq.gz" ]; then
+  if [ ! -f "/scratch/aob2x/dest/fastq/${sranum}.sra" ]; then
     prefetch \
     -o /scratch/aob2x/dest/fastq/${sranum}.sra \
     ${sranum}
+  fi
+
+  if [ ! -f "/scratch/aob2x/dest/fastq/${sranum}_1.fastq.gz" ]; then
 
     fasterq-dump \
     --split-files \
