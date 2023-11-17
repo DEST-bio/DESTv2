@@ -13,10 +13,11 @@
 wd=/scratch/aob2x/dest
 ### grep -E "ES_ba_12|AT_gr_12" /scratch/aob2x/dest/DEST/populationInfo/samps.csv | cut -f1,13 -d',' > /scratch/aob2x/fastq/todl.csv
 ### run as: sbatch --array=2 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.sh
-### sacct -j 55086148
-### cat /scratch/aob2x/dest/slurmOutput/remap.55083350_2.err
+### sacct -j 55090460
+### cat /scratch/aob2x/dest/slurmOutput/remap.55090460_2.out
 
 module load sratoolkit/2.10.5 samtools/1.9 gcc/9.2.0 bwa/0.7.17 picard/2.23.4 cutadapt/3.4
+threads=10
 
 #SLURM_ARRAY_TASK_ID=2
 
@@ -49,22 +50,23 @@ module load sratoolkit/2.10.5 samtools/1.9 gcc/9.2.0 bwa/0.7.17 picard/2.23.4 cu
   fi
 
 ### trim
-  threads=10
-  echo "cutadapt start"
+  if [ ! -f /scratch/aob2x/dest/fastq/${sranum}.trimmed1.fq ]; then
+    echo "cutadapt start"
 
-  cutadapt \
-  -q 18 \
-  --minimum-length 25 \
-  -o /scratch/aob2x/dest/fastq/${sranum}.trimmed1.fq \
-  -p /scratch/aob2x/dest/fastq/${sranum}.trimmed2.fq \
-  -b ACACTCTTTCCCTACACGACGCTCTTCCGATC \
-  -B CAAGCAGAAGACGGCATACGAGAT \
-  -O 15 \
-  -n 3 \
-  --cores=$threads \
-  /scratch/aob2x/dest/fastq/${sranum}_1.fastq \
-  /scratch/aob2x/dest/fastq/${sranum}_2.fastq
-
+    cutadapt \
+    -q 18 \
+    --minimum-length 25 \
+    -o /scratch/aob2x/dest/fastq/${sranum}.trimmed1.fq \
+    -p /scratch/aob2x/dest/fastq/${sranum}.trimmed2.fq \
+    -b ACACTCTTTCCCTACACGACGCTCTTCCGATC \
+    -B CAAGCAGAAGACGGCATACGAGAT \
+    -O 15 \
+    -n 3 \
+    --cores=$threads \
+    /scratch/aob2x/dest/fastq/${sranum}_1.fastq \
+    /scratch/aob2x/dest/fastq/${sranum}_2.fastq
+  fi
+  
   echo "cutadapt done"
   ls -lh /scratch/aob2x/dest/fastq/*
 
