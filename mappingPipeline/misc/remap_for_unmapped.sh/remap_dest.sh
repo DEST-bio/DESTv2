@@ -13,8 +13,8 @@
 wd=/scratch/aob2x/dest
 ### grep -E "ES_ba_12|AT_gr_12" /scratch/aob2x/dest/DEST/populationInfo/samps.csv | cut -f1,13 -d',' > /scratch/aob2x/fastq/todl.csv
 ### run as: sbatch --array=2 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.sh
-### sacct -j 55101018
-### cat /scratch/aob2x/dest/slurmOutput/remap.55101018_2.err
+### sacct -j 55114839
+### cat /scratch/aob2x/dest/slurmOutput/remap.55114839_2.err
 
 module load sratoolkit/2.10.5 samtools/1.9 gcc/9.2.0 bwa/0.7.17 picard/2.23.4 cutadapt/3.4
 threads=10
@@ -97,10 +97,10 @@ threads=10
     /scratch/aob2x/dest/remap_for_unmapped/ref/holo_dmel_6.12.fa \
     /scratch/aob2x/dest/fastq/${sranum}.merged.fq | \
     samtools view -@ $threads -Sbh - > /scratch/aob2x/dest/bam/${sample}.merged.bam
-  }
+  fi
   echo "mapping done"
 
-  
+
   java -jar $EBROOTPICARD/picard.jar MergeSamFiles \
   I=/scratch/aob2x/dest/bam/${sample}.merged.bam \
   I=/scratch/aob2x/dest/bam/${sample}.merged_un.bam \
