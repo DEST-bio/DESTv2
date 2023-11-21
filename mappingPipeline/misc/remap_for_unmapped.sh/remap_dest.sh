@@ -12,8 +12,8 @@
 
 wd=/scratch/aob2x/dest
 ### grep -E "ES_ba_12|AT_gr_12" /scratch/aob2x/dest/DEST/populationInfo/samps.csv | cut -f1,13 -d',' > /scratch/aob2x/fastq/todl.csv
-### run as: sbatch --array=2 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.sh
-### sacct -j 55114839
+### run as: sbatch --array=2-754 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.sh
+### sacct -j 55233611
 ### cat /scratch/aob2x/dest/slurmOutput/remap.55114839_2.err
 
 module load sratoolkit/2.10.5 samtools/1.9 gcc/9.2.0 bwa/0.7.17 picard/2.23.4 cutadapt/3.4
@@ -113,14 +113,14 @@ threads=10
 
 ### get unmapped reads
   echo "get unmapped"
-  samtools view -h -@ 20 -b -f 4 /scratch/aob2x/dest/bam/${sample}.sorted_merged.bam  > \
+  samtools view -h -@ 20 -b -f 12 /scratch/aob2x/dest/bam/${sample}.sorted_merged.bam  > \
   /scratch/aob2x/dest/bam/${sample}.sorted_merged.unmapped.bam
 
 ### get reads mapping to non-Drosophila genomes
   # samtools idxstats ${inputFile} | grep -vE "2L|2R|3L|3R|4|X|Y|mitochondrion_genome|sim_2L|sim_2R|sim_3L|sim_3R|sim_4|sim_X|sim_mtDNA" | cut -f1,2 | awk '{print $1"\t"1"\t"$2}' > /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed
   # sed -i '$d' /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed
 
-  samtools view -@ 20 -L /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed $inputFile -b > \
+  samtools view -@ 20 -L /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed /scratch/aob2x/dest/bam/${sample}.sorted_merged.bam -b > \
   /scratch/aob2x/dest/bam/${sample}.sorted_merged.nonDros.bam
 
 ### index
@@ -129,3 +129,16 @@ threads=10
 
   echo "remap done"
   ls -lh /scratch/aob2x/dest/bam/*
+
+### clean up
+  rm /scratch/aob2x/fastq/${sranum}.sra
+  rm /scratch/aob2x/dest/fastq/${sranum}.trimmed1.fq
+  rm /scratch/aob2x/dest/fastq/${sranum}.trimmed2.fq
+  rm /scratch/aob2x/dest/fastq/${sranum}_1.fastq
+  rm /scratch/aob2x/dest/fastq/${sranum}_2.fastq
+  rm /scratch/aob2x/dest/fastq/${sranum}.merged.fq
+  rm /scratch/aob2x/dest/fastq/${sranum}.1_un.fq
+  rm /scratch/aob2x/dest/fastq/${sranum}.2_un.fq
+  rm /scratch/aob2x/dest/bam/${sample}.merged.bam
+  rm /scratch/aob2x/dest/bam/${sample}.merged_un.bam
+  rm /scratch/aob2x/dest/bam/${sample}.sorted_merged.bam

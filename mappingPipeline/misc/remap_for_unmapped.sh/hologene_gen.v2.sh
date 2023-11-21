@@ -103,3 +103,4 @@ W_pipientis.fasta \
 
 module load samtools
 samtools faidx holo_dmel_6.12.fa
+bwa index
