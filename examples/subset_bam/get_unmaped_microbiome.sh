@@ -30,8 +30,8 @@
   samtools view -h -@ 20 -b -f 4 $inputFile  > /scratch/aob2x/DESTv2_unmapped_reads_v2/unmapped.${fileStem}
 
 ### get reads mapping to non-Drosophila genomes
-  # samtools idxstats ${inputFile} | grep -vE "2L|2R|3L|3R|4|X|Y|mitochondrion_genome|sim_2L|sim_2R|sim_3L|sim_3R|sim_4|sim_X|sim_mtDNA" | cut -f1,2 | awk '{print $1"\t"1"\t"$2}' > /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed
-  # sed -i '$d' /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed
+  samtools idxstats /project/berglandlab/DEST/dest_mapped/Cville/US_Vir_Cha_1_2016-07-08/US_Vir_Cha_1_2016-07-08.original.bam | grep -vE "2L|2R|3L|3R|4|X|Y|mitochondrion_genome|sim_2L|sim_2R|sim_3L|sim_3R|sim_4|sim_X|sim_mtDNA" | cut -f1,2 | awk '{print $1"\t"1"\t"$2}' > /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed
+  sed -i '$d' /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed
 
   samtools view -@ 20 -L /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed $inputFile -b > /scratch/aob2x/DESTv2_unmapped_reads_v2/nonDros.${fileStem}
 

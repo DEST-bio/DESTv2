@@ -3,7 +3,7 @@
 #SBATCH -J remap_fastq # A single job name for the array
 #SBATCH --ntasks-per-node=10 # one core
 #SBATCH -N 1 # on one node
-#SBATCH -t 10:00:00 ### 6 hours
+#SBATCH -t 15:00:00 ### 6 hours
 #SBATCH --mem 50G
 #SBATCH -o /scratch/aob2x/dest/slurmOutput/remap.%A_%a.out # Standard output
 #SBATCH -e /scratch/aob2x/dest/slurmOutput/remap.%A_%a.err # Standard error
@@ -12,7 +12,7 @@
 
 wd=/scratch/aob2x/dest
 ### grep -E "ES_ba_12|AT_gr_12" /scratch/aob2x/dest/DEST/populationInfo/samps.csv | cut -f1,13 -d',' > /scratch/aob2x/fastq/todl.csv
-### run as: sbatch --array=2-754%10 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.sh
+### run as: sbatch --array=2-254%20 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.sh
 ### sacct -j 55233826
 ### cat /scratch/aob2x/dest/slurmOutput/remap.55114839_2.err
 
@@ -22,8 +22,8 @@ threads=10
 #SLURM_ARRAY_TASK_ID=2
 
 ### get sample
-  sranum=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/dest_v2.samps_8Jun2023.csv | cut -f31 -d',' )
-  sample=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/dest_v2.samps_8Jun2023.csv | cut -f1 -d',' )
+  sranum=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /project/berglandlab/DEST2.0_reads_deprecated/dros3.all.mapping.guide.txt | cut -f2 )
+  sample=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /project/berglandlab/DEST2.0_reads_deprecated/dros3.all.mapping.guide.txt | cut -f1 )
 
   echo $sample " / " $sranum
 
