@@ -12,26 +12,30 @@
 
 wd=/scratch/aob2x/dest
 ### grep -E "ES_ba_12|AT_gr_12" /scratch/aob2x/dest/DEST/populationInfo/samps.csv | cut -f1,13 -d',' > /scratch/aob2x/fastq/todl.csv
-### run as: sbatch --array=592,626,694,710,711,714,716,718,719,721,722,746 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.sh
-### sacct -j 55655405
-### cat /scratch/aob2x/dest/slurmOutput/remap.55440483_711.err
+### run as: sbatch --array=2-59%5 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.sh
+### sacct -j 56248874
+### cat /scratch/aob2x/dest/slurmOutput/remap.56248874_8.out
 
 ###   samtools idxstats /project/berglandlab/DEST/dest_mapped/Cville/US_Vir_Cha_1_2016-07-08/US_Vir_Cha_1_2016-07-08.original.bam | grep -vE "2L|2R|3L|3R|4|X|Y|mitochondrion_genome|sim_2L|sim_2R|sim_3L|sim_3R|sim_4|sim_X|sim_mtDNA" | cut -f1,2 | awk '{print $1"\t"1"\t"$2}' > /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed
 ###   sed -i '$d' /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed
 
 
-module load sratoolkit/2.10.5 samtools/1.9 gcc/9.2.0 bwa/0.7.17 picard/2.23.4 cutadapt/3.4
+module load gcc/11.4.0 sratoolkit/3.0.3 samtools/1.17 openmpi/4.1.4 bwa/0.7.17 picard/2.23.4 cutadapt/3.4
 threads=10
 
 #SLURM_ARRAY_TASK_ID=2
 
 ### get sample
-  sranum=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/dest_v2.samps_8Jun2023.csv | cut -f31 -d',' )
-  sample=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/dest_v2.samps_8Jun2023.csv | cut -f1 -d',' )
+  # sranum=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/dest_v2.samps_8Jun2023.csv | cut -f31 -d',' )
+  # sample=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/dest_v2.samps_8Jun2023.csv | cut -f1 -d',' )
+  sranum=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/missingSamples.sra.delim | cut -f31 -d',' )
+  sample=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/missingSamples.sra.delim | cut -f1 -d',' )
 
   echo $sample " / " $sranum
 
 ### download if necesary
+  rm -fr /scratch/aob2x/dest/fastq/${sranum}.sra
+  
   if [ ! -f "/scratch/aob2x/dest/fastq/${sranum}.sra" ]; then
     prefetch \
     -o /scratch/aob2x/dest/fastq/${sranum}.sra \
@@ -132,7 +136,7 @@ threads=10
   samtools index /scratch/aob2x/dest/bam/${sample}.sorted_merged.nonDros.bam
 
   echo "remap done"
-  ls -lh /scratch/aob2x/dest/bam/*
+  ls -lh /scratch/aob2x/dest/bam/${sample}*
 
 ### clean up
   rm /scratch/aob2x/fastq/${sranum}.sra
