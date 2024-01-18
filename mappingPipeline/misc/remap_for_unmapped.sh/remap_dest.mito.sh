@@ -12,9 +12,9 @@
 
 wd=/scratch/aob2x/dest
 ### nl /scratch/aob2x/dest/missingSamples.sra.delim | grep -E "US_Vir_Cha_1_2018-09-20"
-### run as: sbatch --array=2-59%5 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.sh
-### sacct -j 56259084
-### cat /scratch/aob2x/dest/slurmOutput/remap.56259084_46.out
+### run as: sbatch --array=2 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.mito.sh
+### sacct -j 57037859
+### cat /scratch/aob2x/dest/slurmOutput/remap.57037859_2.out
 
 ###   samtools idxstats /project/berglandlab/DEST/dest_mapped/Cville/US_Vir_Cha_1_2016-07-08/US_Vir_Cha_1_2016-07-08.original.bam | grep -vE "2L|2R|3L|3R|4|X|Y|mitochondrion_genome|sim_2L|sim_2R|sim_3L|sim_3R|sim_4|sim_X|sim_mtDNA" | cut -f1,2 | awk '{print $1"\t"1"\t"$2}' > /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed
 ###   sed -i '$d' /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed
@@ -24,7 +24,7 @@ module load gcc/11.4.0 sratoolkit/3.0.3 samtools/1.17 openmpi/4.1.4 bwa/0.7.17 p
 threads=10
 
 #SLURM_ARRAY_TASK_ID=528
-#SLURM_ARRAY_TASK_ID=754
+#SLURM_ARRAY_TASK_ID=2
 
 ### get sample
   sranum=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/dest_v2.samps_8Jun2023.csv | cut -f31 -d',' )
@@ -37,12 +37,14 @@ threads=10
   if [ ! "$sranum" = "NA" ]; then
     echo "Getting FASTQ"
     if [ ! -f "/scratch/aob2x/dest/fastq/${sranum}.sra" ]; then
+      echo "prefetch"
       prefetch \
       -o /scratch/aob2x/dest/fastq/${sranum}.sra \
       ${sranum}
     fi
 
     if [ ! -f "/scratch/aob2x/dest/fastq/${sranum}_1.fastq" ]; then
+      echo "fastq dump"
       fasterq-dump \
       --split-files \
       --split-3 \
@@ -63,8 +65,13 @@ threads=10
       exit
     fi
 
-    r1_filename=/project/berglandlab/DEST/raw_reads/DrosEU_3_Jan2023/${sranum}_1.fastq.gz
-    r2_filename=/project/berglandlab/DEST/raw_reads/DrosEU_3_Jan2023/${sranum}_2.fastq.gz
+    echo "unzipping"
+
+    gunzip -c /project/berglandlab/DEST/raw_reads/DrosEU_3_Jan2023/${sranum}_1.fastq.gz > /scratch/aob2x/dest/fastq/${sranum}_1.fq
+    gunzip -c /project/berglandlab/DEST/raw_reads/DrosEU_3_Jan2023/${sranum}_2.fastq.gz > /scratch/aob2x/dest/fastq/${sranum}_2.fq
+
+    r1_filename=/scratch/aob2x/dest/fastq/${sranum}_1.fq
+    r2_filename=/scratch/aob2x/dest/fastq/${sranum}_2.fq
 
   fi
 
