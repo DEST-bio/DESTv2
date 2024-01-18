@@ -23,41 +23,54 @@ wd=/scratch/aob2x/dest
 module load gcc/11.4.0 sratoolkit/3.0.3 samtools/1.17 openmpi/4.1.4 bwa/0.7.17 picard/2.23.4 cutadapt/3.4
 threads=10
 
-#SLURM_ARRAY_TASK_ID=46
+#SLURM_ARRAY_TASK_ID=528
+#SLURM_ARRAY_TASK_ID=754
 
 ### get sample
-  # sranum=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/dest_v2.samps_8Jun2023.csv | cut -f31 -d',' )
-  # sample=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/dest_v2.samps_8Jun2023.csv | cut -f1 -d',' )
-  sranum=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/missingSamples.sra.delim | cut -f31 -d',' )
-  sample=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/missingSamples.sra.delim | cut -f1 -d',' )
+  sranum=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/dest_v2.samps_8Jun2023.csv | cut -f31 -d',' )
+  sample=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/dest_v2.samps_8Jun2023.csv | cut -f1 -d',' )
+  # sranum=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/missingSamples.sra.delim | cut -f31 -d',' )
+  # sample=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/missingSamples.sra.delim | cut -f1 -d',' )
 
   echo $sample " / " $sranum
 
+  if [ ! "$sranum" = "NA" ]; then
+    echo "Getting FASTQ"
+    if [ ! -f "/scratch/aob2x/dest/fastq/${sranum}.sra" ]; then
+      prefetch \
+      -o /scratch/aob2x/dest/fastq/${sranum}.sra \
+      ${sranum}
+    fi
+
+    if [ ! -f "/scratch/aob2x/dest/fastq/${sranum}_1.fastq" ]; then
+      fasterq-dump \
+      --split-files \
+      --split-3 \
+      --outfile /scratch/aob2x/dest/fastq/${sranum} \
+      -e 10 \
+      /scratch/aob2x/dest/fastq/${sranum}.sra
+    fi
+
+    r1_filename=/scratch/aob2x/dest/fastq/${sranum}_1.fq
+    r2_filename=/scratch/aob2x/dest/fastq/${sranum}_2.fq
+  else
+    echo "No SRA sample."
+    sranum=$( grep ${sample} /scratch/aob2x/dros3.all.mapping.guide.txt | cut -f2 )
+
+    echo $sample " / " $sranum
+    if [ -z "$sranum" ]; then
+      echo "no local"
+      exit
+    fi
+
+    r1_filename=/project/berglandlab/DEST/raw_reads/DrosEU_3_Jan2023/${sranum}_1.fastq.gz
+    r2_filename=/project/berglandlab/DEST/raw_reads/DrosEU_3_Jan2023/${sranum}_2.fastq.gz
+
+  fi
+
+
 ### download if necesary
-  rm -fr /scratch/aob2x/dest/fastq/${sranum}.sra
-  rm -fr /scratch/aob2x/dest/fastq/${sranum}_1.fastq
-  rm -fr /scratch/aob2x/dest/fastq/${sranum}_2.fastq
 
-  if [ ! -f "/scratch/aob2x/dest/fastq/${sranum}.sra" ]; then
-    prefetch \
-    -o /scratch/aob2x/dest/fastq/${sranum}.sra \
-    ${sranum}
-  fi
-
-  if [ ! -f "/scratch/aob2x/dest/fastq/${sranum}_1.fastq" ]; then
-
-    fasterq-dump \
-    --split-files \
-    --split-3 \
-    --outfile /scratch/aob2x/dest/fastq/${sranum} \
-    -e 10 \
-    /scratch/aob2x/dest/fastq/${sranum}.sra
-
-    # gzip /scratch/aob2x/dest/fastq/${sranum}_1.fastq
-    # gzip /scratch/aob2x/dest/fastq/${sranum}_2.fastq
-
-    # rm /scratch/aob2x/fastq/${sranum}.sra
-  fi
 
 ### trim
   if [ ! -f /scratch/aob2x/dest/fastq/${sranum}.trimmed1.fq ]; then
@@ -73,8 +86,8 @@ threads=10
     -O 15 \
     -n 3 \
     --cores=$threads \
-    /scratch/aob2x/dest/fastq/${sranum}_1.fastq \
-    /scratch/aob2x/dest/fastq/${sranum}_2.fastq
+    ${r1_filename} \
+    ${r2_filename}
   fi
 
   echo "cutadapt done"
@@ -121,21 +134,16 @@ threads=10
   echo "remap done"
   ls -lh /scratch/aob2x/dest/bam/*
 
-### get unmapped reads
-  echo "get unmapped"
-  samtools view -h -@ 20 -b -f 12 /scratch/aob2x/dest/bam/${sample}.sorted_merged.bam  > \
-  /scratch/aob2x/dest/bam/${sample}.sorted_merged.unmapped.bam
+### get reads mapping to mitochondria
+  inputFile=/project/berglandlab/DEST/dest_mapped/Cville/US_Vir_Cha_1_2018-11-29/US_Vir_Cha_1_2018-11-29.original.bam
+  samtools idxstats ${inputFile} | grep -E "mitochondrion_genom|sim_mtDNA" | cut -f1,2 | awk '{print $1"\t"1"\t"$2}' > /scratch/aob2x/DESTv2_unmapped_reads/mitoGenome.bed
+  #sed -i '$d' /scratch/aob2x/DESTv2_unmapped_reads/mitoGenome.bed
 
-### get reads mapping to non-Drosophila genomes
-  # samtools idxstats ${inputFile} | grep -vE "2L|2R|3L|3R|4|X|Y|mitochondrion_genome|sim_2L|sim_2R|sim_3L|sim_3R|sim_4|sim_X|sim_mtDNA" | cut -f1,2 | awk '{print $1"\t"1"\t"$2}' > /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed
-  # sed -i '$d' /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed
-
-  samtools view -@ 20 -L /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed /scratch/aob2x/dest/bam/${sample}.sorted_merged.bam -b > \
-  /scratch/aob2x/dest/bam/${sample}.sorted_merged.nonDros.bam
+  samtools view -@ 20 -L /scratch/aob2x/DESTv2_unmapped_reads/mitoGenome.bed /scratch/aob2x/dest/bam/${sample}.sorted_merged.bam -b > \
+  /scratch/aob2x/dest/bam/${sample}.sorted_merged.mito.bam
 
 ### index
-  samtools index /scratch/aob2x/dest/bam/${sample}.sorted_merged.unmapped.bam
-  samtools index /scratch/aob2x/dest/bam/${sample}.sorted_merged.nonDros.bam
+  samtools index /scratch/aob2x/dest/bam/${sample}.sorted_merged.mito.bam
 
   echo "remap done"
   ls -lh /scratch/aob2x/dest/bam/${sample}*

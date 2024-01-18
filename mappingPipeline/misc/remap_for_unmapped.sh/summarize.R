@@ -10,7 +10,7 @@
   library(doMC)
   registerDoMC(20)
 
-###
+### nonDros
   setwd("/scratch/aob2x/dest/bam/")
   files <- system("ls -d *.nonDros.bam", intern=T)
 
@@ -47,6 +47,7 @@
   nonDros.ag[nReads==0, state:="noReads"]
   nonDros.ag[nReads>0, state:="pass"]
 
+  table(nonDros.ag$state)
   table(nonDros.ag$state, nonDros.ag$set)
   table(nonDros.ag[set=="cville"]$state, nonDros.ag[set=="cville"]$year)
   table(nonDros.ag[set=="dest_plus"]$state, nonDros.ag[set=="dest_plus"]$collector)
@@ -61,5 +62,44 @@
   guideRedo <- merge(guide, nonDros.ag[state!="pass"][set%in%c("cville","DrosEU","DrosEU_3","DrosEU_3_sa","DrosRTEC"), c("state", "sampleId"), with=F])
   write.table(guideRedo, "/scratch/aob2x/dest/missingSamples.DrosEU_3.delim", quote=F, row.names=F, sep="\t")
 
+### unmapped
 ###
-head /scratch/aob2x/dest/missingSamples.delim
+  setwd("/scratch/aob2x/dest/bam/")
+  files <- system("ls -d *.unmapped.bam", intern=T)
+
+  unmapped <- foreach(samp.i=files, .errorhandling="remove")%dopar%{
+    #samp.i=files[1]
+    message(samp.i)
+
+    if(length(system(paste("ls -d ", samp.i, ".bai", sep=""), intern=T))==0) {
+      system(paste("samtools index ", samp.i, sep=""))
+    }
+
+    dat <- as.data.table(system(paste("samtools idxstats ", samp.i, sep=""), intern=T))
+    dat[,samp:=samp.i]
+    dat[,chr:=tstrsplit(V1, "\t")[[1]]]
+    dat[,chrLen:=as.numeric(tstrsplit(V1, "\t")[[2]])]
+    dat[,nReads:=as.numeric(tstrsplit(V1, "\t")[[4]])]
+
+    dat
+  }
+  unmapped <- rbindlist(unmapped)
+
+
+  unmapped[,sampleId:=tstrsplit(samp, "\\.")[[1]]]
+  unmapped.ag <- unmapped[,list(nReads=sum(nReads)), list(sampleId)]
+  samps <- fread("/scratch/aob2x/DESTv2/populationInfo/dest_v2.samps_8Jun2023.csv")
+  unmapped.ag <- merge(unmapped.ag, samps, by="sampleId", all.y=T)
+  unmapped.ag[is.na(nReads), state:="noInfo"]
+  unmapped.ag[nReads==0, state:="noReads"]
+  unmapped.ag[nReads>0, state:="pass"]
+
+  table(unmapped.ag$state)
+  table(unmapped.ag$state, unmapped.ag$set)
+  table(nonDros.ag$state, nonDros.ag$set)
+
+
+  m <- merge(nonDros.ag, unmapped.ag, by="sampleId")
+  table(m[set.x!="dgn"]$state.x, m[set.x!="dgn"]$state.y, m[set.x!="dgn"]$set.x)
+  table(m[set.x=="DrosRTEC"]$state.y)
+  (m[set.x=="DrosRTEC"][state.y!="pass"]$sampleId)
