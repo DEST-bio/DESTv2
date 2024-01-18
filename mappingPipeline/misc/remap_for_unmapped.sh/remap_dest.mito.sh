@@ -157,18 +157,18 @@ threads=10
   ls -lh /scratch/aob2x/dest/bam/${sample}*
 
 ### clean up
-  rm /scratch/aob2x/fastq/${sranum}.sra
-  rm /scratch/aob2x/dest/fastq/${sranum}.trimmed1.fq
-  rm /scratch/aob2x/dest/fastq/${sranum}.trimmed2.fq
-  rm /scratch/aob2x/dest/fastq/${sranum}_1.fastq
-  rm /scratch/aob2x/dest/fastq/${sranum}_2.fastq
-  rm /scratch/aob2x/dest/fastq/${sranum}.merged.fq
-  rm /scratch/aob2x/dest/fastq/${sranum}.1_un.fq
-  rm /scratch/aob2x/dest/fastq/${sranum}.2_un.fq
-  rm /scratch/aob2x/dest/bam/${sample}.merged.bam
-  rm /scratch/aob2x/dest/bam/${sample}.merged_un.bam
-  rm /scratch/aob2x/dest/bam/${sample}.sorted_merged.bam
-  rm /scratch/aob2x/dest/bam/${sample}.merged_un.bam
+ #rm /scratch/aob2x/fastq/${sranum}.sra
+ #rm /scratch/aob2x/dest/fastq/${sranum}.trimmed1.fq
+ #rm /scratch/aob2x/dest/fastq/${sranum}.trimmed2.fq
+ #rm /scratch/aob2x/dest/fastq/${sranum}_1.fastq
+ #rm /scratch/aob2x/dest/fastq/${sranum}_2.fastq
+ #rm /scratch/aob2x/dest/fastq/${sranum}.merged.fq
+ #rm /scratch/aob2x/dest/fastq/${sranum}.1_un.fq
+ #rm /scratch/aob2x/dest/fastq/${sranum}.2_un.fq
+ #rm /scratch/aob2x/dest/bam/${sample}.merged.bam
+ #rm /scratch/aob2x/dest/bam/${sample}.merged_un.bam
+ #rm /scratch/aob2x/dest/bam/${sample}.sorted_merged.bam
+ #rm /scratch/aob2x/dest/bam/${sample}.merged_un.bam
 
 
   ls -lh /scratch/aob2x/dest/bam/*sorted_merged.nonDros.bam | grep -v "54K"
