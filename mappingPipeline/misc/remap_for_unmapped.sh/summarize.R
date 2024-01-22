@@ -54,13 +54,13 @@
   table(nonDros.ag[set=="DrosEU_3"]$state, nonDros.ag[set=="DrosEU_3"]$locality)
 
 
-  write.table(nonDros.ag[state!="pass"][set%in%c("cville","DrosEU","DrosEU_3","DrosEU_3_sa","DrosRTEC"), c("state", "sampleId"), with=F], file="/scratch/aob2x/dest/missingSamples.delim", quote=F, row.names=F)
-  write.table(nonDros.ag[state!="pass"][set%in%c("cville","DrosEU","DrosEU_3","DrosEU_3_sa","DrosRTEC"), -c("nReads", "state"), with=F][!is.na(SRA_Accession)], file="/scratch/aob2x/dest/missingSamples.sra.delim", quote=F, row.names=F, sep=",")
+  # write.table(nonDros.ag[state!="pass"][set%in%c("cville","DrosEU","DrosEU_3","DrosEU_3_sa","DrosRTEC"), c("state", "sampleId"), with=F], file="/scratch/aob2x/dest/missingSamples.delim", quote=F, row.names=F)
+  # write.table(nonDros.ag[state!="pass"][set%in%c("cville","DrosEU","DrosEU_3","DrosEU_3_sa","DrosRTEC"), -c("nReads", "state"), with=F][!is.na(SRA_Accession)], file="/scratch/aob2x/dest/missingSamples.sra.delim", quote=F, row.names=F, sep=",")
 
-  guide <- fread("/scratch/aob2x/dros3.all.mapping.guide.txt")
-  setkey(guide, sampleId)
-  guideRedo <- merge(guide, nonDros.ag[state!="pass"][set%in%c("cville","DrosEU","DrosEU_3","DrosEU_3_sa","DrosRTEC"), c("state", "sampleId"), with=F])
-  write.table(guideRedo, "/scratch/aob2x/dest/missingSamples.DrosEU_3.delim", quote=F, row.names=F, sep="\t")
+  # guide <- fread("/scratch/aob2x/dros3.all.mapping.guide.txt")
+  # setkey(guide, sampleId)
+  # guideRedo <- merge(guide, nonDros.ag[state!="pass"][set%in%c("cville","DrosEU","DrosEU_3","DrosEU_3_sa","DrosRTEC"), c("state", "sampleId"), with=F])
+  # write.table(guideRedo, "/scratch/aob2x/dest/missingSamples.DrosEU_3.delim", quote=F, row.names=F, sep="\t")
 
 ### unmapped
 ###
@@ -103,3 +103,28 @@
   table(m[set.x!="dgn"]$state.x, m[set.x!="dgn"]$state.y, m[set.x!="dgn"]$set.x)
   table(m[set.x=="DrosRTEC"]$state.y)
   (m[set.x=="DrosRTEC"][state.y!="pass"]$sampleId)
+
+
+  remap <- unique(c(
+  unmapped.ag[set=="DrosRTEC"][state=="noInfo"]$sampleId,
+  unmapped.ag[set=="DrosRTEC"][state=="noReads"]$sampleId,
+  nonDros.ag[set=="DrosRTEC"][state=="noInfo"]$sampleId,
+  nonDros.ag[set=="DrosRTEC"][state=="noReads"]$sampleId,
+
+  unmapped.ag[set=="cville"][state=="noInfo"]$sampleId,
+  unmapped.ag[set=="cville"][state=="noReads"]$sampleId,
+  nonDros.ag[set== "cville"][state=="noInfo"]$sampleId,
+  nonDros.ag[set== "cville"][state=="noReads"]$sampleId))
+
+  ### remap set
+  setkey(samps, sampleId)
+  redo <- samps[J(remap)]
+  redo <- samps[J(remap)]
+  write.csv(redo, file="/scratch/aob2x/dest/redo_2024.csv", quote=F, row.names=F)
+
+
+  vdbcache <- gsub(".sra.vdbcache", "", list.files("/scratch/aob2x/dest/fastq/", "vdbcache"))
+  table(vdbcache%in%samps[J(remap)]$SRA_Accession)
+  for(i in vdbcache) {
+    system(paste("rm /scratch/aob2x/dest/fastq/", i, "*", sep=""))
+  }

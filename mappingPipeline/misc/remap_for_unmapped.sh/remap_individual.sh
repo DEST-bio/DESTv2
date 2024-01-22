@@ -12,7 +12,7 @@
 
 wd=/scratch/aob2x/dest
 ### run as: sbatch --array=2 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_individual.sh
-### sacct -j 57072677
+### sacct -j 57080425
 ### cat /scratch/aob2x/dest/slurmOutput/remap.57072677_2.out | tail
 
 ###   samtools idxstats /project/berglandlab/DEST/dest_mapped/Cville/US_Vir_Cha_1_2016-07-08/US_Vir_Cha_1_2016-07-08.original.bam | grep -vE "2L|2R|3L|3R|4|X|Y|mitochondrion_genome|sim_2L|sim_2R|sim_3L|sim_3R|sim_4|sim_X|sim_mtDNA" | cut -f1,2 | awk '{print $1"\t"1"\t"$2}' > /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed
@@ -141,8 +141,12 @@ threads=10
   /scratch/aob2x/dest/individual_data/bam/${sample}.sorted_merged.nonDros.bam
 
 ### index
-  samtools index /scratch/aob2x/dest/bam/${sample}.sorted_merged.mito.bam
+  samtools index /scratch/aob2x/dest/individual_data/bam/${sample}.sorted_merged.mito.bam
   samtools index /scratch/aob2x/dest/individual_data/bam/${sample}.sorted_merged.nonDros.bam
   samtools index /scratch/aob2x/dest/individual_data/bam/${sample}.sorted_merged.unmapped.bam
+  samtools index /scratch/aob2x/dest/individual_data/bam/${sample}.sorted_merged.bam
+
+  rm /scratch/aob2x/dest/individual_data/bam/${sample}.merged.bam
+  rm /scratch/aob2x/dest/individual_data/bam/${sample}.merged_un.bam
 
   echo "remap done"

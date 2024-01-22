@@ -12,7 +12,7 @@
 
 wd=/scratch/aob2x/dest
 ### nl /scratch/aob2x/dest/missingSamples.sra.delim | grep -E "US_Vir_Cha_1_2018-09-20"
-### run as: sbatch --array=2-59%5 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.sh
+### run as: sbatch --array=2-31%5 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.sh
 ### sacct -j 56259084
 ### cat /scratch/aob2x/dest/slurmOutput/remap.56259084_46.out
 
@@ -28,15 +28,20 @@ threads=10
 ### get sample
   # sranum=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/dest_v2.samps_8Jun2023.csv | cut -f31 -d',' )
   # sample=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/dest_v2.samps_8Jun2023.csv | cut -f1 -d',' )
-  sranum=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/missingSamples.sra.delim | cut -f31 -d',' )
-  sample=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/missingSamples.sra.delim | cut -f1 -d',' )
+  # sranum=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/missingSamples.sra.delim | cut -f31 -d',' )
+  # sample=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/missingSamples.sra.delim | cut -f1 -d',' )
+  sranum=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/redo_2024.csv | cut -f31 -d',' )
+  sample=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/redo_2024.csv | cut -f1 -d',' )
+
+
+
 
   echo $sample " / " $sranum
 
 ### download if necesary
   rm -fr /scratch/aob2x/dest/fastq/${sranum}.sra
-  rm -fr /scratch/aob2x/dest/fastq/${sranum}_1.fastq
-  rm -fr /scratch/aob2x/dest/fastq/${sranum}_2.fastq
+  # rm -fr /scratch/aob2x/dest/fastq/${sranum}_1.fastq
+  # rm -fr /scratch/aob2x/dest/fastq/${sranum}_2.fastq
 
   if [ ! -f "/scratch/aob2x/dest/fastq/${sranum}.sra" ]; then
     prefetch \
