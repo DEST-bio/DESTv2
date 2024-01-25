@@ -3,7 +3,7 @@
 #SBATCH -J remap_fastq_individual # A single job name for the array
 #SBATCH --ntasks-per-node=10 # one core
 #SBATCH -N 1 # on one node
-#SBATCH -t 15:00:00 ### 6 hours
+#SBATCH -t 20:00:00 ### 6 hours
 #SBATCH --mem 75G
 #SBATCH -o /scratch/aob2x/dest/slurmOutput/remap.%A_%a.out # Standard output
 #SBATCH -e /scratch/aob2x/dest/slurmOutput/remap.%A_%a.err # Standard error
@@ -11,7 +11,7 @@
 #SBATCH --account biol4559-aob2x
 
 wd=/scratch/aob2x/dest
-### run as: sbatch --array=1-240%10 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_individual.sh
+### run as: sbatch --array=44,75,171,173,183,187,214,221,226 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_individual.sh
 ### sacct -j 57433387
 ### cat /scratch/aob2x/dest/slurmOutput/remap.57072677_2.out | tail
 
