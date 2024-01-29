@@ -3,7 +3,7 @@
 #SBATCH -J remap_fastq # A single job name for the array
 #SBATCH --ntasks-per-node=10 # one core
 #SBATCH -N 1 # on one node
-#SBATCH -t 20:00:00 ### 6 hours
+#SBATCH -t 25:00:00 ### 6 hours
 #SBATCH --mem 75G
 #SBATCH -o /scratch/aob2x/dest/slurmOutput/remap.%A_%a.out # Standard output
 #SBATCH -e /scratch/aob2x/dest/slurmOutput/remap.%A_%a.err # Standard error
