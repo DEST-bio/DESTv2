@@ -13,7 +13,7 @@
 wd=/scratch/aob2x/dest
 ### nl /scratch/aob2x/dest/missingSamples.sra.delim | grep -E "US_Vir_Cha_1_2018-09-20"
 ### run as: sbatch --array=31 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.sh
-### sacct -j 57629319
+### sacct -j 57729384
 ### cat /scratch/aob2x/dest/slurmOutput/remap.57433244_2.out
 
 ###   samtools idxstats /project/berglandlab/DEST/dest_mapped/Cville/US_Vir_Cha_1_2016-07-08/US_Vir_Cha_1_2016-07-08.original.bam | grep -vE "2L|2R|3L|3R|4|X|Y|mitochondrion_genome|sim_2L|sim_2R|sim_3L|sim_3R|sim_4|sim_X|sim_mtDNA" | cut -f1,2 | awk '{print $1"\t"1"\t"$2}' > /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed
@@ -30,8 +30,8 @@ threads=10
   # sample=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/dest_v2.samps_8Jun2023.csv | cut -f1 -d',' )
   # sranum=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/missingSamples.sra.delim | cut -f31 -d',' )
   # sample=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/missingSamples.sra.delim | cut -f1 -d',' )
-  sranum=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/redo_2024.csv | cut -f31 -d',' )
-  sample=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/redo_2024.csv | cut -f1 -d',' )
+  sranum=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/redo_2024_2.csv | cut -f31 -d',' )
+  sample=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/redo_2024_2.csv | cut -f1 -d',' )
 
 
   echo $sample " / " $sranum
