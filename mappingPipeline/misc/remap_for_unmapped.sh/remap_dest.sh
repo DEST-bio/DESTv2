@@ -144,9 +144,9 @@ threads=10
   ls -lh /scratch/aob2x/dest/bam/${sample}*
 
 ### clean up
-  rm /scratch/aob2x/fastq/${sranum}.sra
-  rm /scratch/aob2x/dest/fastq/${sranum}.trimmed1.fq
-  rm /scratch/aob2x/dest/fastq/${sranum}.trimmed2.fq
+  #rm /scratch/aob2x/fastq/${sranum}.sra
+  # rm /scratch/aob2x/dest/fastq/${sranum}.trimmed1.fq
+  # rm /scratch/aob2x/dest/fastq/${sranum}.trimmed2.fq
   rm /scratch/aob2x/dest/fastq/${sranum}_1.fastq
   rm /scratch/aob2x/dest/fastq/${sranum}_2.fastq
   rm /scratch/aob2x/dest/fastq/${sranum}.merged.fq
