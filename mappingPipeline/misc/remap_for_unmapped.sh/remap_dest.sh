@@ -12,9 +12,9 @@
 
 wd=/scratch/aob2x/dest
 ### nl /scratch/aob2x/dest/missingSamples.sra.delim | grep -E "US_Vir_Cha_1_2018-09-20"
-### run as: sbatch --array=2-9 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.sh
-### sacct -j 57729684
-### cat /scratch/aob2x/dest/slurmOutput/remap.57729684_1.err
+### run as: sbatch --array=2,4,5,6,7,8,9 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.sh
+### sacct -j 57800748
+### cat /scratch/aob2x/dest/slurmOutput/remap.57800748_2.out
 
 ###   samtools idxstats /project/berglandlab/DEST/dest_mapped/Cville/US_Vir_Cha_1_2016-07-08/US_Vir_Cha_1_2016-07-08.original.bam | grep -vE "2L|2R|3L|3R|4|X|Y|mitochondrion_genome|sim_2L|sim_2R|sim_3L|sim_3R|sim_4|sim_X|sim_mtDNA" | cut -f1,2 | awk '{print $1"\t"1"\t"$2}' > /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed
 ###   sed -i '$d' /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed
@@ -23,7 +23,7 @@ wd=/scratch/aob2x/dest
 module load gcc/11.4.0 sratoolkit/3.0.3 samtools/1.17 openmpi/4.1.4 bwa/0.7.17 picard/2.23.4 cutadapt/3.4
 threads=10
 
-#SLURM_ARRAY_TASK_ID=3
+#SLURM_ARRAY_TASK_ID=2
 
 ### get sample
   # sranum=$( sed "${SLURM_ARRAY_TASK_ID}q;d" /scratch/aob2x/dest/dest_v2.samps_8Jun2023.csv | cut -f31 -d',' )
@@ -37,7 +37,7 @@ threads=10
   echo $sample " / " $sranum
 
 ### download if necesary
-  rm -fr /scratch/aob2x/dest/fastq/${sranum}.sra
+  # rm -fr /scratch/aob2x/dest/fastq/${sranum}.sra
   # rm -fr /scratch/aob2x/dest/fastq/${sranum}_1.fastq
   # rm -fr /scratch/aob2x/dest/fastq/${sranum}_2.fastq
 
