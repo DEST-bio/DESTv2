@@ -13,7 +13,7 @@
 wd=/scratch/aob2x/dest
 ### nl /scratch/aob2x/dest/missingSamples.sra.delim | grep -E "US_Vir_Cha_1_2018-09-20"
 ### run as: sbatch --array=2,4,5,6,7,8,9 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.sh
-### sacct -j 57800748
+### sacct -j 57871615
 ### cat /scratch/aob2x/dest/slurmOutput/remap.57800748_2.out
 
 ###   samtools idxstats /project/berglandlab/DEST/dest_mapped/Cville/US_Vir_Cha_1_2016-07-08/US_Vir_Cha_1_2016-07-08.original.bam | grep -vE "2L|2R|3L|3R|4|X|Y|mitochondrion_genome|sim_2L|sim_2R|sim_3L|sim_3R|sim_4|sim_X|sim_mtDNA" | cut -f1,2 | awk '{print $1"\t"1"\t"$2}' > /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed
@@ -145,8 +145,8 @@ threads=10
 
 ### clean up
   #rm /scratch/aob2x/fastq/${sranum}.sra
-  # rm /scratch/aob2x/dest/fastq/${sranum}.trimmed1.fq
-  # rm /scratch/aob2x/dest/fastq/${sranum}.trimmed2.fq
+  rm /scratch/aob2x/dest/fastq/${sranum}.trimmed1.fq
+  rm /scratch/aob2x/dest/fastq/${sranum}.trimmed2.fq
   rm /scratch/aob2x/dest/fastq/${sranum}_1.fastq
   rm /scratch/aob2x/dest/fastq/${sranum}_2.fastq
   rm /scratch/aob2x/dest/fastq/${sranum}.merged.fq
