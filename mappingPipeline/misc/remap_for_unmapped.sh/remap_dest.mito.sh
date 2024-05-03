@@ -12,8 +12,8 @@
 
 wd=/scratch/aob2x/dest
 ### nl /scratch/aob2x/dest/missingSamples.sra.delim | grep -E "US_Vir_Cha_1_2018-09-20"
-### run as: sbatch --array=2 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.mito.sh
-### sacct -j 57072677
+### run as: sbatch --array=2-754 /scratch/aob2x/DESTv2/mappingPipeline/misc/remap_for_unmapped.sh/remap_dest.mito.sh
+### sacct -j 57800932
 ### cat /scratch/aob2x/dest/slurmOutput/remap.57072677_2.out | tail
 
 ###   samtools idxstats /project/berglandlab/DEST/dest_mapped/Cville/US_Vir_Cha_1_2016-07-08/US_Vir_Cha_1_2016-07-08.original.bam | grep -vE "2L|2R|3L|3R|4|X|Y|mitochondrion_genome|sim_2L|sim_2R|sim_3L|sim_3R|sim_4|sim_X|sim_mtDNA" | cut -f1,2 | awk '{print $1"\t"1"\t"$2}' > /scratch/aob2x/DESTv2_unmapped_reads/nonDrosGenome.bed

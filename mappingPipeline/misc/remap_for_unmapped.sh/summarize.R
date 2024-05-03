@@ -36,7 +36,7 @@
   nonDros[,sampleId:=tstrsplit(samp, "\\.")[[1]]]
   #nonDros <- simContam
 
-  save(nonDros, file="~/nonDros_DESTv2.Rdata")
+  #save(nonDros, file="~/nonDros_DESTv2.Rdata")
   setkey(nonDros, chr)
 
 ### merge and summarize
@@ -120,7 +120,7 @@
   setkey(samps, sampleId)
   redo <- samps[J(remap)]
   redo <- samps[J(remap)]
-  write.csv(redo, file="/scratch/aob2x/dest/redo_2024.csv", quote=F, row.names=F)
+  write.csv(redo, file="/scratch/aob2x/dest/redo_2024_2.csv", quote=F, row.names=F)
 
 
   vdbcache <- gsub(".sra.vdbcache", "", list.files("/scratch/aob2x/dest/fastq/", "vdbcache"))

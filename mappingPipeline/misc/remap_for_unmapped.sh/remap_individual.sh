@@ -24,7 +24,7 @@ threads=10
 
 #SLURM_ARRAY_TASK_ID=528
 #SLURM_ARRAY_TASK_ID=2
-## SLURM_ARRAY_TASK_ID=200
+## SLURM_ARRAY_TASK_ID=167
 
 ### combine keep lists:
 ### four columns: "sranum", "sampleId", "type" (iso or wild), "set" (2016 or OW)
