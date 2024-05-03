@@ -11,8 +11,8 @@
 #SBATCH --account berglandlab_standard
 
 ### sbatch /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/vcf2gds.sh
-### sacct -j 60922083
-### cat /scratch/aob2x/dest/slurmOutput/vcf2gds.60922083*
+### sacct -j 60922101
+### cat /scratch/aob2x/dest/slurmOutput/vcf2gds.60922101*
 
 module load gcc/11.4.0 openmpi/4.1.4 R/4.3.1
 

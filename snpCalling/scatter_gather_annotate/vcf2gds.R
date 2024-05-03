@@ -1,7 +1,10 @@
 # ijob -A berglandlab_standard -c10 -p standard --mem=40G
-#module load gcc/7.1.0 openmpi/3.1.4 R/3.6.3; R
+# module load gcc/11.4.0 openmpi/4.1.4 R/4.3.1; R
 
-library(SeqArray)
+### libraries
+  .libPaths(c("/project/berglandlab/Rlibs_4.3.1/")); .libPaths()
+
+  library(SeqArray)
 
 
 args = commandArgs(trailingOnly=TRUE)
