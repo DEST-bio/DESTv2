@@ -23,5 +23,5 @@ Rscript --vanilla /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/vcf2g
 
 
 ### sneaking a index job here too
-module load samtools/1.17
-tabix -p vcf /project/berglandlab/DEST/vcf/dest.all.PoolSNP.001.50.3May2024.ann.vcf.gz
+# module load samtools/1.17
+# tabix -p vcf /project/berglandlab/DEST/vcf/dest.all.PoolSNP.001.50.3May2024.ann.vcf.gz
