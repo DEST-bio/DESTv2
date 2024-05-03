@@ -11,13 +11,15 @@
 #SBATCH --account berglandlab_standard
 
 ### sbatch /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/vcf2gds.sh
-### sacct -j 60922134
-### cat /scratch/aob2x/dest/slurmOutput/vcf2gds.60922134*
+### sacct -j 60922217
+### cat /scratch/aob2x/dest/slurmOutput/vcf2gds.60922217*
 
 module load gcc/11.4.0 openmpi/4.1.4 R/4.3.1
 
 Rscript --vanilla /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/vcf2gds.R \
-/project/berglandlab/DEST/vcf/dest.all.PoolSNP.001.50.3May2024.ann.vcf.gz
+/project/berglandlab/DEST/vcf/dest.all.PoolSNP.001.50.3May2024.ann.vcf.gz \
+/project/berglandlab/DEST/gds/dest.all.PoolSNP.001.50.3May2024.ann.gds
+
 
 
 ### sneaking a index job here too

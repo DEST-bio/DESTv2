@@ -9,7 +9,7 @@
 
 args = commandArgs(trailingOnly=TRUE)
 vcf.fn=args[[1]]
-gds.fn=gsub(".vcf", ".gds", vcf.fn)
+gds.fn=args[[2]]
 
 #vcf.fn=paste(vcf.fn, ".gz", sep="")
 #vcf.fn="dest.all.PoolSNP.001.5.test.ann.vcf"

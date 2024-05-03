@@ -39,4 +39,4 @@
   samps["IT_Sas_Rec_1_2018-10-18", sampleid:="PT_Por_Rec_1_2018-10-18"]
 
 ### write new file
-  write.csv(samps, file="/Users/alanbergland/Documents/GitHub/DESTv2/populationInfo/dest_v2.samps_5May2024.csv", quote=F, row.names=F)
+  write.csv(samps, file="/Users/alanbergland/Documents/GitHub/DESTv2/populationInfo/dest_v2.samps_3May2024.csv", quote=F, row.names=F)
