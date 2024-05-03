@@ -11,12 +11,12 @@
 #SBATCH --account berglandlab_standard
 
 ### sbatch /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/vcf2gds.sh
-### sacct -j 60922101
-### cat /scratch/aob2x/dest/slurmOutput/vcf2gds.60922101*
+### sacct -j 60922117
+### cat /scratch/aob2x/dest/slurmOutput/vcf2gds.60922117*
 
 module load gcc/11.4.0 openmpi/4.1.4 R/4.3.1
 
-Rscript --vanilla /scratch/aob2x/DEST_freeze1/snpCalling/scatter_gather_annotate/vcf2gds.R \
+Rscript --vanilla /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/vcf2gds.R \
 /project/berglandlab/DEST/vcf/dest.all.PoolSNP.001.50.3May2024.ann.vcf.gz
 
 
