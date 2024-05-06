@@ -26,5 +26,5 @@ module load samtools/1.17
 
   tabix ${wd}/${newVersion_VCF}
 
-### convert new VCF to GDS
+### convert new VCF to GDS calls the script below
   `DESTv2/snpCalling/scatter_gather_annotate/vcf2gds.sh`

@@ -35,8 +35,16 @@
             c("SampleID", "Plate number", "Plate position"),
             c("sampleId", "Plate_number", "Plate_position"))
     droseu_sample <- droseu_sample[!is.na(sampleId)]
-    droseu_sample[,lat:=as.numeric(lat)]
-    droseu_sample[,long:=as.numeric(iconv(long, 'utf-8', 'ascii', sub=''))]
+    ### PT
+      droseu_sample[SequencingID=="DrosEu-233"]$lat
+      droseu_sample[,lat:=as.numeric(lat)]
+      droseu_sample[SequencingID=="DrosEu-233"]$lat
+
+    ### PT
+      droseu_sample[SequencingID=="DrosEu-233"]$long
+      droseu_sample[,long:=as.numeric(iconv(long, 'utf-8', 'ascii', sub=''))]
+      droseu_sample[SequencingID=="DrosEu-233"]$long
+
     droseu_sample[Altitude=="60 m", Altitude:=60]
     droseu_sample[,altitude:=as.numeric(iconv(Altitude, 'utf-8', 'ascii', sub=''))]
 
@@ -44,8 +52,7 @@
     droseu_sample[city=="Charlottesville", lat:=37.9790]
     droseu_sample[city=="Charlottesville", long:=-78.4897]
 
-
-  ### this is the DNA_library metadata
+    ### this is the DNA_library metadata
     droseu_lib <- as.data.table(read_excel("DESTv2/populationInfo/OriginalMetadata/AOB.JCBN.Final Extraction data _Microgen_DrosEU_2017-2021.xlsx"))
 
     setnames(droseu_lib,
