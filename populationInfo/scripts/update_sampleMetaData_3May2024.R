@@ -6,6 +6,7 @@
 
 ### libraries
   library(data.table)
+  options(width = 100)
 
 ### load in old data
   samps <- fread("https://raw.githubusercontent.com/DEST-bio/DESTv2/main/populationInfo/old_versions/dest_v2.samps_8Jun2023.csv")
@@ -34,9 +35,15 @@
   ### Because of the wrong latitude, the Country code and Province are wrong
   ### before we made this change, JCBN confirmed using DIM analysis
 
-  samps["IT_Sas_Rec_1_2018-10-18", province:="Porto"]
-  samps["IT_Sas_Rec_1_2018-10-18", long:=-8.41]
-  samps["IT_Sas_Rec_1_2018-10-18", sampleid:="PT_Por_Rec_1_2018-10-18"]
+  samps[sampleId=="IT_Sas_Rec_1_2018-10-18", province:="Porto"]
+  samps[sampleId=="IT_Sas_Rec_1_2018-10-18", long:=-8.41]
+  samps[sampleId=="IT_Sas_Rec_1_2018-10-18", sampleId:="PT_Por_Rec_1_2018-10-18"]
+  samps[sampleId=="PT_Por_Rec_1_2018-10-18"]
+
+### One more Spanish sample to fix up
+  samps[sampleId=="ES_Bal_Tom_1_2021-10-07", long:=-2.9849]
+  samps[sampleId=="ES_Bal_Tom_1_2021-10-07", province:="Ciudad Real"]
+  samps[sampleId=="ES_Bal_Tom_1_2021-10-07", sampleId:="ES_Ciu_Tom_1_2021-10-07"]
 
 ### write new file
   write.csv(samps, file="/Users/alanbergland/Documents/GitHub/DESTv2/populationInfo/dest_v2.samps_3May2024.csv", quote=F, row.names=F)
