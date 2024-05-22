@@ -32,7 +32,7 @@
   newSamps[grepl("AU_Que_Inn_-1_2014-02-15", newSamps)]
 
 ### function
-  getData <- function(chr="2L", start=14617051, end=14617051, conf.int=NULL) {
+  getData <- function(chr="2L", start=14617051, end=14617051, conf.int="exact") {
     # chr="2L"; start=14617051; end=14617051
 
     ### parameters
@@ -114,5 +114,3 @@
 ### test
   data <- getData(start=14617051, end=14617051, chr="2L", conf.int="exact")
   data[sampleId=="AU_Que_Inn_-1_2014-02-15"]
-
-  
