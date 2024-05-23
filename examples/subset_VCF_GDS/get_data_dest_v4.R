@@ -4,10 +4,10 @@
   library(binom)
 
 ### load meta-data file
-  samps <- fread("https://raw.githubusercontent.com/DEST-bio/DESTv2/main/populationInfo/dest_v2.samps_8Jun2023.csv")
+  samps <- fread("https://raw.githubusercontent.com/DEST-bio/DESTv2/main/populationInfo/dest_v2.samps_3May2024.csv")
 
 ### open GDS for common SNPs (PoolSNP)
-  genofile <- seqOpen("~/dest.all.PoolSNP.001.50.8Jun2023.norep.AT_EScorrect.ann.gds", allow.duplicate=T)
+  genofile <- seqOpen("~/dest.all.PoolSNP.001.50.3May2024.ann.gds", allow.duplicate=T)
 
 ### all of the samples there?
   table(samps$sampleId%in%seqGetData(genofile, "sample.id"))
@@ -113,4 +113,6 @@
 
 ### test
   data <- getData(start=14617051, end=14617051, chr="2L", conf.int="exact")
+  data <- getData(start=14617051, end=14617051+1000, chr="2L", conf.int="exact")
+
   data[sampleId=="AU_Que_Inn_-1_2014-02-15"]
