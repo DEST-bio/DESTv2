@@ -2,20 +2,19 @@
 # module load gcc/11.4.0 openmpi/4.1.4 R/4.3.1; R
 
 ### libraries
-  .libPaths(c("/project/berglandlab/Rlibs_4.3.1/")); .libPaths()
 
   library(SeqArray)
 
 
-args = commandArgs(trailingOnly=TRUE)
-vcf.fn=args[[1]]
-gds.fn=args[[2]]
+  args = commandArgs(trailingOnly=TRUE)
+  vcf.fn=args[[1]]
+  gds.fn=args[[2]]
 
-#vcf.fn=paste(vcf.fn, ".gz", sep="")
-#vcf.fn="dest.all.PoolSNP.001.5.test.ann.vcf"
-seqParallelSetup(cluster=10, verbose=TRUE)
+  #vcf.fn=paste(vcf.fn, ".gz", sep="")
+  #vcf.fn="dest.all.PoolSNP.001.5.test.ann.vcf"
+  seqParallelSetup(cluster=10, verbose=TRUE)
 
-seqVCF2GDS(vcf.fn, gds.fn, storage.option="ZIP_RA", parallel=10, verbose=T, optimize=T)
+  seqVCF2GDS(vcf.fn, gds.fn, storage.option="ZIP_RA", parallel=10, verbose=T, optimize=T)
 
 
 
