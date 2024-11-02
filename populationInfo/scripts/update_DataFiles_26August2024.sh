@@ -10,9 +10,9 @@
 #SBATCH -p standard
 #SBATCH --account berglandlab
 
-### run as: sbatch
-### sacct -j XXXXXXXXX
-### cat /scratch/COMPUTE_ID/logs/fst.*.err
+### run as: sbatch /scratch/aob2x/DESTv2/populationInfo/scripts/update_DataFiles_26August2024.sh
+### sacct -j 65726654
+### cat /scratch/aob2x/logs/updateDESTv2_24Aug2024.*.err
 
   module load bcftools/1.17
   module load samtools/1.17
@@ -46,19 +46,19 @@
   #cmp --silent /scratch/aob2x/header_dest2.txt /scratch/aob2x/header_dest2.new.txt || echo "files are different"
 
 ### rename
-  bcftools reheader \
-  -h /scratch/aob2x/header_dest2.new.txt \
-  -o ${wd}/${newVersion_VCF} \
-  --threads 10 \
-  ${wd}/${prevVersion_VCF}
+  #bcftools reheader \
+  #-h /scratch/aob2x/header_dest2.new.txt \
+  #-o ${wd}/${newVersion_VCF} \
+  #--threads 10 \
+  #${wd}/${prevVersion_VCF}
 
-  tabix ${wd}/${newVersion_VCF}
+  #tabix ${wd}/${newVersion_VCF}
 
 ### convert new VCF to GDS calls the script below
   gdsfn=$( echo ${newVersion_VCF} | sed 's/vcf.gz/gds/g' )
   echo ${gdsfn}
 
   Rscript --vanilla \
-  /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/vcf2gds.sh \
+  /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/vcf2gds.R \
   /project/berglandlab/DEST/vcf/${newVersion_VCF} \
   /project/berglandlab/DEST/gds/${gdsfn} \
