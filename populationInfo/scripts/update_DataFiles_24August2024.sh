@@ -11,7 +11,7 @@
 #SBATCH --account berglandlab
 
 ### run as: sbatch /scratch/aob2x/DESTv2/populationInfo/scripts/update_DataFiles_26August2024.sh
-### sacct -j 65726654
+### sacct -j 65727823
 ### cat /scratch/aob2x/logs/updateDESTv2_24Aug2024.*.err
 
   module load bcftools/1.17
