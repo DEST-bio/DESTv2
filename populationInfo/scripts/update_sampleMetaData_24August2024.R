@@ -92,4 +92,4 @@
   write.csv(samps_new, file="/Users/alanbergland/Documents/GitHub/DESTv2/populationInfo/dest_v2.samps_26Aug2024.csv", quote=F, row.names=F)
   conversion <- sm[sampleId!=old_sampleId,c("sampleId", "old_sampleId")]
 
-  write.csv(conversion, file="/Users/alanbergland/Documents/GitHub/DESTv2/populationInfo/scripts/update_DataFiles_26August2024_conversionTable.csv", quote=F, row.names=F)
+  write.csv(conversion, file="/Users/alanbergland/Documents/GitHub/DESTv2/populationInfo/scripts/update_DataFiles_24August2024_conversionTable.csv", quote=F, row.names=F)
