@@ -57,6 +57,11 @@
   setnames(corrected, "new_sampleId", "correct_sampleId")
   corrected_small <- corrected[,c("sampleId", "correct_sampleId", "correct_locality", "correct_lat", "correct_long", "correct_city", "correct_province", "correct_country" ), with=F]
 
+### fix city names
+  corrected_small[grepl(",", correct_city)]
+  corrected_small[correct_city=="Novi Slankamen, Municipality Inđija", correct_city:="Novi_Slankamen"]
+  corrected_small[correct_city=="Chornobyl, Polisske", correct_city:="Chornobyl_Polisske"]
+
 ### merge
   samps <- fread("https://raw.githubusercontent.com/DEST-bio/DESTv2/main/populationInfo/old_versions/dest_v2.samps_3May2024.csv")
   sm <- merge(corrected_small, samps, by="sampleId", all.y=T)
@@ -89,7 +94,13 @@
 ### samps
   samps_new <- sm[,-paste("old", c("sampleId", "locality", "lat", "long", "city", "province", "country"), sep="_")]
   samps_new
-  write.csv(samps_new, file="/Users/alanbergland/Documents/GitHub/DESTv2/populationInfo/dest_v2.samps_26Aug2024.csv", quote=F, row.names=F)
+  write.csv(samps_new, file="/Users/alanbergland/Documents/GitHub/DESTv2/populationInfo/dest_v2.samps_24Aug2024.csv", quote=F, row.names=F)
   conversion <- sm[sampleId!=old_sampleId,c("sampleId", "old_sampleId")]
 
   write.csv(conversion, file="/Users/alanbergland/Documents/GitHub/DESTv2/populationInfo/scripts/update_DataFiles_24August2024_conversionTable.csv", quote=F, row.names=F)
+
+
+
+### check old and new
+  table(samps_new$Recommendation)
+  table(samps$Recommendation)
