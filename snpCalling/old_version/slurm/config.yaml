@@ -1,0 +1,3 @@
+jobs: 100
+cluster: "sbatch --account berglandlab_standard -p standard -o {resources.log_dir}/{rule}.%A.out -e {resources.log_dir}/{rule}.%A.err -J {rule} --ntasks-per-node={resources.ntasks_per_node} -N 1 -t {resources.time_limit} --mem {resources.memory_limit}G"
+default-resources: [ntasks_per_node=4, memory_limit=36, time_limit=360]

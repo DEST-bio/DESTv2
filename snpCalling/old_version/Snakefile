@@ -1,0 +1,92 @@
+from math import floor, ceil
+from pathlib import Path
+from glob import glob
+import os
+import glob
+
+configfile: "workflow.yaml"
+
+wd = Path(config["working_directory"])
+sd = Path(config["script_directory"])
+nJobs = config["poolsnp_jobs"]
+
+poolseq_path = config["pipeline_output"]
+#poolseq_path = "/project/berglandlab/DEST/dest_mapped/*/*"
+
+input_sync_files = glob.glob(poolseq_path)
+
+log_dir = wd / "logs"
+if not log_dir.exists():
+    log_dir.mkdir()
+
+#if not job_file_path.exists():
+if config["jobs_file"] == "NA":
+    job_file_path = wd / "jobs.csv"
+    CHRS=["2L", "2R", "3L", "3R", "4", "X", "Y", "mitochondrion_genome"]
+
+    chr_lens = dict()
+    with open(config["script_directory"] + "/scatter_gather_annotate/holo_dmel_6.12.fa.fai") as src:
+        for line in src.readlines():
+            line = line.split()
+            if line[0] in CHRS:
+                chr_lens[line[0]] = int(line[1])
+            if len(chr_lens.keys()) == len(CHRS):
+                break
+    total_len = sum(chr_lens.values())
+    with open(wd / "jobs.csv", "w") as dest:
+        for chrom in CHRS:
+            chrom_len = chr_lens[chrom]
+            num_jobs = floor( ( chrom_len / total_len ) * nJobs) + 1
+            step_size = ceil(chrom_len / num_jobs)
+            for ix in range(1, chrom_len+1, step_size):
+                start = ix
+                stop = min(chrom_len, ix + step_size - 1)
+                dest.write(f"{chrom},{start},{stop}\n")
+else:
+    job_file_path = config["jobs_file"]
+    CHRS=["2L"] #, "2R", "3L", "3R", "4", "X", "Y", "mitochondrion_genome"]
+    shell : "cp {job_file_path} {wd}/jobs.csv"
+    job_file_path = wd / "jobs.csv"
+
+rule all:
+    input:
+        expand("{wd}/dest.{popset}.{method}.{maf}.{mac}.{version}.norep.ann.vcf.gz", \
+                wd=config["working_directory"], \
+                popset=config["popSet"], \
+                method=config["method"], \
+                maf=config["maf"], \
+                mac=config["mac"], \
+                version=config["version"])
+
+rule runSNP_calling:
+    input:
+        job_file=job_file_path,
+        input_files=input_sync_files
+    output:
+        expand("{wd}/sub_vcfs/{{jobid}}.{{popset}}.{{method}}.{{maf}}.{{mac}}.{{version}}.norep.vcf.gz", wd=config['working_directory'])
+    resources:
+        log_dir=str(log_dir)
+    shell : "bash scatter_gather_annotate/scatter.sh {config[popSet]} {config[method]} {config[maf]} {config[mac]} {config[version]} {wildcards.jobid} {config[script_directory]} {config[working_directory]} {config[pipeline_output]}"
+
+def get_files_to_gather(wildcards):
+    job_ids = open(job_file_path).readlines()
+    job_ids = [i.strip().replace(",", "_") for i in job_ids if i.strip() != ""]
+    return [f"{config['working_directory']}/sub_vcfs/{job_id}.{wildcards.popSet}.{wildcards.method}.{wildcards.maf}.{wildcards.mac}.{wildcards.version}.norep.vcf.gz" for job_id in job_ids if wildcards.chr in job_id]
+
+rule gatherPoolSnp:
+    input:
+        get_files_to_gather
+    output:
+        expand("{wd}/sub_bcf/dest.{{chr}}.{{popSet}}.{{method}}.{{maf}}.{{mac}}.{{version}}.norep.vcf.gz", wd=config['working_directory'])
+    resources:
+        log_dir=str(log_dir), ntasks_per_node=20, time_limit=1240
+    shell:  "bash scatter_gather_annotate/gather.sh {config[popSet]} {config[method]} {config[maf]} {config[mac]} {config[version]} {config[working_directory]} {wildcards.chr}"
+
+rule annotate:
+    input:
+        expand("{wd}/sub_bcf/dest.{chr}.{{popset}}.{{method}}.{{maf}}.{{mac}}.{{version}}.norep.vcf.gz", wd=config['working_directory'], chr=CHRS)
+    output:
+        expand("{wd}/dest.{{popset}}.{{method}}.{{maf}}.{{mac}}.{{version}}.norep.ann.vcf.gz", wd=config["working_directory"])
+    resources:
+        log_dir=str(log_dir), ntasks_per_node=10, time_limit=1440, memory_limit=20
+    shell:  "bash scatter_gather_annotate/annotate.sh {config[popSet]} {config[method]} {config[maf]} {config[mac]} {config[version]} {config[working_directory]} {config[snpEff_path]}"

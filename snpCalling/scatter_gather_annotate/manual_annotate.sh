@@ -1,31 +1,33 @@
 #!/bin/bash
 #
 #SBATCH -J manual_annotate # A single job name for the array
-#SBATCH --ntasks-per-node=20 # one core
+#SBATCH --ntasks-per-node=10 # one core
 #SBATCH -N 1 # on one node
-#SBATCH -t 14:00:00 ### 1 hours
+#SBATCH -t 6:00:00 ### 1 hours
 #SBATCH --mem 40G
-#SBATCH -o /scratch/aob2x/DESTv2_output_26April2023/logs/manual_annotate.%A_%a.out # Standard output
-#SBATCH -e /scratch/aob2x/DESTv2_output_26April2023/logs/manual_annotate.%A_%a.err # Standard error
-#SBATCH -p standard
-#SBATCH --account berglandlab_standard
+#SBATCH -o /scratch/aob2x/compBio_SNP_25Sept2023/logs/manual_annotate.%A_%a.out # Standard output
+#SBATCH -e /scratch/aob2x/compBio_SNP_25Sept2023/logs/manual_annotate.%A_%a.err # Standard error
+#SBATCH -p largemem
+#SBATCH --account biol4559-aob2x
 
 ### cat /scratch/aob2x/DESTv2_output_SNAPE/logs/runSnakemake.49369837*.err
 
-### sbatch /scratch/aob2x/DESTv2/snpCalling/scatter_gather_annotate/manual_annotate.sh
-### sacct -j 49572492
+### sbatch /scratch/aob2x/CompEvoBio_modules/utils/snpCalling/scatter_gather_annotate/manual_annotate.sh
+### sacct -j 53998649
 ### cat /scratch/aob2x/DESTv2_output_26April2023/logs/manual_annotate.49572492*.out
+# # ijob -A biol4559-aob2x -c10 -p largemem --mem=40G
 
 module purge
 
 module load  htslib/1.10.2 bcftools/1.9 intel/18.0 intelmpi/18.0 parallel/20200322 R/3.6.3 samtools vcftools
 
-popSet=all
+
+popSet=PoolSeq
 method=PoolSNP
 maf=001
 mac=50
-version=26April2023
-wd=/scratch/aob2x/DESTv2_output_26April2023
+version=11Oct2023
+wd=/scratch/aob2x/compBio_SNP_25Sept2023
 
 snpEffPath=~/snpEff
 
@@ -49,23 +51,29 @@ cd ${wd}
    # ${wd}/sub_bcf/dest.*.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz \
    # -o ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.new.vcf.gz
 
-   ls -d ${wd}/sub_bcf/dest.*.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz > \
+   ls -d ${wd}/sub_bcf/dest.*.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz | grep -E "2L|2R|3L|3R|X" > \
    ${wd}/sub_bcf/vcf_order.genome
 
-
-   vcf-concat \
+   bcftools concat \
    -f ${wd}/sub_bcf/vcf_order.genome \
-   -s \
-   |  \
-   bgzip -c > ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
+   -O z \
+   -o ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
+
+   # vcf-concat \
+   # -f ${wd}/sub_bcf/vcf_order.genome \
+   # -s \
+   # |  \
+   # bgzip -c > ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
 
    tabix -p vcf ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz
 
+   # ijob -A berglandlab -c20 -p standard --mem=60G
+
  echo "convert to vcf & annotate"
    bcftools view \
-   --threads 10 \
+   --threads 20 \
    ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.vcf.gz | \
-   java -jar ${snpEffPath}/snpEff.jar \
+   java -jar ~/snpEff/snpEff.jar \
    eff \
    BDGP6.86 - > \
    ${wd}/dest.${popSet}.${method}.${maf}.${mac}.${version}.norep.ann.vcf

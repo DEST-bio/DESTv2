@@ -1,9 +1,18 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+IFS=$'\n\t'
+
+trap 'rm -rf ${tmpdir}' EXIT
+
 module purge
-module load gcc/7.1.0 openmpi/3.1.4
+#module load gcc/7.1.0 openmpi/3.1.4
+module load gcc/11.4.0  openmpi/4.1.4 python/3.11.4
+
 #module load htslib bcftools parallel intel/18.0 intelmpi/18.0 mvapich2/2.3.1 R/3.6.3 python/3.6.6 vcftools/0.1.16
-module load htslib/1.10.2 bcftools/1.9 parallel/20200322 intel/18.0 intelmpi/18.0 R/3.6.3 python/3.6.6 vcftools/0.1.16
+#module load htslib/1.10.2 bcftools/1.9 parallel/20200322 intel/18.0 intelmpi/18.0 R/3.6.3 python/3.6.6 vcftools/0.1.16
+module load htslib/1.17  bcftools/1.17 parallel/20200322 gcc/11.4.0 openmpi/4.1.4 python/3.11.4 vcftools/0.1.16 R/4.3.1
+module load bedtools/2.30.0
 
 ### r, mvapch, parallel
 
@@ -42,8 +51,8 @@ module load htslib/1.10.2 bcftools/1.9 parallel/20200322 intel/18.0 intelmpi/18.
   echo "jobid is " $jobid
   echo "job is " $job
 
-## set up RAM disk
-  [ ! -d /dev/shm/$USER/ ] && mkdir /dev/shm/$USER/
+## set up RAM disk  
+  [ ! -d /dev/shm/$USER/ ] && mkdir -p /dev/shm/$USER/  # added -p flag to avoid error when it isn't needed
   [ ! -d /dev/shm/$USER/${SLURM_JOB_ID} ] && mkdir /dev/shm/$USER/${SLURM_JOB_ID}
   tmpdir=/dev/shm/$USER/${SLURM_JOB_ID}
 
@@ -51,6 +60,7 @@ module load htslib/1.10.2 bcftools/1.9 parallel/20200322 intel/18.0 intelmpi/18.
 
 ## get sub section
   subsection () {
+    #set +e
     syncFile=${1}
     job=${2}
     jobid=$( echo ${job} | sed 's/,/_/g' )
@@ -67,15 +77,15 @@ module load htslib/1.10.2 bcftools/1.9 parallel/20200322 intel/18.0 intelmpi/18.
     tabix -b 2 -s 1 -e 2 \
     ${syncFile} \
     ${chr}:${start}-${stop} > ${tmpdir}/${pop}_${jobid}
+    #set -e
 
   }
   export -f subsection
 
-  echo "subset"
-
+  echo "subset" 
   if [[ "${method}" == "SNAPE" && "${popSet}" == "PoolSeq" ]]; then
     echo "SNAPE" ${method}
-    parallel -j 4 subsection ::: $( ls ${pipeline_output}/*/*/*.masked.sync.gz | tr '  ' '\n' | grep "SNAPE" | grep "monomorphic" | tr '\n' ' ' ) ::: ${job} ::: ${tmpdir}
+    parallel -j 4 subsection ::: $( ls ${pipeline_output}/*/*/*.masked.sync.gz | tr '  ' '\n' | grep "SNAPE" | grep "monomorphic" ) ::: ${job} ::: ${tmpdir}
   elif [[ "${method}" == "PoolSNP" && "${popSet}" == "all" ]]; then
     echo "PoolSNP" ${method}
     parallel -j 4 subsection ::: $( ls ${pipeline_output}/*/*/*.masked.sync.gz | tr '  ' '\n' | grep -v "SNAPE" ) ::: ${job} ::: ${tmpdir}
@@ -129,8 +139,6 @@ module load htslib/1.10.2 bcftools/1.9 parallel/20200322 intel/18.0 intelmpi/18.
   tabix -p vcf ${outdir}/${jobid}.${popSet}.${method}.${maf}.${mac}.${version}.vcf.gz
 
 
-  module load gcc/9.2.0 bedtools/2.29.2
-
   bedtools intersect -sorted -v -header \
   -b ${script_dir}/scatter_gather_annotate/repeat_bed/repeats.sort.bed.gz \
   -a ${outdir}/${jobid}.${popSet}.${method}.${maf}.${mac}.${version}.vcf.gz |
@@ -142,7 +150,7 @@ module load htslib/1.10.2 bcftools/1.9 parallel/20200322 intel/18.0 intelmpi/18.
   #echo "vcf -> bcf "
   #bcftools view -Ou ${tmpdir}/${jobid}.vcf.gz > ${outdir}/${jobid}.bcf
 
-  rm -fr ${tmpdir}
+  # rm -fr ${tmpdir} # used bash exit trap instead (line 6)   
 
 ### done
   echo "done"

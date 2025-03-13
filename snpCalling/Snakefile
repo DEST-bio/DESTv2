@@ -26,6 +26,7 @@ if config["jobs_file"] == "NA":
 
     chr_lens = dict()
     with open(config["script_directory"] + "/scatter_gather_annotate/holo_dmel_6.12.fa.fai") as src:
+    #with open("/scratch/aob2x/holo_dmel_6.12.fa.fai") as src:
         for line in src.readlines():
             line = line.split()
             if line[0] in CHRS:
@@ -44,7 +45,7 @@ if config["jobs_file"] == "NA":
                 dest.write(f"{chrom},{start},{stop}\n")
 else:
     job_file_path = config["jobs_file"]
-    CHRS=["2L"] #, "2R", "3L", "3R", "4", "X", "Y", "mitochondrion_genome"]
+    CHRS=["2L", "2R", "3L", "3R", "4", "X", "Y", "mitochondrion_genome"]
     shell : "cp {job_file_path} {wd}/jobs.csv"
     job_file_path = wd / "jobs.csv"
 
@@ -67,19 +68,20 @@ rule runSNP_calling:
     resources:
         log_dir=str(log_dir)
     shell : "bash scatter_gather_annotate/scatter.sh {config[popSet]} {config[method]} {config[maf]} {config[mac]} {config[version]} {wildcards.jobid} {config[script_directory]} {config[working_directory]} {config[pipeline_output]}"
-
+   
 def get_files_to_gather(wildcards):
     job_ids = open(job_file_path).readlines()
     job_ids = [i.strip().replace(",", "_") for i in job_ids if i.strip() != ""]
-    return [f"{config['working_directory']}/sub_vcfs/{job_id}.{wildcards.popSet}.{wildcards.method}.{wildcards.maf}.{wildcards.mac}.{wildcards.version}.norep.vcf.gz" for job_id in job_ids if wildcards.chr in job_id]
-
+    return [f"{config['working_directory']}/sub_vcfs/{job_id}.{wildcards.popSet}.{wildcards.method}.{wildcards.maf}.{wildcards.mac}.{wildcards.version}.norep.vcf.gz" for job_id in job_ids if job_id.startswith(wildcards.chr)]
+#if wildcards.chr in job_id    
+   
 rule gatherPoolSnp:
     input:
         get_files_to_gather
     output:
         expand("{wd}/sub_bcf/dest.{{chr}}.{{popSet}}.{{method}}.{{maf}}.{{mac}}.{{version}}.norep.vcf.gz", wd=config['working_directory'])
     resources:
-        log_dir=str(log_dir), ntasks_per_node=20, time_limit=1240
+        log_dir=str(log_dir), ntasks_per_node=20, time_limit=60
     shell:  "bash scatter_gather_annotate/gather.sh {config[popSet]} {config[method]} {config[maf]} {config[mac]} {config[version]} {config[working_directory]} {wildcards.chr}"
 
 rule annotate:
