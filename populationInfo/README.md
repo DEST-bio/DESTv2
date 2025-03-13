@@ -1,8 +1,27 @@
 # Sample information
 
-## Description
->  This directory contains scripts to generate meta-data files for the DEST2 dataset. The 25Feb2023 version is the most recent and matches with the SNP calls that use the same date
+## Description for DESTv2 sample metadata
 
+## sample metadata
+> `DESTv2/populationInfo/CHANGE_LOG.md` has info on the latest versions and changes between dated versions
+
+## scripts
+> Several scripts that generate the sample metadata
+>  `DESTv2/populationInfo/scripts/makeJointSampleInfo_DESTv2.R`
+> There are also a bunch of update scripts that fix various naming erorrs or add more info
+
+
+
+
+
+
+
+
+
+
+## Description for DESTv1 sample medatdata
+>  This directory contains scripts to generate meta-data files for the DEST2 dataset. The 25Feb2023 version is the most recent and matches with the SNP calls that use the same date
+>
 ## Sample metadata
   > `DEST_freeze1/populationInfo/makeJointSampleInfo.R` generates several files:
   > 1. `DEST_freeze1/populationInfo/samps.csv` <br> Contains collection information (locality, date, SRA accession, weather station ID, etc). This is Supplemental Table 1 <br>
