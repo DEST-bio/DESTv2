@@ -15,4 +15,5 @@
 ## Minor updates - these are changes to the metadata
 ### 13 March 2025
   • The dated version stays the same `24August2024`
+  • The updated file is here: `DESTv2/populationInfo/dest_v2.samps_24Aug2024.xa.csv`
   • Added in sex-ratio info. Sex-ratio calculated here: `DESTv2/populationInfo/scripts/update_add_XAratio_24August2024.R`
