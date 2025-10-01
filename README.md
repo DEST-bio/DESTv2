@@ -4,7 +4,7 @@
 
 ## Citations (public releases)
 
-#### Version 2: 
+#### Version 2: [https://academic.oup.com/mbe/article/42/8/msaf132/8237493](https://academic.oup.com/mbe/article/42/8/msaf132/8237493)
 
 #### Version 1: [https://doi.org/10.1093/molbev/msab259](https://doi.org/10.1093/molbev/msab259)
 
