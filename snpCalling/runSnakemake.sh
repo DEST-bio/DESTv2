@@ -14,4 +14,4 @@
 module load gcc/11.4.0  openmpi/4.1.4 python/3.11.4 snakemake/7.24.2
 
 cd ~/Bergland/snpCalling_v2/snpCalling/
-snakemake --profile ~/Bergland/snpCalling_v2/snpCalling/slurm 
+snakemake --profile ~/Bergland/snpCalling_v2/snpCalling/slurm
